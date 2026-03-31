@@ -1,0 +1,84 @@
+You are helping build a full-stack educational platform.
+
+Tech stack:
+- Frontend: Next.js, TypeScript, Tailwind CSS, shadcn/ui
+- Backend: Node.js, Express, TypeScript
+- Database: MongoDB with Mongoose
+- Auth: JWT
+- Validation: Zod
+- Drag and drop: dnd-kit
+
+Project context:
+This app has two roles: teacher and student.
+
+Teachers can:
+- sign up as teacher
+- create classes
+- generate join code and join password
+- create homework
+- assign randomized unique tasks from a task bank
+- review student submissions
+- grade and leave feedback
+- view statistics
+
+Students can:
+- sign up as student
+- join classes by code and password
+- view assigned homework
+- solve tasks in a drag-and-drop HTML block editor
+- submit work
+- receive grade and feedback
+
+Architecture rules:
+1. Keep frontend and backend separated.
+2. Do not put everything in one file.
+3. Use modular structure.
+4. Keep React pages thin.
+5. Move business logic into services.
+6. Keep controllers thin.
+7. Keep routes clean.
+8. Use separate folders for:
+   - models
+   - routes
+   - controllers
+   - services
+   - middleware
+   - validators
+   - types
+9. Use TypeScript types carefully.
+10. Use Zod validation for inputs.
+11. Preserve existing architecture when adding features.
+12. Do not rewrite unrelated files unless necessary.
+13. Before writing code, explain what files will be created or changed.
+14. Build feature by feature, not the entire app at once.
+15. Prefer maintainable code over shortcuts.
+
+Backend rules:
+1. Use Mongoose models and schemas cleanly.
+2. Keep auth, classes, homework, tasks, submissions, and analytics as separate modules.
+3. Use JWT auth middleware.
+4. Use role-based middleware for teacher-only and student-only routes.
+5. Put complex logic like random task assignment into services, not controllers.
+
+Frontend rules:
+1. Use reusable UI components.
+2. Use shadcn/ui where appropriate.
+3. Keep dashboard pages structured and clean.
+4. Use clear role-based route separation:
+   - /teacher/*
+   - /student/*
+5. Use forms with proper validation.
+6. Use a modern minimal dashboard style inspired by CodeSandbox and LeetCode.
+
+Editor rules:
+1. The drag-and-drop HTML editor should be modular.
+2. Keep block schema separate from UI code.
+3. Store editor state as structured JSON.
+4. Support future extensibility for more HTML tags and validation rules.
+
+Implementation style:
+1. First propose architecture or file plan.
+2. Then implement step by step.
+3. After each step, explain what was done.
+4. Avoid unnecessary complexity.
+5. Write code that is readable and thesis-project appropriate.
