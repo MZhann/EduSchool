@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { authService } from "../services";
-import { registerSchema, loginSchema } from "../validators";
+import { registerSchema, loginSchema, updateProfileSchema } from "../validators";
 import { AuthRequest } from "../types";
 
 export async function register(
@@ -34,6 +34,20 @@ export async function getProfile(
 ) {
   try {
     const user = await authService.getProfile(req.user!.userId);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function updateProfile(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const data = updateProfileSchema.parse(req.body);
+    const user = await authService.updateProfile(req.user!.userId, data);
     res.json(user);
   } catch (error) {
     next(error);

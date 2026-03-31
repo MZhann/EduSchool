@@ -32,10 +32,17 @@ export async function createHomework(
     throw new AppError(400, `No tasks found for topic "${data.topic}"`);
   }
 
+  if (tasks.length < cls.students.length) {
+    throw new AppError(
+      400,
+      `Not enough unique tasks for this topic. Need ${cls.students.length}, but only ${tasks.length} available.`
+    );
+  }
+
   const shuffledTasks = shuffleArray(tasks);
   const assignedTasks = cls.students.map((studentId, index) => ({
     student: studentId,
-    task: shuffledTasks[index % shuffledTasks.length]._id,
+    task: shuffledTasks[index]._id,
   }));
 
   const homework = await Homework.create({

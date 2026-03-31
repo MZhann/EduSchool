@@ -18,8 +18,10 @@ async function seed() {
 
   const tasks: any[] = [];
 
+  const VARIANTS_PER_TEMPLATE = 5;
+
   for (const template of taskTemplates) {
-    for (let variant = 0; variant < 1; variant++) {
+    for (let variant = 0; variant < VARIANTS_PER_TEMPLATE; variant++) {
       const generated = template.generator(variant);
       tasks.push({
         title: generated.title,
