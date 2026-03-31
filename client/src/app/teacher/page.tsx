@@ -38,7 +38,7 @@ export default function TeacherDashboardPage() {
         setClasses(classData);
         setHomeworks(hwData);
       } catch {
-        setError("Failed to load dashboard data");
+        setError("Басты бет деректерін жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -73,36 +73,36 @@ export default function TeacherDashboardPage() {
 
   const statCards = [
     {
-      label: "Total Classes",
+      label: "Барлық сыныптар",
       value: classes.length,
-      subtitle: `${totalStudents} student${totalStudents !== 1 ? "s" : ""} enrolled`,
+      subtitle: `${totalStudents} оқушы тіркелген`,
       icon: Users,
       gradient: "from-blue-500 to-blue-600",
       iconBg: "bg-blue-500/10",
       iconColor: "text-blue-500",
     },
     {
-      label: "Total Homeworks",
+      label: "Барлық тапсырмалар",
       value: homeworks.length,
-      subtitle: "Across all classes",
+      subtitle: "Барлық сыныптар бойынша",
       icon: ClipboardList,
       gradient: "from-amber-500 to-orange-500",
       iconBg: "bg-amber-500/10",
       iconColor: "text-amber-500",
     },
     {
-      label: "Active Assignments",
+      label: "Белсенді тапсырмалар",
       value: activeHomeworks.length,
-      subtitle: "Currently in progress",
+      subtitle: "Қазір орындалуда",
       icon: BookOpen,
       gradient: "from-emerald-500 to-teal-500",
       iconBg: "bg-emerald-500/10",
       iconColor: "text-emerald-500",
     },
     {
-      label: "Total Students",
+      label: "Барлық оқушылар",
       value: totalStudents,
-      subtitle: `Across ${classes.length} class${classes.length !== 1 ? "es" : ""}`,
+      subtitle: `${classes.length} сыныпта`,
       icon: Users,
       gradient: "from-violet-500 to-purple-600",
       iconBg: "bg-violet-500/10",
@@ -114,10 +114,10 @@ export default function TeacherDashboardPage() {
     <div className="space-y-8">
       <div className="animate-fade-in-down">
         <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back, {user?.name}
+          Қайта қош келдіңіз, {user?.name}
         </h1>
         <p className="text-muted-foreground mt-1">
-          Here&apos;s an overview of your teaching activity
+          Міне сіздің оқыту іс-әрекетіңіздің шолуы
         </p>
       </div>
 
@@ -150,17 +150,17 @@ export default function TeacherDashboardPage() {
         <Card className="animate-fade-in-up stagger-5 overflow-hidden border-0 shadow-md">
           <div className="h-1.5 bg-linear-to-r from-indigo-500 to-blue-500" />
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Recent Homeworks</CardTitle>
+            <CardTitle>Соңғы тапсырмалар</CardTitle>
             <Link href="/teacher/homework">
               <Button variant="ghost" size="sm">
-                View all <ArrowRight className="ml-1 h-4 w-4" />
+                Барлығын көру <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
           <CardContent>
             {recentHomeworks.length === 0 ? (
               <p className="text-sm text-muted-foreground py-4 text-center">
-                No homeworks created yet
+                Әлі тапсырма жасалмаған
               </p>
             ) : (
               <div className="space-y-3">
@@ -208,17 +208,17 @@ export default function TeacherDashboardPage() {
         <Card className="animate-fade-in-up stagger-6 overflow-hidden border-0 shadow-md">
           <div className="h-1.5 bg-linear-to-r from-emerald-500 to-green-500" />
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Your Classes</CardTitle>
+            <CardTitle>Сіздің сыныптарыңыз</CardTitle>
             <Link href="/teacher/classes">
               <Button variant="ghost" size="sm">
-                View all <ArrowRight className="ml-1 h-4 w-4" />
+                Барлығын көру <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
           <CardContent>
             {classes.length === 0 ? (
               <p className="text-sm text-muted-foreground py-4 text-center">
-                No classes created yet
+                Әлі сынып жасалмаған
               </p>
             ) : (
               <div className="space-y-3">
@@ -231,8 +231,7 @@ export default function TeacherDashboardPage() {
                     <div>
                       <p className="text-sm font-medium">{cls.name}</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {cls.students?.length || 0} student
-                        {(cls.students?.length || 0) !== 1 ? "s" : ""}
+                        {cls.students?.length || 0} оқушы
                       </p>
                     </div>
                     <ArrowRight className="h-4 w-4 text-muted-foreground" />

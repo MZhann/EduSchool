@@ -61,7 +61,7 @@ export default function TeacherClassesPage() {
       const data = await getTeacherClasses();
       setClasses(data);
     } catch {
-      setError("Failed to load classes");
+      setError("Сыныптарды жүктеу сәтсіз аяқталды");
     } finally {
       setLoading(false);
     }
@@ -69,7 +69,7 @@ export default function TeacherClassesPage() {
 
   async function handleCreate() {
     if (!formData.name.trim() || !formData.joinPassword.trim()) {
-      toast.error("Please fill in all fields");
+      toast.error("Барлық өрістерді толтырыңыз");
       return;
     }
 
@@ -79,9 +79,9 @@ export default function TeacherClassesPage() {
       setClasses((prev) => [newClass, ...prev]);
       setFormData({ name: "", joinPassword: "" });
       setDialogOpen(false);
-      toast.success("Class created successfully");
+      toast.success("Сынып сәтті жасалды");
     } catch {
-      toast.error("Failed to create class");
+      toast.error("Сынып жасау сәтсіз аяқталды");
     } finally {
       setCreating(false);
     }
@@ -89,7 +89,7 @@ export default function TeacherClassesPage() {
 
   function copyToClipboard(text: string, label: string) {
     navigator.clipboard.writeText(text);
-    toast.success(`${label} copied to clipboard`);
+    toast.success(`${label} алмасу буферіне көшірілді`);
   }
 
   if (authLoading || loading) {
@@ -113,31 +113,31 @@ export default function TeacherClassesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between animate-fade-in-down">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Classes</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Сыныптар</h1>
           <p className="text-muted-foreground mt-1">
-            Manage your classes and students
+            Сыныптарыңыз бен оқушыларыңызды басқарыңыз
           </p>
         </div>
 
         <Button onClick={() => setDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Create Class
+          Сынып жасау
         </Button>
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create New Class</DialogTitle>
+              <DialogTitle>Жаңа сынып жасау</DialogTitle>
               <DialogDescription>
-                Students will use the join code and password to enter this class.
+                Оқушылар осы сыныпқа кіру үшін қосылу коды мен құпия сөзді пайдаланады.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="className">Class Name</Label>
+                <Label htmlFor="className">Сынып атауы</Label>
                 <Input
                   id="className"
-                  placeholder="e.g. Web Development 101"
+                  placeholder="мыс. Веб-әзірлеу 101"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
@@ -145,11 +145,11 @@ export default function TeacherClassesPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Join Password</Label>
+                <Label htmlFor="password">Қосылу құпия сөзі</Label>
                 <Input
                   id="password"
                   type="text"
-                  placeholder="Password for students to join"
+                  placeholder="Оқушылардың қосылуы үшін құпия сөз"
                   value={formData.joinPassword}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -166,11 +166,11 @@ export default function TeacherClassesPage() {
                 onClick={() => setDialogOpen(false)}
                 disabled={creating}
               >
-                Cancel
+                Бас тарту
               </Button>
               <Button onClick={handleCreate} disabled={creating}>
                 {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                Create
+                Жасау
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -181,13 +181,13 @@ export default function TeacherClassesPage() {
         <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <Users className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-1">No classes yet</h3>
+            <h3 className="text-lg font-semibold mb-1">Әлі сыныптар жоқ</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Create your first class to get started
+              Бастау үшін бірінші сыныпты жасаңыз
             </p>
             <Button onClick={() => setDialogOpen(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Create Class
+              Сынып жасау
             </Button>
           </CardContent>
         </Card>
@@ -203,8 +203,7 @@ export default function TeacherClassesPage() {
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-lg">{cls.name}</CardTitle>
                   <Badge variant="secondary" className="rounded-full">
-                    {cls.students?.length || 0} student
-                    {(cls.students?.length || 0) !== 1 ? "s" : ""}
+                    {cls.students?.length || 0} оқушы
                   </Badge>
                 </div>
               </CardHeader>
@@ -213,10 +212,10 @@ export default function TeacherClassesPage() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground flex items-center gap-1.5">
                       <Copy className="h-3.5 w-3.5" />
-                      Join Code
+                      Қосылу коды
                     </span>
                     <button
-                      onClick={() => copyToClipboard(cls.joinCode, "Join code")}
+                      onClick={() => copyToClipboard(cls.joinCode, "Қосылу коды")}
                       className="font-mono font-medium hover:text-primary transition-colors"
                     >
                       {cls.joinCode}
@@ -225,11 +224,11 @@ export default function TeacherClassesPage() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground flex items-center gap-1.5">
                       <Key className="h-3.5 w-3.5" />
-                      Password
+                      Құпия сөз
                     </span>
                     <button
                       onClick={() =>
-                        copyToClipboard(cls.joinPassword, "Password")
+                        copyToClipboard(cls.joinPassword, "Құпия сөз")
                       }
                       className="font-mono font-medium hover:text-primary transition-colors"
                     >
@@ -239,7 +238,7 @@ export default function TeacherClassesPage() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground flex items-center gap-1.5">
                       <Calendar className="h-3.5 w-3.5" />
-                      Created
+                      Жасалған
                     </span>
                     <span className="text-muted-foreground">
                       {new Date(cls.createdAt).toLocaleDateString()}
@@ -253,7 +252,7 @@ export default function TeacherClassesPage() {
                       variant="outline"
                       className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
                     >
-                      View Details
+                      Толығырақ
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>

@@ -22,7 +22,7 @@ export const updateProfileSchema = z.object({
     if (data.newPassword && !data.currentPassword) return false;
     return true;
   },
-  { message: "Current password is required to set a new password", path: ["currentPassword"] }
+  { message: "Жаңа құпия сөз орнату үшін ағымдағы құпия сөз қажет", path: ["currentPassword"] }
 );
 
 export type RegisterInput = z.infer<typeof registerSchema>;

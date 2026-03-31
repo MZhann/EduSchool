@@ -29,7 +29,7 @@ export default function StudentDashboardPage() {
         setClasses(classData);
         setHomeworks(hwData);
       } catch {
-        setError("Failed to load dashboard data");
+        setError("Басты бет деректерін жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -63,7 +63,7 @@ export default function StudentDashboardPage() {
 
   const stats = [
     {
-      label: "Joined Classes",
+      label: "Қосылған сыныптар",
       value: classes.length,
       icon: FolderOpen,
       gradient: "from-blue-500 to-cyan-500",
@@ -71,7 +71,7 @@ export default function StudentDashboardPage() {
       iconColor: "text-blue-500",
     },
     {
-      label: "Assigned Homework",
+      label: "Берілген тапсырмалар",
       value: homeworks.length,
       icon: BookOpen,
       gradient: "from-amber-500 to-orange-500",
@@ -79,7 +79,7 @@ export default function StudentDashboardPage() {
       iconColor: "text-amber-500",
     },
     {
-      label: "Completed",
+      label: "Аяқталған",
       value: completedCount,
       icon: CheckCircle,
       gradient: "from-emerald-500 to-teal-500",
@@ -87,7 +87,7 @@ export default function StudentDashboardPage() {
       iconColor: "text-emerald-500",
     },
     {
-      label: "In Progress",
+      label: "Орындалуда",
       value: pendingCount,
       icon: Clock,
       gradient: "from-violet-500 to-purple-600",
@@ -100,10 +100,10 @@ export default function StudentDashboardPage() {
     <div className="space-y-8">
       <div className="animate-fade-in-down">
         <h1 className="text-2xl font-bold tracking-tight">
-          Welcome back, {user?.name}
+          Қайта қош келдіңіз, {user?.name}
         </h1>
         <p className="text-muted-foreground mt-1">
-          Here&apos;s an overview of your progress
+          Міне сіздің прогресіңіздің шолуы
         </p>
       </div>
 
@@ -132,12 +132,12 @@ export default function StudentDashboardPage() {
       {homeworks.length > 0 && (
         <div className="animate-fade-in-up stagger-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Recent Homework</h2>
+            <h2 className="text-lg font-semibold">Соңғы тапсырмалар</h2>
             <button
               onClick={() => router.push("/student/homework")}
               className="text-sm text-primary hover:underline flex items-center gap-1"
             >
-              View all <ArrowRight className="h-3.5 w-3.5" />
+              Барлығын көру <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </div>
           <div className="grid gap-3">
@@ -170,10 +170,10 @@ export default function StudentDashboardPage() {
 
 function StatusDot({ status }: { status: string }) {
   const config: Record<string, { color: string; label: string }> = {
-    in_progress: { color: "bg-amber-500", label: "In Progress" },
-    submitted: { color: "bg-blue-500", label: "Submitted" },
-    graded: { color: "bg-emerald-500", label: "Graded" },
-    returned: { color: "bg-orange-500", label: "Returned" },
+    in_progress: { color: "bg-amber-500", label: "Орындалуда" },
+    submitted: { color: "bg-blue-500", label: "Жіберілді" },
+    graded: { color: "bg-emerald-500", label: "Бағаланды" },
+    returned: { color: "bg-orange-500", label: "Қайтарылды" },
   };
 
   const { color, label } = config[status] ?? {

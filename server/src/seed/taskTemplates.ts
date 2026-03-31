@@ -16,35 +16,35 @@ interface TaskTemplate {
 
 const names = ["Айдар", "Дана", "Арман", "Мадина", "Ерлан", "Аяна", "Болат", "Жанна", "Нурлан", "Камила", "Тимур", "Алия", "Самат", "Гүлнар", "Рустем"];
 const cities = ["Алматы", "Астана", "Шымкент", "Караганда", "Ақтау", "Атырау", "Павлодар", "Семей", "Тараз", "Өскемен"];
-const animals = ["cat", "dog", "bird", "fish", "horse", "rabbit", "turtle", "eagle", "wolf", "fox"];
-const colors = ["red", "blue", "green", "yellow", "orange", "purple", "pink", "black", "white", "gray"];
-const fruits = ["apple", "banana", "cherry", "grape", "lemon", "mango", "orange", "peach", "pear", "plum"];
-const subjects = ["Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography", "Literature", "Art", "Music", "Sports"];
-const hobbies = ["reading", "painting", "swimming", "cycling", "cooking", "gardening", "photography", "dancing", "singing", "hiking"];
-const foods = ["pizza", "pasta", "salad", "soup", "bread", "rice", "fish", "chicken", "cake", "ice cream"];
-const seasons = ["Spring", "Summer", "Autumn", "Winter"];
-const planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+const animals = ["мысық", "ит", "құс", "балық", "жылқы", "қоян", "тасбақа", "бүркіт", "қасқыр", "түлкі"];
+const colors = ["қызыл", "көк", "жасыл", "сары", "қызғылт сары", "күлгін", "қызғылт", "қара", "ақ", "сұр"];
+const fruits = ["алма", "банан", "шие", "жүзім", "лимон", "манго", "апельсин", "шабдалы", "алмұрт", "өрік"];
+const subjects = ["Математика", "Физика", "Химия", "Биология", "Тарих", "География", "Әдебиет", "Өнер", "Музыка", "Дене шынықтыру"];
+const hobbies = ["оқу", "сурет салу", "жүзу", "велосипед тебу", "ас пісіру", "бақша өсіру", "фотография", "би", "ән айту", "саяхат"];
+const foods = ["пицца", "макарон", "салат", "сорпа", "нан", "күріш", "балық", "тауық", "торт", "балмұздақ"];
+const seasons = ["Көктем", "Жаз", "Күз", "Қыс"];
+const planets = ["Меркурий", "Венера", "Жер", "Марс", "Юпитер", "Сатурн", "Уран", "Нептун"];
 
 function pick<T>(arr: T[], idx: number): T {
   return arr[idx % arr.length];
 }
 
 export const taskTemplates: TaskTemplate[] = [
-  // ===== TOPIC 1: HTML BASICS (60 tasks) =====
+  // ===== TOPIC 1: HTML НЕГІЗДЕРІ (60 tasks) =====
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "HTML Basics",
+    topic: "HTML негіздері",
     difficulty: "easy",
-    titleTemplate: `Basic HTML Page - Variant ${i + 1}`,
-    descriptionTemplate: "Create a basic HTML page structure",
-    instructionTemplate: "Build a simple HTML page",
+    titleTemplate: `Негізгі HTML парақша - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Негізгі HTML парақша құрылымын жасаңыз",
+    instructionTemplate: "Қарапайым HTML парақша жасаңыз",
     availableTags: ["html", "head", "title", "body"],
     generator: (v) => {
       const name = pick(names, v);
-      const title = `${name}'s Page`;
+      const title = `${name} парақшасы`;
       return {
-        title: `Create a page titled "${title}"`,
-        description: `Build a basic HTML page with the title "${title}". Use the html, head, title, and body tags.`,
-        instruction: `Drag the HTML structure blocks in the correct order. Set the page title to "${title}".`,
+        title: `Парақша жасаңыз, тақырыбы "${title}"`,
+        description: `Негізгі HTML парақша жасаңыз, тақырыбы "${title}". html, head, title және body тегтерін қолданыңыз.`,
+        instruction: `HTML құрылым блоктарын дұрыс ретпен сүйреңіз. Парақша тақырыбын "${title}" деп орнатыңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
             { tag: "head", children: [
@@ -58,354 +58,354 @@ export const taskTemplates: TaskTemplate[] = [
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "HTML Basics",
+    topic: "HTML негіздері",
     difficulty: "easy",
-    titleTemplate: `Page with greeting - Variant ${i + 1}`,
-    descriptionTemplate: "Create a page with a greeting in the body",
-    instructionTemplate: "Build a page with text content",
+    titleTemplate: `Сәлемдесу бар парақша - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Денесінде сәлемдесуі бар парақша жасаңыз",
+    instructionTemplate: "Мәтіні бар парақша жасаңыз",
     availableTags: ["html", "head", "title", "body", "p"],
     generator: (v) => {
       const city = pick(cities, v);
-      const greeting = `Welcome to ${city}!`;
+      const greeting = `${city} қаласына қош келдіңіз!`;
       return {
-        title: `Page with greeting: "${greeting}"`,
-        description: `Create an HTML page with the body containing a paragraph that says "${greeting}".`,
-        instruction: `Build the HTML structure and add a paragraph element with the text "${greeting}".`,
+        title: `Сәлемдесу бар парақша: "${greeting}"`,
+        description: `HTML парақша жасаңыз, денесінде "${greeting}" деген абзац болсын.`,
+        instruction: `HTML құрылымын жасаңыз және "${greeting}" мәтіні бар абзац элементін қосыңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Greeting" }]},
+            { tag: "head", children: [{ tag: "title", content: "Сәлемдесу" }]},
             { tag: "body", children: [{ tag: "p", content: greeting }] }
           ]}
         ],
-        expectedHtml: `<html><head><title>Greeting</title></head><body><p>${greeting}</p></body></html>`,
+        expectedHtml: `<html><head><title>Сәлемдесу</title></head><body><p>${greeting}</p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "HTML Basics",
+    topic: "HTML негіздері",
     difficulty: "medium",
-    titleTemplate: `Multiple paragraphs - Variant ${i + 1}`,
-    descriptionTemplate: "Create a page with multiple paragraphs",
-    instructionTemplate: "Build a page with multiple text blocks",
+    titleTemplate: `Бірнеше абзац - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Бірнеше абзацы бар парақша жасаңыз",
+    instructionTemplate: "Бірнеше мәтін блогы бар парақша жасаңыз",
     availableTags: ["html", "head", "title", "body", "p"],
     generator: (v) => {
       const subj = pick(subjects, v);
       const hobby = pick(hobbies, v + 3);
       return {
-        title: `Page about ${subj} and ${hobby}`,
-        description: `Create a page with a title "${subj}" and two paragraphs in the body.`,
-        instruction: `Build the page. First paragraph: "I study ${subj} at school." Second paragraph: "My hobby is ${hobby}."`,
+        title: `${subj} және ${hobby} туралы парақша`,
+        description: `"${subj}" тақырыбы және денесінде екі абзацы бар парақша жасаңыз.`,
+        instruction: `Парақша жасаңыз. Бірінші абзац: "Мен мектепте ${subj} оқимын." Екінші абзац: "Менің хоббим - ${hobby}."`,
         expectedBlocks: [
           { tag: "html", children: [
             { tag: "head", children: [{ tag: "title", content: subj }]},
             { tag: "body", children: [
-              { tag: "p", content: `I study ${subj} at school.` },
-              { tag: "p", content: `My hobby is ${hobby}.` }
+              { tag: "p", content: `Мен мектепте ${subj} оқимын.` },
+              { tag: "p", content: `Менің хоббим - ${hobby}.` }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${subj}</title></head><body><p>I study ${subj} at school.</p><p>My hobby is ${hobby}.</p></body></html>`,
+        expectedHtml: `<html><head><title>${subj}</title></head><body><p>Мен мектепте ${subj} оқимын.</p><p>Менің хоббим - ${hobby}.</p></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 2: HEADINGS (60 tasks) =====
+  // ===== TOPIC 2: ТАҚЫРЫПТАР (60 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Headings",
+    topic: "Тақырыптар",
     difficulty: "easy",
-    titleTemplate: `Single heading - Variant ${i + 1}`,
-    descriptionTemplate: "Create a page with a heading",
-    instructionTemplate: "Add a heading to your page",
+    titleTemplate: `Жалғыз тақырып - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Тақырыбы бар парақша жасаңыз",
+    instructionTemplate: "Парақшаңызға тақырып қосыңыз",
     availableTags: ["html", "head", "title", "body", "h1"],
     generator: (v) => {
       const animal = pick(animals, v);
       return {
-        title: `Page with h1 heading about ${animal}`,
-        description: `Create a page with an h1 heading that says "My favorite animal: ${animal}".`,
-        instruction: `Build the HTML structure and add an h1 element with the text "My favorite animal: ${animal}".`,
+        title: `${animal} туралы h1 тақырыбы бар парақша`,
+        description: `"Менің сүйікті жануарым: ${animal}" деген h1 тақырыбы бар парақша жасаңыз.`,
+        instruction: `HTML құрылымын жасаңыз және "Менің сүйікті жануарым: ${animal}" мәтіні бар h1 элементін қосыңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Animals" }]},
+            { tag: "head", children: [{ tag: "title", content: "Жануарлар" }]},
             { tag: "body", children: [
-              { tag: "h1", content: `My favorite animal: ${animal}` }
+              { tag: "h1", content: `Менің сүйікті жануарым: ${animal}` }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Animals</title></head><body><h1>My favorite animal: ${animal}</h1></body></html>`,
+        expectedHtml: `<html><head><title>Жануарлар</title></head><body><h1>Менің сүйікті жануарым: ${animal}</h1></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Headings",
+    topic: "Тақырыптар",
     difficulty: "medium",
-    titleTemplate: `Heading hierarchy - Variant ${i + 1}`,
-    descriptionTemplate: "Create proper heading hierarchy",
-    instructionTemplate: "Use h1 and h2 headings",
+    titleTemplate: `Тақырып иерархиясы - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Дұрыс тақырып иерархиясын жасаңыз",
+    instructionTemplate: "h1 және h2 тақырыптарын қолданыңыз",
     availableTags: ["html", "head", "title", "body", "h1", "h2", "p"],
     generator: (v) => {
       const subj = pick(subjects, v);
       const topic1 = pick(hobbies, v);
       return {
-        title: `Heading hierarchy for ${subj}`,
-        description: `Create a page with h1 "${subj}" and h2 "Chapter: ${topic1}" followed by a paragraph.`,
-        instruction: `Build the HTML with proper heading hierarchy. h1 for the main title, h2 for the chapter.`,
+        title: `${subj} үшін тақырып иерархиясы`,
+        description: `h1 "${subj}" және h2 "Тарау: ${topic1}" тақырыптары мен абзацы бар парақша жасаңыз.`,
+        instruction: `Дұрыс тақырып иерархиясымен HTML жасаңыз. h1 - негізгі тақырып, h2 - тарау.`,
         expectedBlocks: [
           { tag: "html", children: [
             { tag: "head", children: [{ tag: "title", content: subj }]},
             { tag: "body", children: [
               { tag: "h1", content: subj },
-              { tag: "h2", content: `Chapter: ${topic1}` },
-              { tag: "p", content: `This chapter is about ${topic1}.` }
+              { tag: "h2", content: `Тарау: ${topic1}` },
+              { tag: "p", content: `Бұл тарау ${topic1} туралы.` }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${subj}</title></head><body><h1>${subj}</h1><h2>Chapter: ${topic1}</h2><p>This chapter is about ${topic1}.</p></body></html>`,
+        expectedHtml: `<html><head><title>${subj}</title></head><body><h1>${subj}</h1><h2>Тарау: ${topic1}</h2><p>Бұл тарау ${topic1} туралы.</p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Headings",
+    topic: "Тақырыптар",
     difficulty: "hard",
-    titleTemplate: `Full heading structure - Variant ${i + 1}`,
-    descriptionTemplate: "Use h1 through h3 with content",
-    instructionTemplate: "Create a document with three heading levels",
+    titleTemplate: `Толық тақырып құрылымы - Нұсқа ${i + 1}`,
+    descriptionTemplate: "h1-ден h3-ке дейін мазмұнмен қолданыңыз",
+    instructionTemplate: "Үш деңгейлі тақырыптары бар құжат жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "h2", "h3", "p"],
     generator: (v) => {
       const planet = pick(planets, v);
       return {
-        title: `Article about ${planet}`,
-        description: `Create a structured page about ${planet} using h1, h2, h3 headings.`,
-        instruction: `Build: h1 "${planet}", h2 "Overview", p with description, h2 "Facts", h3 "Size", p with size info.`,
+        title: `${planet} туралы мақала`,
+        description: `${planet} туралы h1, h2, h3 тақырыптарымен құрылымдалған парақша жасаңыз.`,
+        instruction: `Жасаңыз: h1 "${planet}", h2 "Шолу", сипаттамасы бар p, h2 "Фактілер", h3 "Өлшемі", өлшемі туралы ақпараты бар p.`,
         expectedBlocks: [
           { tag: "html", children: [
             { tag: "head", children: [{ tag: "title", content: planet }]},
             { tag: "body", children: [
               { tag: "h1", content: planet },
-              { tag: "h2", content: "Overview" },
-              { tag: "p", content: `${planet} is a planet in our solar system.` },
-              { tag: "h2", content: "Facts" },
-              { tag: "h3", content: "Size" },
-              { tag: "p", content: `${planet} has a unique size compared to Earth.` }
+              { tag: "h2", content: "Шолу" },
+              { tag: "p", content: `${planet} - біздің Күн жүйесіндегі ғаламшар.` },
+              { tag: "h2", content: "Фактілер" },
+              { tag: "h3", content: "Өлшемі" },
+              { tag: "p", content: `${planet}-тің Жерге қарағанда ерекше өлшемі бар.` }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${planet}</title></head><body><h1>${planet}</h1><h2>Overview</h2><p>${planet} is a planet in our solar system.</p><h2>Facts</h2><h3>Size</h3><p>${planet} has a unique size compared to Earth.</p></body></html>`,
+        expectedHtml: `<html><head><title>${planet}</title></head><body><h1>${planet}</h1><h2>Шолу</h2><p>${planet} - біздің Күн жүйесіндегі ғаламшар.</p><h2>Фактілер</h2><h3>Өлшемі</h3><p>${planet}-тің Жерге қарағанда ерекше өлшемі бар.</p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Headings",
+    topic: "Тақырыптар",
     difficulty: "easy",
-    titleTemplate: `Simple h2 heading - Variant ${i + 1}`,
-    descriptionTemplate: "Create a page with h2 heading",
-    instructionTemplate: "Add h2 heading to page",
+    titleTemplate: `Қарапайым h2 тақырып - Нұсқа ${i + 1}`,
+    descriptionTemplate: "h2 тақырыбы бар парақша жасаңыз",
+    instructionTemplate: "Парақшаға h2 тақырыбын қосыңыз",
     availableTags: ["html", "head", "title", "body", "h2"],
     generator: (v) => {
       const fruit = pick(fruits, v);
       return {
-        title: `Page with h2 about ${fruit}`,
-        description: `Create a simple page with an h2 heading "${fruit}".`,
-        instruction: `Build an HTML page with an h2 heading that contains the text "${fruit}".`,
+        title: `${fruit} туралы h2 бар парақша`,
+        description: `"${fruit}" h2 тақырыбы бар қарапайым парақша жасаңыз.`,
+        instruction: `"${fruit}" мәтіні бар h2 тақырыбы бар HTML парақша жасаңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Fruits" }]},
+            { tag: "head", children: [{ tag: "title", content: "Жемістер" }]},
             { tag: "body", children: [{ tag: "h2", content: fruit }] }
           ]}
         ],
-        expectedHtml: `<html><head><title>Fruits</title></head><body><h2>${fruit}</h2></body></html>`,
+        expectedHtml: `<html><head><title>Жемістер</title></head><body><h2>${fruit}</h2></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 3: TEXT FORMATTING (60 tasks) =====
+  // ===== TOPIC 3: МӘТІНДІ ПІШІМДЕУ (60 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Text Formatting",
+    topic: "Мәтінді пішімдеу",
     difficulty: "easy",
-    titleTemplate: `Bold text - Variant ${i + 1}`,
-    descriptionTemplate: "Use strong tag for bold text",
-    instructionTemplate: "Make text bold",
+    titleTemplate: `Қалың мәтін - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Қалың мәтін үшін strong тегін қолданыңыз",
+    instructionTemplate: "Мәтінді қалың жасаңыз",
     availableTags: ["html", "head", "title", "body", "p", "strong"],
     generator: (v) => {
       const name = pick(names, v);
       return {
-        title: `Bold name: ${name}`,
-        description: `Create a paragraph where the name "${name}" is bold.`,
-        instruction: `Build a paragraph: "My name is " then bold "${name}".`,
+        title: `Қалың есім: ${name}`,
+        description: `"${name}" есімі қалың болатын абзац жасаңыз.`,
+        instruction: `Абзац жасаңыз: "Менің атым " содан кейін қалың "${name}".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Bold Text" }]},
+            { tag: "head", children: [{ tag: "title", content: "Қалың мәтін" }]},
             { tag: "body", children: [
-              { tag: "p", content: "My name is ", children: [
+              { tag: "p", content: "Менің атым ", children: [
                 { tag: "strong", content: name }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Bold Text</title></head><body><p>My name is <strong>${name}</strong></p></body></html>`,
+        expectedHtml: `<html><head><title>Қалың мәтін</title></head><body><p>Менің атым <strong>${name}</strong></p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Text Formatting",
+    topic: "Мәтінді пішімдеу",
     difficulty: "easy",
-    titleTemplate: `Italic text - Variant ${i + 1}`,
-    descriptionTemplate: "Use em tag for italic text",
-    instructionTemplate: "Make text italic",
+    titleTemplate: `Көлбеу мәтін - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Көлбеу мәтін үшін em тегін қолданыңыз",
+    instructionTemplate: "Мәтінді көлбеу жасаңыз",
     availableTags: ["html", "head", "title", "body", "p", "em"],
     generator: (v) => {
       const city = pick(cities, v);
       return {
-        title: `Italic city: ${city}`,
-        description: `Create a paragraph where "${city}" is italicized.`,
-        instruction: `Build: "I live in " then italic "${city}".`,
+        title: `Көлбеу қала: ${city}`,
+        description: `"${city}" көлбеу болатын абзац жасаңыз.`,
+        instruction: `Жасаңыз: "Мен тұрамын " содан кейін көлбеу "${city}".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Cities" }]},
+            { tag: "head", children: [{ tag: "title", content: "Қалалар" }]},
             { tag: "body", children: [
-              { tag: "p", content: "I live in ", children: [
+              { tag: "p", content: "Мен тұрамын ", children: [
                 { tag: "em", content: city }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Cities</title></head><body><p>I live in <em>${city}</em></p></body></html>`,
+        expectedHtml: `<html><head><title>Қалалар</title></head><body><p>Мен тұрамын <em>${city}</em></p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Text Formatting",
+    topic: "Мәтінді пішімдеу",
     difficulty: "medium",
-    titleTemplate: `Mixed formatting - Variant ${i + 1}`,
-    descriptionTemplate: "Combine bold and italic",
-    instructionTemplate: "Use both strong and em",
+    titleTemplate: `Аралас пішімдеу - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Қалың және көлбеуді біріктіріңіз",
+    instructionTemplate: "strong және em қолданыңыз",
     availableTags: ["html", "head", "title", "body", "p", "strong", "em"],
     generator: (v) => {
       const name = pick(names, v);
       const hobby = pick(hobbies, v + 2);
       return {
-        title: `Formatted bio for ${name}`,
-        description: `Create a paragraph with bold name and italic hobby.`,
-        instruction: `Build: bold "${name}" then " enjoys " then italic "${hobby}".`,
+        title: `${name} үшін пішімделген өмірбаян`,
+        description: `Қалың есімі және көлбеу хоббиі бар абзац жасаңыз.`,
+        instruction: `Жасаңыз: қалың "${name}" содан кейін " Y-ді ұнатады " содан кейін көлбеу "${hobby}".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Bio" }]},
+            { tag: "head", children: [{ tag: "title", content: "Өмірбаян" }]},
             { tag: "body", children: [
               { tag: "p", children: [
                 { tag: "strong", content: name },
                 { tag: "em", content: hobby }
-              ], content: " enjoys " }
+              ], content: " Y-ді ұнатады " }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Bio</title></head><body><p><strong>${name}</strong> enjoys <em>${hobby}</em></p></body></html>`,
+        expectedHtml: `<html><head><title>Өмірбаян</title></head><body><p><strong>${name}</strong> ${hobby}-ді ұнатады <em>${hobby}</em></p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Text Formatting",
+    topic: "Мәтінді пішімдеу",
     difficulty: "hard",
-    titleTemplate: `Full formatted article - Variant ${i + 1}`,
-    descriptionTemplate: "Create a formatted article",
-    instructionTemplate: "Use multiple text formatting tags",
+    titleTemplate: `Толық пішімделген мақала - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Пішімделген мақала жасаңыз",
+    instructionTemplate: "Бірнеше мәтін пішімдеу тегтерін қолданыңыз",
     availableTags: ["html", "head", "title", "body", "h1", "p", "strong", "em", "u"],
     generator: (v) => {
       const subj = pick(subjects, v);
       return {
-        title: `Formatted ${subj} article`,
-        description: `Create a page with heading, paragraphs with bold, italic, and underlined text.`,
-        instruction: `Build: h1 "${subj}", paragraph with bold keyword, paragraph with italic and underline.`,
+        title: `Пішімделген ${subj} мақаласы`,
+        description: `Тақырыбы, қалың, көлбеу және асты сызылған мәтіні бар абзацтары бар парақша жасаңыз.`,
+        instruction: `Жасаңыз: h1 "${subj}", қалың кілт сөзі бар абзац, көлбеу және асты сызылған абзац.`,
         expectedBlocks: [
           { tag: "html", children: [
             { tag: "head", children: [{ tag: "title", content: subj }]},
             { tag: "body", children: [
               { tag: "h1", content: subj },
-              { tag: "p", children: [{ tag: "strong", content: subj }], content: " is an important subject." },
+              { tag: "p", children: [{ tag: "strong", content: subj }], content: " - маңызды пән." },
               { tag: "p", children: [
-                { tag: "em", content: "Study" },
-                { tag: "u", content: "every day" }
-              ], content: " hard " }
+                { tag: "em", content: "Оқу" },
+                { tag: "u", content: "күн сайын" }
+              ], content: " тырысып " }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${subj}</title></head><body><h1>${subj}</h1><p><strong>${subj}</strong> is an important subject.</p><p><em>Study</em> hard <u>every day</u></p></body></html>`,
+        expectedHtml: `<html><head><title>${subj}</title></head><body><h1>${subj}</h1><p><strong>${subj}</strong> - маңызды пән.</p><p><em>Оқу</em> тырысып <u>күн сайын</u></p></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 4: LINKS (50 tasks) =====
+  // ===== TOPIC 4: СІЛТЕМЕЛЕР (50 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Links",
+    topic: "Сілтемелер",
     difficulty: "easy",
-    titleTemplate: `Simple link - Variant ${i + 1}`,
-    descriptionTemplate: "Create a hyperlink",
-    instructionTemplate: "Add a link to your page",
+    titleTemplate: `Қарапайым сілтеме - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Гиперсілтеме жасаңыз",
+    instructionTemplate: "Парақшаңызға сілтеме қосыңыз",
     availableTags: ["html", "head", "title", "body", "a"],
     generator: (v) => {
       const city = pick(cities, v);
       return {
-        title: `Link to ${city} page`,
-        description: `Create a link that says "Visit ${city}" pointing to "#${city.toLowerCase()}".`,
-        instruction: `Add an anchor tag with text "Visit ${city}" and href "#${city.toLowerCase()}".`,
+        title: `${city} парақшасына сілтеме`,
+        description: `"#${city.toLowerCase()}" адресіне бағытталған "${city}-ге бару" деген сілтеме жасаңыз.`,
+        instruction: `"${city}-ге бару" мәтіні және "#${city.toLowerCase()}" href атрибуты бар якорь тегін қосыңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Links" }]},
+            { tag: "head", children: [{ tag: "title", content: "Сілтемелер" }]},
             { tag: "body", children: [
-              { tag: "a", content: `Visit ${city}`, attributes: { href: `#${city.toLowerCase()}` } }
+              { tag: "a", content: `${city}-ге бару`, attributes: { href: `#${city.toLowerCase()}` } }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Links</title></head><body><a href="#${city.toLowerCase()}">Visit ${city}</a></body></html>`,
+        expectedHtml: `<html><head><title>Сілтемелер</title></head><body><a href="#${city.toLowerCase()}">${city}-ге бару</a></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Links",
+    topic: "Сілтемелер",
     difficulty: "medium",
-    titleTemplate: `Multiple links - Variant ${i + 1}`,
-    descriptionTemplate: "Create navigation with links",
-    instructionTemplate: "Build a page with multiple links",
+    titleTemplate: `Бірнеше сілтеме - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Сілтемелері бар навигация жасаңыз",
+    instructionTemplate: "Бірнеше сілтемесі бар парақша жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "p", "a"],
     generator: (v) => {
       const subj1 = pick(subjects, v);
       const subj2 = pick(subjects, v + 3);
       return {
-        title: `Navigation for ${subj1} and ${subj2}`,
-        description: `Create a page with a heading and two links to different subjects.`,
-        instruction: `Build: h1 "Subjects", then two paragraphs each containing a link.`,
+        title: `${subj1} және ${subj2} навигациясы`,
+        description: `Тақырыбы және әр түрлі пәндерге екі сілтемесі бар парақша жасаңыз.`,
+        instruction: `Жасаңыз: h1 "Пәндер", содан кейін әрқайсысында сілтемесі бар екі абзац.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Subjects" }]},
+            { tag: "head", children: [{ tag: "title", content: "Пәндер" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Subjects" },
+              { tag: "h1", content: "Пәндер" },
               { tag: "p", children: [{ tag: "a", content: subj1, attributes: { href: `#${subj1.toLowerCase()}` } }] },
               { tag: "p", children: [{ tag: "a", content: subj2, attributes: { href: `#${subj2.toLowerCase()}` } }] }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Subjects</title></head><body><h1>Subjects</h1><p><a href="#${subj1.toLowerCase()}">${subj1}</a></p><p><a href="#${subj2.toLowerCase()}">${subj2}</a></p></body></html>`,
+        expectedHtml: `<html><head><title>Пәндер</title></head><body><h1>Пәндер</h1><p><a href="#${subj1.toLowerCase()}">${subj1}</a></p><p><a href="#${subj2.toLowerCase()}">${subj2}</a></p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "Links",
+    topic: "Сілтемелер",
     difficulty: "hard",
-    titleTemplate: `Links with formatting - Variant ${i + 1}`,
-    descriptionTemplate: "Combine links with text formatting",
-    instructionTemplate: "Build a page with formatted links",
+    titleTemplate: `Пішімделген сілтемелер - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Сілтемелерді мәтін пішімдеумен біріктіріңіз",
+    instructionTemplate: "Пішімделген сілтемелері бар парақша жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "p", "a", "strong"],
     generator: (v) => {
       const name = pick(names, v);
       const hobby = pick(hobbies, v + 1);
       return {
-        title: `${name}'s portfolio with links`,
-        description: `Create a page with bold heading, paragraph with a bold link.`,
-        instruction: `Build h1 "${name}'s Portfolio", paragraph with bold link to "${hobby}".`,
+        title: `Сілтемелері бар ${name} портфолиосы`,
+        description: `Қалың тақырыбы, қалың сілтемесі бар абзац жасаңыз.`,
+        instruction: `h1 "${name} портфолиосы" жасаңыз, "${hobby}"-ге қалың сілтемесі бар абзац.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: `${name}'s Portfolio` }]},
+            { tag: "head", children: [{ tag: "title", content: `${name} портфолиосы` }]},
             { tag: "body", children: [
-              { tag: "h1", content: `${name}'s Portfolio` },
-              { tag: "p", content: "Check out my ", children: [
+              { tag: "h1", content: `${name} портфолиосы` },
+              { tag: "p", content: "Менің ", children: [
                 { tag: "a", attributes: { href: `#${hobby}` }, children: [
                   { tag: "strong", content: hobby }
                 ]}
@@ -413,118 +413,118 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${name}'s Portfolio</title></head><body><h1>${name}'s Portfolio</h1><p>Check out my <a href="#${hobby}"><strong>${hobby}</strong></a></p></body></html>`,
+        expectedHtml: `<html><head><title>${name} портфолиосы</title></head><body><h1>${name} портфолиосы</h1><p>Менің <a href="#${hobby}"><strong>${hobby}</strong></a></p></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 5: IMAGES (40 tasks) =====
+  // ===== TOPIC 5: СУРЕТТЕР (40 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Images",
+    topic: "Суреттер",
     difficulty: "easy",
-    titleTemplate: `Single image - Variant ${i + 1}`,
-    descriptionTemplate: "Add an image to a page",
-    instructionTemplate: "Insert an image with alt text",
+    titleTemplate: `Жалғыз сурет - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Парақшаға сурет қосыңыз",
+    instructionTemplate: "Alt мәтіні бар сурет қосыңыз",
     availableTags: ["html", "head", "title", "body", "img"],
     generator: (v) => {
       const animal = pick(animals, v);
       return {
-        title: `Image of a ${animal}`,
-        description: `Add an image of a ${animal} with proper alt text.`,
-        instruction: `Add an img tag with src "${animal}.jpg" and alt "A ${animal}".`,
+        title: `${animal} суреті`,
+        description: `Дұрыс alt мәтіні бар ${animal} суретін қосыңыз.`,
+        instruction: `src "${animal}.jpg" және alt "${animal}" атрибуттары бар img тегін қосыңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Images" }]},
+            { tag: "head", children: [{ tag: "title", content: "Суреттер" }]},
             { tag: "body", children: [
-              { tag: "img", attributes: { src: `${animal}.jpg`, alt: `A ${animal}` } }
+              { tag: "img", attributes: { src: `${animal}.jpg`, alt: `${animal}` } }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Images</title></head><body><img src="${animal}.jpg" alt="A ${animal}"></body></html>`,
+        expectedHtml: `<html><head><title>Суреттер</title></head><body><img src="${animal}.jpg" alt="${animal}"></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Images",
+    topic: "Суреттер",
     difficulty: "medium",
-    titleTemplate: `Image with caption - Variant ${i + 1}`,
-    descriptionTemplate: "Add image with heading and paragraph",
-    instructionTemplate: "Create image gallery item",
+    titleTemplate: `Сипаттамасы бар сурет - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Тақырыбы және абзацы бар сурет қосыңыз",
+    instructionTemplate: "Галерея элементін жасаңыз",
     availableTags: ["html", "head", "title", "body", "h2", "img", "p"],
     generator: (v) => {
       const fruit = pick(fruits, v);
       return {
-        title: `${fruit} gallery item`,
-        description: `Create a page with an h2 title, image, and caption paragraph.`,
-        instruction: `h2 "${fruit}", img with src="${fruit}.jpg" alt="${fruit}", p "A delicious ${fruit}."`,
+        title: `${fruit} галерея элементі`,
+        description: `h2 тақырыбы, суреті және сипаттама абзацы бар парақша жасаңыз.`,
+        instruction: `h2 "${fruit}", img src="${fruit}.jpg" alt="${fruit}", p "Дәмді ${fruit}."`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Gallery" }]},
+            { tag: "head", children: [{ tag: "title", content: "Галерея" }]},
             { tag: "body", children: [
               { tag: "h2", content: fruit },
               { tag: "img", attributes: { src: `${fruit}.jpg`, alt: fruit } },
-              { tag: "p", content: `A delicious ${fruit}.` }
+              { tag: "p", content: `Дәмді ${fruit}.` }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Gallery</title></head><body><h2>${fruit}</h2><img src="${fruit}.jpg" alt="${fruit}"><p>A delicious ${fruit}.</p></body></html>`,
+        expectedHtml: `<html><head><title>Галерея</title></head><body><h2>${fruit}</h2><img src="${fruit}.jpg" alt="${fruit}"><p>Дәмді ${fruit}.</p></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 10 }, (_, i): TaskTemplate => ({
-    topic: "Images",
+    topic: "Суреттер",
     difficulty: "hard",
-    titleTemplate: `Image gallery - Variant ${i + 1}`,
-    descriptionTemplate: "Create a multi-image gallery",
-    instructionTemplate: "Build a gallery with multiple images",
+    titleTemplate: `Сурет галереясы - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Бірнеше суреті бар галерея жасаңыз",
+    instructionTemplate: "Бірнеше суреті бар галерея жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "h2", "img", "p"],
     generator: (v) => {
       const a1 = pick(animals, v);
       const a2 = pick(animals, v + 3);
       return {
-        title: `Animal gallery: ${a1} and ${a2}`,
-        description: `Create a gallery page with two images and captions.`,
-        instruction: `h1 "Animal Gallery", then for each: h2 with name, img, p with description.`,
+        title: `Жануарлар галереясы: ${a1} және ${a2}`,
+        description: `Екі суреті және сипаттамасы бар галерея парақшасын жасаңыз.`,
+        instruction: `h1 "Жануарлар галереясы", содан кейін әрқайсысы үшін: h2 аты, img, p сипаттамасы.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Animal Gallery" }]},
+            { tag: "head", children: [{ tag: "title", content: "Жануарлар галереясы" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Animal Gallery" },
+              { tag: "h1", content: "Жануарлар галереясы" },
               { tag: "h2", content: a1 },
               { tag: "img", attributes: { src: `${a1}.jpg`, alt: a1 } },
-              { tag: "p", content: `This is a ${a1}.` },
+              { tag: "p", content: `Бұл ${a1}.` },
               { tag: "h2", content: a2 },
               { tag: "img", attributes: { src: `${a2}.jpg`, alt: a2 } },
-              { tag: "p", content: `This is a ${a2}.` }
+              { tag: "p", content: `Бұл ${a2}.` }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Animal Gallery</title></head><body><h1>Animal Gallery</h1><h2>${a1}</h2><img src="${a1}.jpg" alt="${a1}"><p>This is a ${a1}.</p><h2>${a2}</h2><img src="${a2}.jpg" alt="${a2}"><p>This is a ${a2}.</p></body></html>`,
+        expectedHtml: `<html><head><title>Жануарлар галереясы</title></head><body><h1>Жануарлар галереясы</h1><h2>${a1}</h2><img src="${a1}.jpg" alt="${a1}"><p>Бұл ${a1}.</p><h2>${a2}</h2><img src="${a2}.jpg" alt="${a2}"><p>Бұл ${a2}.</p></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 6: LISTS (60 tasks) =====
+  // ===== TOPIC 6: ТІЗІМДЕР (60 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Lists",
+    topic: "Тізімдер",
     difficulty: "easy",
-    titleTemplate: `Unordered list - Variant ${i + 1}`,
-    descriptionTemplate: "Create an unordered list",
-    instructionTemplate: "Build a bullet point list",
+    titleTemplate: `Реттелмеген тізім - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Реттелмеген тізім жасаңыз",
+    instructionTemplate: "Таңбалы тізім жасаңыз",
     availableTags: ["html", "head", "title", "body", "h2", "ul", "li"],
     generator: (v) => {
       const f1 = pick(fruits, v);
       const f2 = pick(fruits, v + 2);
       const f3 = pick(fruits, v + 5);
       return {
-        title: `Fruit list: ${f1}, ${f2}, ${f3}`,
-        description: `Create an unordered list with three fruits.`,
-        instruction: `Build: h2 "Fruits", then ul with three li items: "${f1}", "${f2}", "${f3}".`,
+        title: `Жемістер тізімі: ${f1}, ${f2}, ${f3}`,
+        description: `Үш жемісі бар реттелмеген тізім жасаңыз.`,
+        instruction: `Жасаңыз: h2 "Жемістер", содан кейін ul үш li элементімен: "${f1}", "${f2}", "${f3}".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Fruits" }]},
+            { tag: "head", children: [{ tag: "title", content: "Жемістер" }]},
             { tag: "body", children: [
-              { tag: "h2", content: "Fruits" },
+              { tag: "h2", content: "Жемістер" },
               { tag: "ul", children: [
                 { tag: "li", content: f1 },
                 { tag: "li", content: f2 },
@@ -533,30 +533,30 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Fruits</title></head><body><h2>Fruits</h2><ul><li>${f1}</li><li>${f2}</li><li>${f3}</li></ul></body></html>`,
+        expectedHtml: `<html><head><title>Жемістер</title></head><body><h2>Жемістер</h2><ul><li>${f1}</li><li>${f2}</li><li>${f3}</li></ul></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Lists",
+    topic: "Тізімдер",
     difficulty: "easy",
-    titleTemplate: `Ordered list - Variant ${i + 1}`,
-    descriptionTemplate: "Create an ordered list",
-    instructionTemplate: "Build a numbered list",
+    titleTemplate: `Реттелген тізім - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Реттелген тізім жасаңыз",
+    instructionTemplate: "Нөмірленген тізім жасаңыз",
     availableTags: ["html", "head", "title", "body", "h2", "ol", "li"],
     generator: (v) => {
       const s1 = pick(subjects, v);
       const s2 = pick(subjects, v + 2);
       const s3 = pick(subjects, v + 4);
       return {
-        title: `Favorite subjects: ${s1}, ${s2}, ${s3}`,
-        description: `Create an ordered list of favorite subjects.`,
-        instruction: `Build: h2 "My Favorite Subjects", then ol with "${s1}", "${s2}", "${s3}".`,
+        title: `Сүйікті пәндер: ${s1}, ${s2}, ${s3}`,
+        description: `Сүйікті пәндердің реттелген тізімін жасаңыз.`,
+        instruction: `Жасаңыз: h2 "Менің сүйікті пәндерім", содан кейін ol "${s1}", "${s2}", "${s3}".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Subjects" }]},
+            { tag: "head", children: [{ tag: "title", content: "Пәндер" }]},
             { tag: "body", children: [
-              { tag: "h2", content: "My Favorite Subjects" },
+              { tag: "h2", content: "Менің сүйікті пәндерім" },
               { tag: "ol", children: [
                 { tag: "li", content: s1 },
                 { tag: "li", content: s2 },
@@ -565,16 +565,16 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Subjects</title></head><body><h2>My Favorite Subjects</h2><ol><li>${s1}</li><li>${s2}</li><li>${s3}</li></ol></body></html>`,
+        expectedHtml: `<html><head><title>Пәндер</title></head><body><h2>Менің сүйікті пәндерім</h2><ol><li>${s1}</li><li>${s2}</li><li>${s3}</li></ol></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Lists",
+    topic: "Тізімдер",
     difficulty: "medium",
-    titleTemplate: `Mixed lists - Variant ${i + 1}`,
-    descriptionTemplate: "Combine ordered and unordered lists",
-    instructionTemplate: "Build both types of lists",
+    titleTemplate: `Аралас тізімдер - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Реттелген және реттелмеген тізімдерді біріктіріңіз",
+    instructionTemplate: "Екі түрлі тізім жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "h2", "ul", "ol", "li"],
     generator: (v) => {
       const h1 = pick(hobbies, v);
@@ -582,20 +582,20 @@ export const taskTemplates: TaskTemplate[] = [
       const f1 = pick(foods, v);
       const f2 = pick(foods, v + 2);
       return {
-        title: `Hobbies and foods lists`,
-        description: `Create a page with an ordered list of hobbies and unordered list of foods.`,
-        instruction: `h1 "My Lists", h2 "Hobbies" with ol, h2 "Foods" with ul.`,
+        title: `Хобби және тағамдар тізімдері`,
+        description: `Хоббидің реттелген тізімі және тағамдардың реттелмеген тізімі бар парақша жасаңыз.`,
+        instruction: `h1 "Менің тізімдерім", h2 "Хобби" ol-мен, h2 "Тағамдар" ul-мен.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "My Lists" }]},
+            { tag: "head", children: [{ tag: "title", content: "Менің тізімдерім" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "My Lists" },
-              { tag: "h2", content: "Hobbies" },
+              { tag: "h1", content: "Менің тізімдерім" },
+              { tag: "h2", content: "Хобби" },
               { tag: "ol", children: [
                 { tag: "li", content: h1 },
                 { tag: "li", content: h2 }
               ]},
-              { tag: "h2", content: "Foods" },
+              { tag: "h2", content: "Тағамдар" },
               { tag: "ul", children: [
                 { tag: "li", content: f1 },
                 { tag: "li", content: f2 }
@@ -603,25 +603,25 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>My Lists</title></head><body><h1>My Lists</h1><h2>Hobbies</h2><ol><li>${h1}</li><li>${h2}</li></ol><h2>Foods</h2><ul><li>${f1}</li><li>${f2}</li></ul></body></html>`,
+        expectedHtml: `<html><head><title>Менің тізімдерім</title></head><body><h1>Менің тізімдерім</h1><h2>Хобби</h2><ol><li>${h1}</li><li>${h2}</li></ol><h2>Тағамдар</h2><ul><li>${f1}</li><li>${f2}</li></ul></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Lists",
+    topic: "Тізімдер",
     difficulty: "hard",
-    titleTemplate: `Nested list - Variant ${i + 1}`,
-    descriptionTemplate: "Create nested lists",
-    instructionTemplate: "Build a list with sub-items",
+    titleTemplate: `Кірістірілген тізім - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Кірістірілген тізімдер жасаңыз",
+    instructionTemplate: "Ішкі элементтері бар тізім жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "ul", "ol", "li"],
     generator: (v) => {
       const s = pick(subjects, v);
       const t1 = pick(hobbies, v);
       const t2 = pick(hobbies, v + 3);
       return {
-        title: `Nested list for ${s}`,
-        description: `Create a list with nested sub-items.`,
-        instruction: `h1 "${s}", ul with li "${s}" containing a nested ol with "${t1}" and "${t2}".`,
+        title: `${s} үшін кірістірілген тізім`,
+        description: `Кірістірілген ішкі элементтері бар тізім жасаңыз.`,
+        instruction: `h1 "${s}", ul ішінде li "${s}" кірістірілген ol-мен "${t1}" және "${t2}".`,
         expectedBlocks: [
           { tag: "html", children: [
             { tag: "head", children: [{ tag: "title", content: s }]},
@@ -643,30 +643,30 @@ export const taskTemplates: TaskTemplate[] = [
     },
   })),
 
-  // ===== TOPIC 7: TABLES (60 tasks) =====
+  // ===== TOPIC 7: КЕСТЕЛЕР (60 tasks) =====
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "Tables",
+    topic: "Кестелер",
     difficulty: "easy",
-    titleTemplate: `Simple table - Variant ${i + 1}`,
-    descriptionTemplate: "Create a basic table",
-    instructionTemplate: "Build a table with rows",
+    titleTemplate: `Қарапайым кесте - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Негізгі кесте жасаңыз",
+    instructionTemplate: "Жолдары бар кесте жасаңыз",
     availableTags: ["html", "head", "title", "body", "h2", "table", "tr", "th", "td"],
     generator: (v) => {
       const n = pick(names, v);
       const c = pick(cities, v);
       return {
-        title: `Student info table for ${n}`,
-        description: `Create a table with Name and City columns.`,
-        instruction: `Build table with header row (th: "Name", "City") and data row (td: "${n}", "${c}").`,
+        title: `${n} үшін оқушы ақпарат кестесі`,
+        description: `Аты және Қаласы бағандары бар кесте жасаңыз.`,
+        instruction: `Тақырып жолы (th: "Аты", "Қала") және деректер жолы (td: "${n}", "${c}") бар кесте жасаңыз.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Students" }]},
+            { tag: "head", children: [{ tag: "title", content: "Оқушылар" }]},
             { tag: "body", children: [
-              { tag: "h2", content: "Students" },
+              { tag: "h2", content: "Оқушылар" },
               { tag: "table", children: [
                 { tag: "tr", children: [
-                  { tag: "th", content: "Name" },
-                  { tag: "th", content: "City" }
+                  { tag: "th", content: "Аты" },
+                  { tag: "th", content: "Қала" }
                 ]},
                 { tag: "tr", children: [
                   { tag: "td", content: n },
@@ -676,16 +676,16 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Students</title></head><body><h2>Students</h2><table><tr><th>Name</th><th>City</th></tr><tr><td>${n}</td><td>${c}</td></tr></table></body></html>`,
+        expectedHtml: `<html><head><title>Оқушылар</title></head><body><h2>Оқушылар</h2><table><tr><th>Аты</th><th>Қала</th></tr><tr><td>${n}</td><td>${c}</td></tr></table></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "Tables",
+    topic: "Кестелер",
     difficulty: "medium",
-    titleTemplate: `Multi-row table - Variant ${i + 1}`,
-    descriptionTemplate: "Create a table with multiple rows",
-    instructionTemplate: "Build a table with multiple data rows",
+    titleTemplate: `Көп жолды кесте - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Бірнеше жолы бар кесте жасаңыз",
+    instructionTemplate: "Бірнеше деректер жолы бар кесте жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "table", "tr", "th", "td"],
     generator: (v) => {
       const n1 = pick(names, v);
@@ -693,32 +693,32 @@ export const taskTemplates: TaskTemplate[] = [
       const s1 = pick(subjects, v);
       const s2 = pick(subjects, v + 2);
       return {
-        title: `Schedule table with ${n1} and ${n2}`,
-        description: `Create a table with Student and Subject columns and two data rows.`,
-        instruction: `h1 "Class Schedule", table header: "Student", "Subject"; row1: "${n1}", "${s1}"; row2: "${n2}", "${s2}".`,
+        title: `${n1} және ${n2} кесте кестесі`,
+        description: `Оқушы және Пән бағандары мен екі деректер жолы бар кесте жасаңыз.`,
+        instruction: `h1 "Сабақ кестесі", кесте тақырыбы: "Оқушы", "Пән"; 1-жол: "${n1}", "${s1}"; 2-жол: "${n2}", "${s2}".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Schedule" }]},
+            { tag: "head", children: [{ tag: "title", content: "Кесте" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Class Schedule" },
+              { tag: "h1", content: "Сабақ кестесі" },
               { tag: "table", children: [
-                { tag: "tr", children: [{ tag: "th", content: "Student" }, { tag: "th", content: "Subject" }]},
+                { tag: "tr", children: [{ tag: "th", content: "Оқушы" }, { tag: "th", content: "Пән" }]},
                 { tag: "tr", children: [{ tag: "td", content: n1 }, { tag: "td", content: s1 }]},
                 { tag: "tr", children: [{ tag: "td", content: n2 }, { tag: "td", content: s2 }]}
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Schedule</title></head><body><h1>Class Schedule</h1><table><tr><th>Student</th><th>Subject</th></tr><tr><td>${n1}</td><td>${s1}</td></tr><tr><td>${n2}</td><td>${s2}</td></tr></table></body></html>`,
+        expectedHtml: `<html><head><title>Кесте</title></head><body><h1>Сабақ кестесі</h1><table><tr><th>Оқушы</th><th>Пән</th></tr><tr><td>${n1}</td><td>${s1}</td></tr><tr><td>${n2}</td><td>${s2}</td></tr></table></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "Tables",
+    topic: "Кестелер",
     difficulty: "hard",
-    titleTemplate: `Complex table - Variant ${i + 1}`,
-    descriptionTemplate: "Create a table with 3 columns and 3 rows",
-    instructionTemplate: "Build a comprehensive data table",
+    titleTemplate: `Күрделі кесте - Нұсқа ${i + 1}`,
+    descriptionTemplate: "3 баған және 3 жолы бар кесте жасаңыз",
+    instructionTemplate: "Толық деректер кестесін жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "table", "tr", "th", "td"],
     generator: (v) => {
       const n1 = pick(names, v);
@@ -728,16 +728,16 @@ export const taskTemplates: TaskTemplate[] = [
       const s2 = pick(subjects, v + 1);
       const s3 = pick(subjects, v + 3);
       return {
-        title: `Grade table for three students`,
-        description: `Create a table with Student, Subject, Grade columns and three data rows.`,
-        instruction: `h1 "Grades", table with 3 columns and 3 data rows.`,
+        title: `Үш оқушы үшін баға кестесі`,
+        description: `Оқушы, Пән, Баға бағандары және үш деректер жолы бар кесте жасаңыз.`,
+        instruction: `h1 "Бағалар", 3 бағаны және 3 деректер жолы бар кесте.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Grades" }]},
+            { tag: "head", children: [{ tag: "title", content: "Бағалар" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Grades" },
+              { tag: "h1", content: "Бағалар" },
               { tag: "table", children: [
-                { tag: "tr", children: [{ tag: "th", content: "Student" }, { tag: "th", content: "Subject" }, { tag: "th", content: "Grade" }]},
+                { tag: "tr", children: [{ tag: "th", content: "Оқушы" }, { tag: "th", content: "Пән" }, { tag: "th", content: "Баға" }]},
                 { tag: "tr", children: [{ tag: "td", content: n1 }, { tag: "td", content: s1 }, { tag: "td", content: "90" }]},
                 { tag: "tr", children: [{ tag: "td", content: n2 }, { tag: "td", content: s2 }, { tag: "td", content: "85" }]},
                 { tag: "tr", children: [{ tag: "td", content: n3 }, { tag: "td", content: s3 }, { tag: "td", content: "92" }]}
@@ -745,190 +745,190 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Grades</title></head><body><h1>Grades</h1><table><tr><th>Student</th><th>Subject</th><th>Grade</th></tr><tr><td>${n1}</td><td>${s1}</td><td>90</td></tr><tr><td>${n2}</td><td>${s2}</td><td>85</td></tr><tr><td>${n3}</td><td>${s3}</td><td>92</td></tr></table></body></html>`,
+        expectedHtml: `<html><head><title>Бағалар</title></head><body><h1>Бағалар</h1><table><tr><th>Оқушы</th><th>Пән</th><th>Баға</th></tr><tr><td>${n1}</td><td>${s1}</td><td>90</td></tr><tr><td>${n2}</td><td>${s2}</td><td>85</td></tr><tr><td>${n3}</td><td>${s3}</td><td>92</td></tr></table></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 8: FORMS (60 tasks) =====
+  // ===== TOPIC 8: ФОРМАЛАР (60 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Forms",
+    topic: "Формалар",
     difficulty: "easy",
-    titleTemplate: `Simple input - Variant ${i + 1}`,
-    descriptionTemplate: "Create a form with an input",
-    instructionTemplate: "Build a basic form",
+    titleTemplate: `Қарапайым енгізу - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Енгізу өрісі бар форма жасаңыз",
+    instructionTemplate: "Негізгі форма жасаңыз",
     availableTags: ["html", "head", "title", "body", "h2", "form", "label", "input", "button"],
     generator: (v) => {
-      const field = pick(["Name", "Email", "Phone", "Address", "City", "Age", "School", "Country", "Password", "Username"], v);
+      const field = pick(["Аты", "Email", "Телефон", "Мекенжай", "Қала", "Жасы", "Мектеп", "Ел", "Құпия сөз", "Пайдаланушы аты"], v);
       return {
-        title: `Form with ${field} input`,
-        description: `Create a form with a labeled ${field} input and a submit button.`,
-        instruction: `Build: h2 "Registration", form with label "${field}:", input, and button "Submit".`,
+        title: `${field} енгізу өрісі бар форма`,
+        description: `Белгіленген ${field} енгізу өрісі және жіберу батырмасы бар форма жасаңыз.`,
+        instruction: `Жасаңыз: h2 "Тіркелу", форма label "${field}:", input, және button "Жіберу".`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Form" }]},
+            { tag: "head", children: [{ tag: "title", content: "Форма" }]},
             { tag: "body", children: [
-              { tag: "h2", content: "Registration" },
+              { tag: "h2", content: "Тіркелу" },
               { tag: "form", children: [
                 { tag: "label", content: `${field}:` },
                 { tag: "input", attributes: { type: "text" } },
-                { tag: "button", content: "Submit" }
+                { tag: "button", content: "Жіберу" }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Form</title></head><body><h2>Registration</h2><form><label>${field}:</label><input type="text"><button>Submit</button></form></body></html>`,
+        expectedHtml: `<html><head><title>Форма</title></head><body><h2>Тіркелу</h2><form><label>${field}:</label><input type="text"><button>Жіберу</button></form></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Forms",
+    topic: "Формалар",
     difficulty: "medium",
-    titleTemplate: `Multi-field form - Variant ${i + 1}`,
-    descriptionTemplate: "Create a form with multiple inputs",
-    instructionTemplate: "Build a form with several fields",
+    titleTemplate: `Көп өрісті форма - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Бірнеше енгізу өрісі бар форма жасаңыз",
+    instructionTemplate: "Бірнеше өрісі бар форма жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "form", "label", "input", "button"],
     generator: (v) => {
       const name = pick(names, v);
       return {
-        title: `Registration form for ${name}`,
-        description: `Create a form with Name, Email fields and Submit button.`,
-        instruction: `h1 "Sign Up", form with two labeled inputs (Name, Email) and a Submit button.`,
+        title: `${name} үшін тіркелу формасы`,
+        description: `Аты, Email өрістері және Жіберу батырмасы бар форма жасаңыз.`,
+        instruction: `h1 "Тіркелу", форма екі белгіленген енгізу өрісімен (Аты, Email) және Тіркелу батырмасымен.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Sign Up" }]},
+            { tag: "head", children: [{ tag: "title", content: "Тіркелу" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Sign Up" },
+              { tag: "h1", content: "Тіркелу" },
               { tag: "form", children: [
-                { tag: "label", content: "Name:" },
+                { tag: "label", content: "Аты:" },
                 { tag: "input", attributes: { type: "text" } },
                 { tag: "label", content: "Email:" },
                 { tag: "input", attributes: { type: "email" } },
-                { tag: "button", content: "Sign Up" }
+                { tag: "button", content: "Тіркелу" }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Sign Up</title></head><body><h1>Sign Up</h1><form><label>Name:</label><input type="text"><label>Email:</label><input type="email"><button>Sign Up</button></form></body></html>`,
+        expectedHtml: `<html><head><title>Тіркелу</title></head><body><h1>Тіркелу</h1><form><label>Аты:</label><input type="text"><label>Email:</label><input type="email"><button>Тіркелу</button></form></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Forms",
+    topic: "Формалар",
     difficulty: "hard",
-    titleTemplate: `Select form - Variant ${i + 1}`,
-    descriptionTemplate: "Create a form with select dropdown",
-    instructionTemplate: "Build a form with select element",
+    titleTemplate: `Таңдау формасы - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Таңдау тізімі бар форма жасаңыз",
+    instructionTemplate: "Select элементі бар форма жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "form", "label", "input", "select", "option", "button"],
     generator: (v) => {
       const s1 = pick(subjects, v);
       const s2 = pick(subjects, v + 2);
       const s3 = pick(subjects, v + 5);
       return {
-        title: `Subject selection form`,
-        description: `Create a form with name input and subject dropdown.`,
-        instruction: `h1 "Enrollment", form with name input, select with options: "${s1}", "${s2}", "${s3}", and Submit button.`,
+        title: `Пән таңдау формасы`,
+        description: `Есім енгізу өрісі және пән таңдау тізімі бар форма жасаңыз.`,
+        instruction: `h1 "Қабылдау", форма есім енгізу өрісімен, таңдау тізімімен: "${s1}", "${s2}", "${s3}", және Жіберу батырмасымен.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Enrollment" }]},
+            { tag: "head", children: [{ tag: "title", content: "Қабылдау" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Enrollment" },
+              { tag: "h1", content: "Қабылдау" },
               { tag: "form", children: [
-                { tag: "label", content: "Name:" },
+                { tag: "label", content: "Аты:" },
                 { tag: "input", attributes: { type: "text" } },
-                { tag: "label", content: "Subject:" },
+                { tag: "label", content: "Пән:" },
                 { tag: "select", children: [
                   { tag: "option", content: s1 },
                   { tag: "option", content: s2 },
                   { tag: "option", content: s3 }
                 ]},
-                { tag: "button", content: "Enroll" }
+                { tag: "button", content: "Қабылдау" }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Enrollment</title></head><body><h1>Enrollment</h1><form><label>Name:</label><input type="text"><label>Subject:</label><select><option>${s1}</option><option>${s2}</option><option>${s3}</option></select><button>Enroll</button></form></body></html>`,
+        expectedHtml: `<html><head><title>Қабылдау</title></head><body><h1>Қабылдау</h1><form><label>Аты:</label><input type="text"><label>Пән:</label><select><option>${s1}</option><option>${s2}</option><option>${s3}</option></select><button>Қабылдау</button></form></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Forms",
+    topic: "Формалар",
     difficulty: "hard",
-    titleTemplate: `Textarea form - Variant ${i + 1}`,
-    descriptionTemplate: "Create a form with textarea",
-    instructionTemplate: "Build a feedback form",
+    titleTemplate: `Textarea формасы - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Textarea бар форма жасаңыз",
+    instructionTemplate: "Кері байланыс формасын жасаңыз",
     availableTags: ["html", "head", "title", "body", "h1", "form", "label", "input", "textarea", "button"],
     generator: (v) => {
       const subj = pick(subjects, v);
       return {
-        title: `Feedback form for ${subj}`,
-        description: `Create a form with name input, textarea for feedback, and submit button.`,
-        instruction: `h1 "${subj} Feedback", form with "Name" input, "Comments" textarea, and "Send" button.`,
+        title: `${subj} кері байланыс формасы`,
+        description: `Есім енгізу өрісі, кері байланыс textarea және жіберу батырмасы бар форма жасаңыз.`,
+        instruction: `h1 "${subj} кері байланыс", форма "Аты" енгізу өрісімен, "Пікірлер" textarea және "Жіберу" батырмасымен.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Feedback" }]},
+            { tag: "head", children: [{ tag: "title", content: "Кері байланыс" }]},
             { tag: "body", children: [
-              { tag: "h1", content: `${subj} Feedback` },
+              { tag: "h1", content: `${subj} кері байланыс` },
               { tag: "form", children: [
-                { tag: "label", content: "Name:" },
+                { tag: "label", content: "Аты:" },
                 { tag: "input", attributes: { type: "text" } },
-                { tag: "label", content: "Comments:" },
+                { tag: "label", content: "Пікірлер:" },
                 { tag: "textarea", content: "" },
-                { tag: "button", content: "Send" }
+                { tag: "button", content: "Жіберу" }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Feedback</title></head><body><h1>${subj} Feedback</h1><form><label>Name:</label><input type="text"><label>Comments:</label><textarea></textarea><button>Send</button></form></body></html>`,
+        expectedHtml: `<html><head><title>Кері байланыс</title></head><body><h1>${subj} кері байланыс</h1><form><label>Аты:</label><input type="text"><label>Пікірлер:</label><textarea></textarea><button>Жіберу</button></form></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 9: SEMANTIC HTML (50 tasks) =====
+  // ===== TOPIC 9: СЕМАНТИКАЛЫҚ HTML (50 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Semantic HTML",
+    topic: "Семантикалық HTML",
     difficulty: "medium",
-    titleTemplate: `Semantic structure - Variant ${i + 1}`,
-    descriptionTemplate: "Use semantic HTML elements",
-    instructionTemplate: "Build a page with semantic tags",
+    titleTemplate: `Семантикалық құрылым - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Семантикалық HTML элементтерін қолданыңыз",
+    instructionTemplate: "Семантикалық тегтері бар парақша жасаңыз",
     availableTags: ["html", "head", "title", "body", "header", "main", "footer", "h1", "p"],
     generator: (v) => {
       const name = pick(names, v);
       return {
-        title: `Semantic page for ${name}`,
-        description: `Create a page using header, main, and footer elements.`,
-        instruction: `Build: header with h1 "${name}'s Site", main with paragraph, footer with copyright.`,
+        title: `${name} үшін семантикалық парақша`,
+        description: `header, main және footer элементтерін қолданып парақша жасаңыз.`,
+        instruction: `Жасаңыз: header ішінде h1 "${name} сайты", main ішінде абзац, footer ішінде авторлық құқық.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: `${name}'s Site` }]},
+            { tag: "head", children: [{ tag: "title", content: `${name} сайты` }]},
             { tag: "body", children: [
-              { tag: "header", children: [{ tag: "h1", content: `${name}'s Site` }] },
-              { tag: "main", children: [{ tag: "p", content: `Welcome to ${name}'s website.` }] },
+              { tag: "header", children: [{ tag: "h1", content: `${name} сайты` }] },
+              { tag: "main", children: [{ tag: "p", content: `${name} веб-сайтына қош келдіңіз.` }] },
               { tag: "footer", children: [{ tag: "p", content: `© 2026 ${name}` }] }
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${name}'s Site</title></head><body><header><h1>${name}'s Site</h1></header><main><p>Welcome to ${name}'s website.</p></main><footer><p>© 2026 ${name}</p></footer></body></html>`,
+        expectedHtml: `<html><head><title>${name} сайты</title></head><body><header><h1>${name} сайты</h1></header><main><p>${name} веб-сайтына қош келдіңіз.</p></main><footer><p>© 2026 ${name}</p></footer></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Semantic HTML",
+    topic: "Семантикалық HTML",
     difficulty: "medium",
-    titleTemplate: `Nav and sections - Variant ${i + 1}`,
-    descriptionTemplate: "Use nav and section elements",
-    instructionTemplate: "Build navigation and sections",
+    titleTemplate: `Nav және бөлімдер - Нұсқа ${i + 1}`,
+    descriptionTemplate: "nav және section элементтерін қолданыңыз",
+    instructionTemplate: "Навигация және бөлімдер жасаңыз",
     availableTags: ["html", "head", "title", "body", "header", "nav", "section", "h1", "h2", "p", "a"],
     generator: (v) => {
       const s1 = pick(subjects, v);
       const s2 = pick(subjects, v + 3);
       return {
-        title: `Page with nav: ${s1}, ${s2}`,
-        description: `Create a page with navigation and two sections.`,
-        instruction: `header with nav (two links), section for "${s1}" and section for "${s2}".`,
+        title: `Nav бар парақша: ${s1}, ${s2}`,
+        description: `Навигациясы және екі бөлімі бар парақша жасаңыз.`,
+        instruction: `header ішінде nav (екі сілтеме), "${s1}" бөлімі және "${s2}" бөлімі.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "School" }]},
+            { tag: "head", children: [{ tag: "title", content: "Мектеп" }]},
             { tag: "body", children: [
               { tag: "header", children: [
                 { tag: "nav", children: [
@@ -938,51 +938,51 @@ export const taskTemplates: TaskTemplate[] = [
               ]},
               { tag: "section", children: [
                 { tag: "h2", content: s1 },
-                { tag: "p", content: `Learn about ${s1}.` }
+                { tag: "p", content: `${s1} туралы үйреніңіз.` }
               ]},
               { tag: "section", children: [
                 { tag: "h2", content: s2 },
-                { tag: "p", content: `Learn about ${s2}.` }
+                { tag: "p", content: `${s2} туралы үйреніңіз.` }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>School</title></head><body><header><nav><a href="#${s1.toLowerCase()}">${s1}</a><a href="#${s2.toLowerCase()}">${s2}</a></nav></header><section><h2>${s1}</h2><p>Learn about ${s1}.</p></section><section><h2>${s2}</h2><p>Learn about ${s2}.</p></section></body></html>`,
+        expectedHtml: `<html><head><title>Мектеп</title></head><body><header><nav><a href="#${s1.toLowerCase()}">${s1}</a><a href="#${s2.toLowerCase()}">${s2}</a></nav></header><section><h2>${s1}</h2><p>${s1} туралы үйреніңіз.</p></section><section><h2>${s2}</h2><p>${s2} туралы үйреніңіз.</p></section></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "Semantic HTML",
+    topic: "Семантикалық HTML",
     difficulty: "hard",
-    titleTemplate: `Full semantic page - Variant ${i + 1}`,
-    descriptionTemplate: "Build a complete semantic page",
-    instructionTemplate: "Use all semantic elements",
+    titleTemplate: `Толық семантикалық парақша - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Толық семантикалық парақша жасаңыз",
+    instructionTemplate: "Барлық семантикалық элементтерді қолданыңыз",
     availableTags: ["html", "head", "title", "body", "header", "nav", "main", "article", "aside", "footer", "h1", "h2", "p", "a"],
     generator: (v) => {
       const name = pick(names, v);
       const subj = pick(subjects, v);
       return {
-        title: `Full semantic page by ${name}`,
-        description: `Create a complete semantic page with header, nav, main, article, aside, and footer.`,
-        instruction: `Build a full page structure: header with h1 and nav, main with article about ${subj} and aside with a tip, footer with copyright.`,
+        title: `${name} толық семантикалық парақшасы`,
+        description: `header, nav, main, article, aside және footer бар толық семантикалық парақша жасаңыз.`,
+        instruction: `Толық парақша құрылымын жасаңыз: header ішінде h1 және nav, main ішінде ${subj} туралы article және кеңесі бар aside, footer ішінде авторлық құқық.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: `${name}'s Blog` }]},
+            { tag: "head", children: [{ tag: "title", content: `${name} блогы` }]},
             { tag: "body", children: [
               { tag: "header", children: [
-                { tag: "h1", content: `${name}'s Blog` },
+                { tag: "h1", content: `${name} блогы` },
                 { tag: "nav", children: [
-                  { tag: "a", content: "Home", attributes: { href: "#home" } },
-                  { tag: "a", content: "About", attributes: { href: "#about" } }
+                  { tag: "a", content: "Басты бет", attributes: { href: "#home" } },
+                  { tag: "a", content: "Біз туралы", attributes: { href: "#about" } }
                 ]}
               ]},
               { tag: "main", children: [
                 { tag: "article", children: [
                   { tag: "h2", content: subj },
-                  { tag: "p", content: `Today we learn about ${subj}.` }
+                  { tag: "p", content: `Бүгін біз ${subj} туралы үйренеміз.` }
                 ]},
                 { tag: "aside", children: [
-                  { tag: "p", content: "Tip: Practice every day!" }
+                  { tag: "p", content: "Кеңес: Күн сайын жаттығыңыз!" }
                 ]}
               ]},
               { tag: "footer", children: [
@@ -991,111 +991,111 @@ export const taskTemplates: TaskTemplate[] = [
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>${name}'s Blog</title></head><body><header><h1>${name}'s Blog</h1><nav><a href="#home">Home</a><a href="#about">About</a></nav></header><main><article><h2>${subj}</h2><p>Today we learn about ${subj}.</p></article><aside><p>Tip: Practice every day!</p></aside></main><footer><p>© 2026 ${name}</p></footer></body></html>`,
+        expectedHtml: `<html><head><title>${name} блогы</title></head><body><header><h1>${name} блогы</h1><nav><a href="#home">Басты бет</a><a href="#about">Біз туралы</a></nav></header><main><article><h2>${subj}</h2><p>Бүгін біз ${subj} туралы үйренеміз.</p></article><aside><p>Кеңес: Күн сайын жаттығыңыз!</p></aside></main><footer><p>© 2026 ${name}</p></footer></body></html>`,
       };
     },
   })),
 
-  // ===== TOPIC 10: DIV & LAYOUT (50 tasks) =====
+  // ===== TOPIC 10: DIV ЖӘНЕ SPAN (50 tasks) =====
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Div and Span",
+    topic: "Div және Span",
     difficulty: "easy",
-    titleTemplate: `Div wrapper - Variant ${i + 1}`,
-    descriptionTemplate: "Use div as a container",
-    instructionTemplate: "Wrap content in a div",
+    titleTemplate: `Div контейнер - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Div-ті контейнер ретінде қолданыңыз",
+    instructionTemplate: "Мазмұнды div-ке орауыңыз",
     availableTags: ["html", "head", "title", "body", "div", "h2", "p"],
     generator: (v) => {
       const color = pick(colors, v);
       return {
-        title: `Div container - ${color} theme`,
-        description: `Create a page with content wrapped in a div.`,
-        instruction: `Build: div containing h2 "Section" and p "This is the ${color} section."`,
+        title: `Div контейнер - ${color} тақырып`,
+        description: `Мазмұны div-ке оралған парақша жасаңыз.`,
+        instruction: `Жасаңыз: div ішінде h2 "Бөлім" және p "Бұл ${color} бөлімі."`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Divs" }]},
+            { tag: "head", children: [{ tag: "title", content: "Div-тер" }]},
             { tag: "body", children: [
               { tag: "div", children: [
-                { tag: "h2", content: "Section" },
-                { tag: "p", content: `This is the ${color} section.` }
+                { tag: "h2", content: "Бөлім" },
+                { tag: "p", content: `Бұл ${color} бөлімі.` }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Divs</title></head><body><div><h2>Section</h2><p>This is the ${color} section.</p></div></body></html>`,
+        expectedHtml: `<html><head><title>Div-тер</title></head><body><div><h2>Бөлім</h2><p>Бұл ${color} бөлімі.</p></div></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 15 }, (_, i): TaskTemplate => ({
-    topic: "Div and Span",
+    topic: "Div және Span",
     difficulty: "medium",
-    titleTemplate: `Multiple divs - Variant ${i + 1}`,
-    descriptionTemplate: "Create a multi-div layout",
-    instructionTemplate: "Build multiple div sections",
+    titleTemplate: `Бірнеше div - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Көп div-ті орналасу жасаңыз",
+    instructionTemplate: "Бірнеше div бөлімдерін жасаңыз",
     availableTags: ["html", "head", "title", "body", "div", "h1", "h2", "p", "span"],
     generator: (v) => {
       const c1 = pick(colors, v);
       const c2 = pick(colors, v + 3);
       return {
-        title: `Two-section layout: ${c1} and ${c2}`,
-        description: `Create a page with two div sections.`,
-        instruction: `h1 "Layout", div with h2 "${c1} Section" and p, div with h2 "${c2} Section" and p with span.`,
+        title: `Екі бөлімді орналасу: ${c1} және ${c2}`,
+        description: `Екі div бөлімі бар парақша жасаңыз.`,
+        instruction: `h1 "Орналасу", div ішінде h2 "${c1} бөлімі" және p, div ішінде h2 "${c2} бөлімі" және span бар p.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Layout" }]},
+            { tag: "head", children: [{ tag: "title", content: "Орналасу" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Layout" },
+              { tag: "h1", content: "Орналасу" },
               { tag: "div", children: [
-                { tag: "h2", content: `${c1} Section` },
-                { tag: "p", content: `This is the ${c1} area.` }
+                { tag: "h2", content: `${c1} бөлімі` },
+                { tag: "p", content: `Бұл ${c1} аймағы.` }
               ]},
               { tag: "div", children: [
-                { tag: "h2", content: `${c2} Section` },
-                { tag: "p", content: "Highlight: ", children: [
+                { tag: "h2", content: `${c2} бөлімі` },
+                { tag: "p", content: "Ерекшеленген: ", children: [
                   { tag: "span", content: c2 }
                 ]}
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Layout</title></head><body><h1>Layout</h1><div><h2>${c1} Section</h2><p>This is the ${c1} area.</p></div><div><h2>${c2} Section</h2><p>Highlight: <span>${c2}</span></p></div></body></html>`,
+        expectedHtml: `<html><head><title>Орналасу</title></head><body><h1>Орналасу</h1><div><h2>${c1} бөлімі</h2><p>Бұл ${c1} аймағы.</p></div><div><h2>${c2} бөлімі</h2><p>Ерекшеленген: <span>${c2}</span></p></div></body></html>`,
       };
     },
   })),
   ...Array.from({ length: 20 }, (_, i): TaskTemplate => ({
-    topic: "Div and Span",
+    topic: "Div және Span",
     difficulty: "hard",
-    titleTemplate: `Card layout - Variant ${i + 1}`,
-    descriptionTemplate: "Create a card-based layout",
-    instructionTemplate: "Build card components with divs",
+    titleTemplate: `Карточка орналасуы - Нұсқа ${i + 1}`,
+    descriptionTemplate: "Карточкалы орналасу жасаңыз",
+    instructionTemplate: "Div-термен карточка компоненттерін жасаңыз",
     availableTags: ["html", "head", "title", "body", "div", "h1", "h3", "p", "img", "a"],
     generator: (v) => {
       const a1 = pick(animals, v);
       const a2 = pick(animals, v + 4);
       return {
-        title: `Animal cards: ${a1} and ${a2}`,
-        description: `Create a card layout with two animal cards.`,
-        instruction: `h1 "Animals", two divs each with h3, img, p, and a link.`,
+        title: `Жануар карточкалары: ${a1} және ${a2}`,
+        description: `Екі жануар карточкасы бар орналасу жасаңыз.`,
+        instruction: `h1 "Жануарлар", екі div әрқайсысында h3, img, p және сілтеме.`,
         expectedBlocks: [
           { tag: "html", children: [
-            { tag: "head", children: [{ tag: "title", content: "Animals" }]},
+            { tag: "head", children: [{ tag: "title", content: "Жануарлар" }]},
             { tag: "body", children: [
-              { tag: "h1", content: "Animals" },
+              { tag: "h1", content: "Жануарлар" },
               { tag: "div", children: [
                 { tag: "h3", content: a1 },
                 { tag: "img", attributes: { src: `${a1}.jpg`, alt: a1 } },
-                { tag: "p", content: `The ${a1} is amazing.` },
-                { tag: "a", content: "Learn more", attributes: { href: `#${a1}` } }
+                { tag: "p", content: `${a1} таңғажайып.` },
+                { tag: "a", content: "Толығырақ", attributes: { href: `#${a1}` } }
               ]},
               { tag: "div", children: [
                 { tag: "h3", content: a2 },
                 { tag: "img", attributes: { src: `${a2}.jpg`, alt: a2 } },
-                { tag: "p", content: `The ${a2} is wonderful.` },
-                { tag: "a", content: "Learn more", attributes: { href: `#${a2}` } }
+                { tag: "p", content: `${a2} керемет.` },
+                { tag: "a", content: "Толығырақ", attributes: { href: `#${a2}` } }
               ]}
             ]}
           ]}
         ],
-        expectedHtml: `<html><head><title>Animals</title></head><body><h1>Animals</h1><div><h3>${a1}</h3><img src="${a1}.jpg" alt="${a1}"><p>The ${a1} is amazing.</p><a href="#${a1}">Learn more</a></div><div><h3>${a2}</h3><img src="${a2}.jpg" alt="${a2}"><p>The ${a2} is wonderful.</p><a href="#${a2}">Learn more</a></div></body></html>`,
+        expectedHtml: `<html><head><title>Жануарлар</title></head><body><h1>Жануарлар</h1><div><h3>${a1}</h3><img src="${a1}.jpg" alt="${a1}"><p>${a1} таңғажайып.</p><a href="#${a1}">Толығырақ</a></div><div><h3>${a2}</h3><img src="${a2}.jpg" alt="${a2}"><p>${a2} керемет.</p><a href="#${a2}">Толығырақ</a></div></body></html>`,
       };
     },
   })),

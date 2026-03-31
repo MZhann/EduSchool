@@ -44,7 +44,7 @@ export default function TagPalette({ availableTags, disabled }: TagPaletteProps)
   return (
     <div className="space-y-3">
       <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-        Available Tags
+        Қолжетімді тегтер
       </h3>
       {Array.from(grouped.entries()).map(([category, tags]) => (
         <div key={category}>

@@ -113,16 +113,16 @@ export default function StudentGradesPage() {
   return (
     <div className="space-y-6">
       <div className="animate-fade-in-down">
-        <h1 className="text-2xl font-bold tracking-tight">My Grades</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Менің бағаларым</h1>
         <p className="text-muted-foreground mt-1">
-          Track your performance across all homework
+          Бағаларыңыздың қорытындысын көру
         </p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           {
-            label: "Total Homework",
+            label: "Барлық тапсырмалар",
             value: stats.total,
             icon: BookOpen,
             gradient: "from-blue-500 to-cyan-500",
@@ -130,7 +130,7 @@ export default function StudentGradesPage() {
             iconColor: "text-blue-500",
           },
           {
-            label: "Completed",
+            label: "Аяқталған",
             value: stats.completed,
             icon: CheckCircle,
             gradient: "from-emerald-500 to-teal-500",
@@ -138,7 +138,7 @@ export default function StudentGradesPage() {
             iconColor: "text-emerald-500",
           },
           {
-            label: "Graded",
+            label: "Бағаланды",
             value: stats.gradedCount,
             icon: TrendingUp,
             gradient: "from-violet-500 to-purple-600",
@@ -146,7 +146,7 @@ export default function StudentGradesPage() {
             iconColor: "text-violet-500",
           },
           {
-            label: "Average Grade",
+            label: "Орташа баға",
             value: stats.average !== null ? `${stats.average}%` : "—",
             icon: Award,
             gradient: "from-amber-500 to-orange-500",
@@ -180,9 +180,9 @@ export default function StudentGradesPage() {
         <Card className="animate-fade-in-up stagger-5">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <Award className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-1">No grades yet</h3>
+            <h3 className="text-lg font-semibold mb-1">Бағалар жоқ</h3>
             <p className="text-sm text-muted-foreground">
-              Your grades will appear here once teachers grade your submissions
+              Бағаларыңыздың қорытындысын көру үшін сіздің тапсырмаларыңыздың бағаландығына әкетілгеннен кейін
             </p>
           </CardContent>
         </Card>
@@ -193,13 +193,13 @@ export default function StudentGradesPage() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">#</TableHead>
-                <TableHead>Homework</TableHead>
-                <TableHead>Class</TableHead>
-                <TableHead>Topic</TableHead>
-                <TableHead className="text-center">Status</TableHead>
-                <TableHead className="text-center">Grade</TableHead>
-                <TableHead>Due Date</TableHead>
-                <TableHead>Submitted</TableHead>
+                <TableHead>Тапсырма</TableHead>
+                <TableHead>Сынып</TableHead>
+                <TableHead>Тақырып</TableHead>
+                <TableHead className="text-center">Статусы</TableHead>
+                <TableHead className="text-center">Баға</TableHead>
+                <TableHead>Дедлайн</TableHead>
+                <TableHead>Жіберілді</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

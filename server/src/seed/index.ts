@@ -9,11 +9,11 @@ const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/eduschool";
 
 async function seed() {
-  console.log("Connecting to MongoDB...");
+  console.log("MongoDB-ге қосылуда...");
   await mongoose.connect(MONGODB_URI);
-  console.log("Connected.");
+  console.log("MongoDB-ге қосылды.");
 
-  console.log("Clearing existing tasks...");
+  console.log("Бар тапсырмалар тазартылуда...");
   await Task.deleteMany({});
 
   const tasks: any[] = [];
@@ -36,24 +36,24 @@ async function seed() {
     }
   }
 
-  console.log(`Generated ${tasks.length} tasks. Inserting...`);
+  console.log(`${tasks.length} тапсырма жасалды. Енгізілуде...`);
   await Task.insertMany(tasks);
-  console.log(`Successfully seeded ${tasks.length} tasks.`);
+  console.log(`${tasks.length} тапсырма сәтті енгізілді.`);
 
   const topicCounts: Record<string, number> = {};
   for (const t of tasks) {
     topicCounts[t.topic] = (topicCounts[t.topic] || 0) + 1;
   }
-  console.log("\nTasks per topic:");
+  console.log("\nТақырып бойынша тапсырмалар:");
   for (const [topic, count] of Object.entries(topicCounts).sort()) {
     console.log(`  ${topic}: ${count}`);
   }
 
   await mongoose.disconnect();
-  console.log("\nDone.");
+  console.log("\nДеректер базасы толтырылды.");
 }
 
 seed().catch((err) => {
-  console.error("Seed error:", err);
+  console.error("Деректерді толтыру қатесі:", err);
   process.exit(1);
 });

@@ -69,7 +69,7 @@ export default function HomeworkWorkspacePage() {
         setBlocks(data.submission.blocks ?? []);
         blocksRef.current = data.submission.blocks ?? [];
       } catch {
-        setError("Failed to load homework data");
+        setError("Тапсырма деректерін жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -128,9 +128,9 @@ export default function HomeworkWorkspacePage() {
         generatedHtml: html,
       });
       setSubmission((prev) => (prev ? { ...prev, blocks: updated.blocks, generatedHtml: updated.generatedHtml } : prev));
-      toast.success("Progress saved");
+      toast.success("Прогресс сақталды");
     } catch {
-      toast.error("Failed to save progress");
+      toast.error("Прогресті сақтау сәтсіз аяқталды");
     } finally {
       setSaving(false);
     }
@@ -146,9 +146,9 @@ export default function HomeworkWorkspacePage() {
       });
       setSubmission((prev) => (prev ? { ...prev, ...updated, task: prev.task } : prev));
       setConfirmDialogOpen(false);
-      toast.success("Work submitted successfully!");
+      toast.success("Жұмыс сәтті жіберілді!");
     } catch {
-      toast.error("Failed to submit work");
+      toast.error("Жұмысты жіберу сәтсіз аяқталды");
     } finally {
       setSubmitting(false);
     }
@@ -165,12 +165,12 @@ export default function HomeworkWorkspacePage() {
   if (error || !submission || !homework) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <p className="text-destructive">{error ?? "Submission not found"}</p>
+        <p className="text-destructive">{error ?? "Тапсырма табылмады"}</p>
       </div>
     );
   }
 
-  const task = submission.task as TaskItem;
+  const task = (typeof submission.task === "object" && submission.task !== null) ? submission.task as TaskItem : null;
   const feedback = submission.feedback;
   const feedbackAnnotations: FeedbackAnnotation[] =
     submission.feedbackAnnotations ?? [];
@@ -191,7 +191,7 @@ export default function HomeworkWorkspacePage() {
             <h1 className="text-xl font-bold tracking-tight truncate">
               {homework.title}
             </h1>
-            <p className="text-sm text-muted-foreground">{task.topic}</p>
+            <p className="text-sm text-muted-foreground">{task?.topic ?? homework.topic}</p>
           </div>
         </div>
 
@@ -211,14 +211,14 @@ export default function HomeworkWorkspacePage() {
                 ) : (
                   <Save className="h-4 w-4 mr-2" />
                 )}
-                Save
+                Сақтау
               </Button>
               <Button
                 size="sm"
                 onClick={() => setConfirmDialogOpen(true)}
               >
                 <Send className="h-4 w-4 mr-2" />
-                Submit
+                Жіберу
               </Button>
             </>
           )}
@@ -233,7 +233,7 @@ export default function HomeworkWorkspacePage() {
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-emerald-500" />
-                  Grade
+                  Баға
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -248,7 +248,7 @@ export default function HomeworkWorkspacePage() {
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                   <MessageSquare className="h-4 w-4 text-blue-500" />
-                  Teacher Feedback
+                  Мұғалімнің кері байланысы
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -263,7 +263,7 @@ export default function HomeworkWorkspacePage() {
       {homework.theoryContent && (
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Theory</CardTitle>
+            <CardTitle className="text-sm font-medium">Теория</CardTitle>
           </CardHeader>
           <CardContent>
             <div
@@ -277,24 +277,30 @@ export default function HomeworkWorkspacePage() {
       {/* Task Description */}
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">Task</CardTitle>
+          <CardTitle className="text-sm font-medium">Тапсырма</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          <p className="font-medium">{task.title}</p>
-          {task.description && (
-            <p className="text-sm text-muted-foreground">{task.description}</p>
-          )}
-          {task.instruction && (
-            <div className="mt-3 p-3 rounded-lg bg-muted text-sm">
-              {task.instruction}
-            </div>
-          )}
-          {task.imageUrl && (
-            <img
-              src={task.imageUrl}
-              alt="Task reference"
-              className="mt-3 rounded-lg border max-h-64 object-contain"
-            />
+          {task ? (
+            <>
+              <p className="font-medium">{task.title}</p>
+              {task.description && (
+                <p className="text-sm text-muted-foreground">{task.description}</p>
+              )}
+              {task.instruction && (
+                <div className="mt-3 p-3 rounded-lg bg-muted text-sm">
+                  {task.instruction}
+                </div>
+              )}
+              {task.imageUrl && (
+                <img
+                  src={task.imageUrl}
+                  alt="Тапсырма үлгісі"
+                  className="mt-3 rounded-lg border max-h-64 object-contain"
+                />
+              )}
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground">Тапсырма деректері жүктелуде...</p>
           )}
         </CardContent>
       </Card>
@@ -302,7 +308,7 @@ export default function HomeworkWorkspacePage() {
       {/* Editor */}
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">Your Work</CardTitle>
+          <CardTitle className="text-sm font-medium">Сіздің жұмысыңыз</CardTitle>
         </CardHeader>
         <CardContent>
           <HtmlBlockEditor
@@ -322,24 +328,24 @@ export default function HomeworkWorkspacePage() {
       <Dialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Submit your work?</DialogTitle>
+            <DialogTitle>Жұмысты жіберу керек пе?</DialogTitle>
           </DialogHeader>
           <p className="text-sm text-muted-foreground">
-            Once submitted, you won&apos;t be able to make further changes
-            unless the teacher returns it for revision.
+            Жіберілгеннен кейін мұғалім қайта қарауға қайтармайынша
+            өзгерістер енгізу мүмкін болмайды.
           </p>
           <div className="flex justify-end gap-2 pt-4">
             <Button
               variant="outline"
               onClick={() => setConfirmDialogOpen(false)}
             >
-              Cancel
+              Бас тарту
             </Button>
             <Button onClick={handleSubmit} disabled={submitting}>
               {submitting && (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               )}
-              Confirm Submit
+              Жіберуді растау
             </Button>
           </div>
         </DialogContent>
@@ -351,19 +357,19 @@ export default function HomeworkWorkspacePage() {
 function StatusBadge({ status }: { status: string }) {
   const config: Record<string, { label: string; className: string }> = {
     in_progress: {
-      label: "In Progress",
+      label: "Орындалуда",
       className: "border-amber-500/50 text-amber-600 bg-amber-500/10",
     },
     submitted: {
-      label: "Submitted",
+      label: "Жіберілді",
       className: "border-blue-500/50 text-blue-600 bg-blue-500/10",
     },
     graded: {
-      label: "Graded",
+      label: "Бағаланды",
       className: "border-emerald-500/50 text-emerald-600 bg-emerald-500/10",
     },
     returned: {
-      label: "Returned",
+      label: "Қайтарылды",
       className: "border-orange-500/50 text-orange-600 bg-orange-500/10",
     },
   };

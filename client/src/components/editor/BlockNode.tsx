@@ -70,7 +70,7 @@ export default function BlockNode({
             <Input
               value={block.content}
               onChange={(e) => onUpdate(block.id, { content: e.target.value })}
-              placeholder="Enter text content..."
+              placeholder="Мәтін енгізіңіз..."
               className="h-6 text-xs bg-white/50 border-0 focus-visible:ring-1 flex-1 min-w-[100px]"
             />
           )}
@@ -140,7 +140,7 @@ export default function BlockNode({
               isOver ? "border-primary bg-primary/5" : "border-muted"
             }`}
           >
-            Drop child tags here
+            Ішкі тегтерді мұнда тастаңыз
           </div>
         )}
 

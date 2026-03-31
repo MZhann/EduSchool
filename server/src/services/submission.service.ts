@@ -17,7 +17,7 @@ export async function getStudentSubmission(
   }).populate("task");
 
   if (!submission) {
-    throw new AppError(404, "Submission not found");
+    throw new AppError(404, "Жұмыс табылмады");
   }
 
   const homework = await Homework.findById(homeworkId);
@@ -36,11 +36,11 @@ export async function saveProgress(
   });
 
   if (!submission) {
-    throw new AppError(404, "Submission not found");
+    throw new AppError(404, "Жұмыс табылмады");
   }
 
   if (submission.status === "submitted" || submission.status === "graded") {
-    throw new AppError(400, "Cannot edit a submitted or graded submission");
+    throw new AppError(400, "Жіберілген немесе бағаланған жұмысты өңдеуге болмайды");
   }
 
   submission.blocks = data.blocks;
@@ -61,11 +61,11 @@ export async function submitWork(
   });
 
   if (!submission) {
-    throw new AppError(404, "Submission not found");
+    throw new AppError(404, "Жұмыс табылмады");
   }
 
   if (submission.status === "submitted" || submission.status === "graded") {
-    throw new AppError(400, "Work already submitted");
+    throw new AppError(400, "Жұмыс бұрын жіберілген");
   }
 
   submission.blocks = data.blocks;
@@ -87,12 +87,12 @@ export async function gradeSubmission(
   );
 
   if (!submission) {
-    throw new AppError(404, "Submission not found");
+    throw new AppError(404, "Жұмыс табылмады");
   }
 
   const homework = await Homework.findById(submission.homework);
   if (!homework || homework.teacher.toString() !== teacherId) {
-    throw new AppError(403, "Not authorized to grade this submission");
+    throw new AppError(403, "Бұл жұмысты бағалауға рұқсатыңыз жоқ");
   }
 
   submission.grade = data.grade;
@@ -113,12 +113,12 @@ export async function returnSubmission(
   const submission = await Submission.findById(submissionId);
 
   if (!submission) {
-    throw new AppError(404, "Submission not found");
+    throw new AppError(404, "Жұмыс табылмады");
   }
 
   const homework = await Homework.findById(submission.homework);
   if (!homework || homework.teacher.toString() !== teacherId) {
-    throw new AppError(403, "Not authorized");
+    throw new AppError(403, "Рұқсатыңыз жоқ");
   }
 
   submission.feedback = data.feedback;
@@ -137,7 +137,7 @@ export async function getSubmissionById(submissionId: string) {
     .populate("homework", "title topic");
 
   if (!submission) {
-    throw new AppError(404, "Submission not found");
+    throw new AppError(404, "Жұмыс табылмады");
   }
 
   return submission;

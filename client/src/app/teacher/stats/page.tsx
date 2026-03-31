@@ -80,7 +80,7 @@ function GradeBarChart({ studentStats }: { studentStats: ClassStats["studentStat
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-indigo-500" />
-          Student Average Grades
+          Оқушылардың орташа бағалары
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -105,7 +105,7 @@ function GradeBarChart({ studentStats }: { studentStats: ClassStats["studentStat
                     <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
                       <p className="font-medium">{d.fullName}</p>
                       <p className="text-muted-foreground">
-                        Grade: <span className="font-semibold text-foreground">{d.grade}%</span>
+                        Баға: <span className="font-semibold text-foreground">{d.grade}%</span>
                       </p>
                     </div>
                   );
@@ -132,9 +132,9 @@ function SubmissionPieChart({ studentStats }: { studentStats: ClassStats["studen
   const submittedPending = totalSubmitted - totalGraded;
 
   const data = [
-    { name: "Graded", value: totalGraded, color: "#10b981" },
-    { name: "Awaiting Review", value: submittedPending, color: "#3b82f6" },
-    { name: "Not Submitted", value: notSubmitted, color: "#94a3b8" },
+    { name: "Бағаланды", value: totalGraded, color: "#10b981" },
+    { name: "Тексеруді күтуде", value: submittedPending, color: "#3b82f6" },
+    { name: "Жіберілмеген", value: notSubmitted, color: "#94a3b8" },
   ].filter((d) => d.value > 0);
 
   if (data.length === 0) return null;
@@ -145,7 +145,7 @@ function SubmissionPieChart({ studentStats }: { studentStats: ClassStats["studen
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-emerald-500" />
-          Submission Overview
+          Жұмыстар шолуы
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -174,7 +174,7 @@ function SubmissionPieChart({ studentStats }: { studentStats: ClassStats["studen
                     <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
                       <p className="font-medium">{d.name}</p>
                       <p className="text-muted-foreground">
-                        Count: <span className="font-semibold text-foreground">{d.value}</span>
+                        Саны: <span className="font-semibold text-foreground">{d.value}</span>
                       </p>
                     </div>
                   );
@@ -221,7 +221,7 @@ function GradeDistributionChart({ studentStats }: { studentStats: ClassStats["st
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Award className="h-5 w-5 text-amber-500" />
-          Grade Distribution
+          Бағалар бөлінісі
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -244,7 +244,7 @@ function GradeDistributionChart({ studentStats }: { studentStats: ClassStats["st
                     <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
                       <p className="font-medium">{d.range}%</p>
                       <p className="text-muted-foreground">
-                        Students: <span className="font-semibold text-foreground">{d.count}</span>
+                        Оқушылар: <span className="font-semibold text-foreground">{d.count}</span>
                       </p>
                     </div>
                   );
@@ -272,8 +272,8 @@ function CompletionRadialChart({ studentStats }: { studentStats: ClassStats["stu
   const gradingRate = totalSubmitted > 0 ? Math.round((totalGraded / totalSubmitted) * 100) : 0;
 
   const data = [
-    { name: "Grading Rate", value: gradingRate, fill: "#8b5cf6" },
-    { name: "Completion Rate", value: completionRate, fill: "#06b6d4" },
+    { name: "Бағалау көрсеткіші", value: gradingRate, fill: "#8b5cf6" },
+    { name: "Аяқтау көрсеткіші", value: completionRate, fill: "#06b6d4" },
   ];
 
   return (
@@ -282,7 +282,7 @@ function CompletionRadialChart({ studentStats }: { studentStats: ClassStats["stu
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-cyan-500" />
-          Rates Overview
+          Көрсеткіштер шолуы
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -328,11 +328,11 @@ function CompletionRadialChart({ studentStats }: { studentStats: ClassStats["stu
         <div className="flex justify-center gap-8 -mt-2 text-center">
           <div>
             <p className="text-2xl font-bold text-cyan-500">{completionRate}%</p>
-            <p className="text-xs text-muted-foreground">Completion</p>
+            <p className="text-xs text-muted-foreground">Аяқтау</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-violet-500">{gradingRate}%</p>
-            <p className="text-xs text-muted-foreground">Grading</p>
+            <p className="text-xs text-muted-foreground">Бағалау</p>
           </div>
         </div>
       </CardContent>
@@ -360,7 +360,7 @@ export default function TeacherStatsPage() {
           setSelectedClassId(data[0]._id);
         }
       } catch {
-        setError("Failed to load classes");
+        setError("Сыныптарды жүктеу сәтсіз аяқталды");
       } finally {
         setLoadingClasses(false);
       }
@@ -379,7 +379,7 @@ export default function TeacherStatsPage() {
         const data = await getClassStats(selectedClassId);
         setStats(data);
       } catch {
-        setError("Failed to load statistics");
+        setError("Статистиканы жүктеу сәтсіз аяқталды");
       } finally {
         setLoadingStats(false);
       }
@@ -406,7 +406,7 @@ export default function TeacherStatsPage() {
 
   const statCards = [
     {
-      label: "Students",
+      label: "Оқушылар",
       value: stats?.studentStats.length || 0,
       subtitle: null,
       icon: Users,
@@ -415,7 +415,7 @@ export default function TeacherStatsPage() {
       iconColor: "text-blue-500",
     },
     {
-      label: "Total Homeworks",
+      label: "Барлық тапсырмалар",
       value: stats?.totalHomeworks || 0,
       subtitle: null,
       icon: BookOpen,
@@ -424,16 +424,16 @@ export default function TeacherStatsPage() {
       iconColor: "text-amber-500",
     },
     {
-      label: "Submissions",
+      label: "Жұмыстар",
       value: totalSubmitted,
-      subtitle: `${totalGraded} graded`,
+      subtitle: `${totalGraded} бағаланды`,
       icon: TrendingUp,
       gradient: "from-emerald-500 to-teal-500",
       iconBg: "bg-emerald-500/10",
       iconColor: "text-emerald-500",
     },
     {
-      label: "Class Average",
+      label: "Сынып орташа бағасы",
       value: overallAvg !== null ? `${Math.round(overallAvg)}%` : "—",
       subtitle: null,
       icon: Award,
@@ -464,23 +464,23 @@ export default function TeacherStatsPage() {
   return (
     <div className="space-y-6">
       <div className="animate-fade-in-down">
-        <h1 className="text-3xl font-bold tracking-tight">Statistics</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Статистика</h1>
         <p className="text-muted-foreground mt-1">
-          View student performance by class
+          Сынып бойынша оқушылар үлгерімін көру
         </p>
       </div>
 
       <div className="flex items-center gap-3 animate-fade-in-up stagger-1">
-        <label className="text-sm font-medium">Class:</label>
+        <label className="text-sm font-medium">Сынып:</label>
         <select
           value={selectedClassId}
           onChange={(e) => setSelectedClassId(e.target.value)}
           className="flex h-9 w-full sm:w-[300px] rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <option value="">Select a class</option>
+          <option value="">Сынып таңдаңыз</option>
           {classes.map((cls) => (
             <option key={cls._id} value={cls._id}>
-              {cls.name} ({cls.students?.length || 0} students)
+              {cls.name} ({cls.students?.length || 0} оқушы)
             </option>
           ))}
         </select>
@@ -490,9 +490,9 @@ export default function TeacherStatsPage() {
         <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <BarChart3 className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-1">No classes yet</h3>
+            <h3 className="text-lg font-semibold mb-1">Әлі сыныптар жоқ</h3>
             <p className="text-sm text-muted-foreground">
-              Create a class first to view statistics
+              Статистиканы көру үшін алдымен сынып жасаңыз
             </p>
           </CardContent>
         </Card>
@@ -537,7 +537,7 @@ export default function TeacherStatsPage() {
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Users className="h-10 w-10 text-muted-foreground mb-3" />
                 <p className="text-muted-foreground text-sm">
-                  No student data available for this class
+                  Бұл сынып үшін оқушы деректері жоқ
                 </p>
               </CardContent>
             </Card>
@@ -559,19 +559,19 @@ export default function TeacherStatsPage() {
               <Card className="animate-fade-in-up overflow-hidden border-0 shadow-md">
                 <div className="h-1.5 bg-linear-to-r from-indigo-500 to-blue-500" />
                 <CardHeader>
-                  <CardTitle>Student Performance</CardTitle>
+                  <CardTitle>Оқушылар үлгерімі</CardTitle>
                 </CardHeader>
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-12">#</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead className="text-center">Assignments</TableHead>
-                      <TableHead className="text-center">Submitted</TableHead>
-                      <TableHead className="text-center">Graded</TableHead>
-                      <TableHead className="text-center">Completion</TableHead>
-                      <TableHead className="text-center">Average Grade</TableHead>
+                      <TableHead>Аты</TableHead>
+                      <TableHead>Электрондық пошта</TableHead>
+                      <TableHead className="text-center">Тапсырмалар</TableHead>
+                      <TableHead className="text-center">Жіберілді</TableHead>
+                      <TableHead className="text-center">Бағаланды</TableHead>
+                      <TableHead className="text-center">Аяқтау</TableHead>
+                      <TableHead className="text-center">Орташа баға</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

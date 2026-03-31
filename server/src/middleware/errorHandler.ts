@@ -27,10 +27,10 @@ export function errorHandler(
       field: e.path.join("."),
       message: e.message,
     }));
-    res.status(400).json({ message: "Validation error", errors });
+    res.status(400).json({ message: "Валидация қатесі", errors });
     return;
   }
 
   console.error("Unhandled error:", err);
-  res.status(500).json({ message: "Internal server error" });
+  res.status(500).json({ message: "Сервердің ішкі қатесі" });
 }

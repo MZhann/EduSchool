@@ -30,7 +30,7 @@ export default function ClassShareModal({
 
   function copyToClipboard(text: string, label: string) {
     navigator.clipboard.writeText(text);
-    toast.success(`${label} copied`);
+    toast.success(`${label} көшірілді`);
   }
 
   return (
@@ -43,7 +43,7 @@ export default function ClassShareModal({
             </DialogTitle>
           </DialogHeader>
           <p className="text-center text-primary-foreground/80 text-sm mt-1">
-            Scan QR or enter credentials to join
+            Қосылу үшін QR кодын сканерлеңіз немесе деректерді енгізіңіз
           </p>
         </div>
 
@@ -61,7 +61,7 @@ export default function ClassShareModal({
               </div>
               <p className="text-xs text-muted-foreground flex items-center gap-1.5">
                 <QrCode className="h-3.5 w-3.5" />
-                Scan to open join page
+                Қосылу бетін ашу үшін сканерлеңіз
               </p>
             </div>
 
@@ -72,16 +72,16 @@ export default function ClassShareModal({
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
                   <Hash className="h-4 w-4" />
-                  Join Code
+                  Қосылу коды
                 </span>
                 <Button
                   variant="ghost"
                   size="sm"
                   className="h-7 text-xs"
-                  onClick={() => copyToClipboard(joinCode, "Join code")}
+                  onClick={() => copyToClipboard(joinCode, "Қосылу коды")}
                 >
                   <Copy className="h-3 w-3 mr-1" />
-                  Copy
+                  Көшіру
                 </Button>
               </div>
               <div className="bg-muted rounded-lg px-4 py-3 text-center">
@@ -96,16 +96,16 @@ export default function ClassShareModal({
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
                   <Key className="h-4 w-4" />
-                  Password
+                  Құпия сөз
                 </span>
                 <Button
                   variant="ghost"
                   size="sm"
                   className="h-7 text-xs"
-                  onClick={() => copyToClipboard(joinPassword, "Password")}
+                  onClick={() => copyToClipboard(joinPassword, "Құпия сөз")}
                 >
                   <Copy className="h-3 w-3 mr-1" />
-                  Copy
+                  Көшіру
                 </Button>
               </div>
               <div className="bg-muted rounded-lg px-4 py-3 text-center">

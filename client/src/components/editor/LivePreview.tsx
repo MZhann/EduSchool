@@ -50,7 +50,7 @@ export default function LivePreview({ blocks }: LivePreviewProps) {
     <div className="h-full flex flex-col">
       <div className="flex items-center justify-between px-3 py-2 bg-muted/50 border-b">
         <span className="text-xs font-medium text-muted-foreground">
-          Live Preview
+          Тікелей алдын ала көрініс
         </span>
         <div className="flex items-center gap-1">
           <div className="h-2 w-2 rounded-full bg-red-400" />
@@ -63,7 +63,7 @@ export default function LivePreview({ blocks }: LivePreviewProps) {
           srcDoc={srcDoc}
           className="w-full h-full border-0"
           sandbox="allow-same-origin allow-scripts"
-          title="Live Preview"
+          title="Тікелей алдын ала көрініс"
         />
       </div>
     </div>

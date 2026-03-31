@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Save, Send, Undo2 } from "lucide-react";
 
 interface HtmlBlockEditorProps {
-  task: TaskItem;
+  task: TaskItem | null;
   blocks: HtmlBlock[];
   onBlocksChange: (blocks: HtmlBlock[]) => void;
   onSave?: () => void;
@@ -202,10 +202,10 @@ export default function HtmlBlockEditor({
         {/* Toolbar */}
         <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">HTML Editor</span>
+            <span className="text-sm font-medium">HTML редакторы</span>
             {readOnly && (
               <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">
-                Read Only
+                Тек оқу
               </span>
             )}
           </div>
@@ -216,21 +216,21 @@ export default function HtmlBlockEditor({
                 size="sm"
                 onClick={undo}
                 disabled={history.length === 0}
-                title="Undo"
+                title="Болдырмау"
               >
                 <Undo2 className="h-4 w-4 mr-1" />
-                Undo
+                Болдырмау
               </Button>
               {onSave && (
                 <Button variant="outline" size="sm" onClick={onSave}>
                   <Save className="h-4 w-4 mr-1" />
-                  Save
+                  Сақтау
                 </Button>
               )}
               {onSubmit && (
                 <Button size="sm" onClick={onSubmit}>
                   <Send className="h-4 w-4 mr-1" />
-                  Submit
+                  Жіберу
                 </Button>
               )}
             </div>
@@ -241,7 +241,7 @@ export default function HtmlBlockEditor({
           {/* Tag Palette - left sidebar */}
           <div className="w-56 border-r p-3 overflow-y-auto bg-muted/20 shrink-0">
             <TagPalette
-              availableTags={task.availableTags}
+              availableTags={task?.availableTags ?? []}
               disabled={readOnly}
             />
           </div>
@@ -254,8 +254,8 @@ export default function HtmlBlockEditor({
                   <div className="flex items-center justify-center h-40 border-2 border-dashed rounded-lg">
                     <p className="text-sm text-muted-foreground">
                       {readOnly
-                        ? "No blocks placed"
-                        : "Drag tags from the palette and drop them here"}
+                        ? "Блоктар қойылмаған"
+                        : "Палитрадан тегтерді сүйреп, осында тастаңыз"}
                     </p>
                   </div>
                 ) : (

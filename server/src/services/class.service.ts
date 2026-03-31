@@ -34,7 +34,7 @@ export async function getClassById(classId: string, teacherId: string) {
     .populate("students", "name email");
 
   if (!cls) {
-    throw new AppError(404, "Class not found");
+    throw new AppError(404, "Сынып табылмады");
   }
 
   return cls;
@@ -43,18 +43,18 @@ export async function getClassById(classId: string, teacherId: string) {
 export async function joinClass(studentId: string, data: JoinClassInput) {
   const cls = await Class.findOne({ joinCode: data.joinCode });
   if (!cls) {
-    throw new AppError(404, "Class not found. Check the join code.");
+    throw new AppError(404, "Сынып табылмады. Қосылу кодын тексеріңіз.");
   }
 
   if (cls.joinPassword !== data.joinPassword) {
-    throw new AppError(401, "Incorrect class password");
+    throw new AppError(401, "Сынып құпия сөзі қате");
   }
 
   const alreadyJoined = cls.students.some(
     (s) => s.toString() === studentId
   );
   if (alreadyJoined) {
-    throw new AppError(409, "You have already joined this class");
+    throw new AppError(409, "Сіз бұл сыныпқа бұрын қосылғансыз");
   }
 
   cls.students.push(studentId as any);
@@ -118,7 +118,7 @@ export async function removeStudent(
 ) {
   const cls = await Class.findOne({ _id: classId, teacher: teacherId });
   if (!cls) {
-    throw new AppError(404, "Class not found");
+    throw new AppError(404, "Сынып табылмады");
   }
 
   cls.students = cls.students.filter((s) => s.toString() !== studentId);

@@ -29,9 +29,9 @@ export default function ProfilePage() {
     try {
       const updated = await authService.updateProfile({ name, email });
       updateUser(updated);
-      toast.success("Profile updated successfully");
+      toast.success("Профиль сәтті жаңартылды");
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Failed to update profile");
+      toast.error(err?.response?.data?.message || "Профильді жаңарту сәтсіз аяқталды");
     } finally {
       setSavingInfo(false);
     }
@@ -40,11 +40,11 @@ export default function ProfilePage() {
   async function handleChangePassword(e: React.FormEvent) {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      toast.error("New passwords do not match");
+      toast.error("Жаңа құпия сөздер сәйкес келмейді");
       return;
     }
     if (newPassword.length < 6) {
-      toast.error("New password must be at least 6 characters");
+      toast.error("Жаңа құпия сөз кемінде 6 таңбадан тұруы керек");
       return;
     }
     setSavingPassword(true);
@@ -53,9 +53,9 @@ export default function ProfilePage() {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      toast.success("Password changed successfully");
+      toast.success("Құпия сөз сәтті өзгертілді");
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Failed to change password");
+      toast.error(err?.response?.data?.message || "Құпия сөзді өзгерту сәтсіз аяқталды");
     } finally {
       setSavingPassword(false);
     }
@@ -64,9 +64,9 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="animate-fade-in-down">
-        <h1 className="text-2xl font-bold tracking-tight">Profile</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Профиль</h1>
         <p className="text-muted-foreground mt-1">
-          Manage your account information
+          Аккаунт ақпаратын басқару
         </p>
       </div>
 
@@ -97,13 +97,13 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <UserIcon className="h-4 w-4" />
-            Personal Information
+            Жеке ақпарат
           </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleUpdateInfo} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Толық аты-жөні</Label>
               <div className="relative">
                 <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -117,7 +117,7 @@ export default function ProfilePage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">Электрондық пошта</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -136,7 +136,7 @@ export default function ProfilePage() {
               ) : (
                 <Save className="h-4 w-4" />
               )}
-              {savingInfo ? "Saving..." : "Save Changes"}
+              {savingInfo ? "Сақталуда..." : "Сақтау"}
             </Button>
           </form>
         </CardContent>
@@ -147,43 +147,43 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Lock className="h-4 w-4" />
-            Change Password
+            Құпия сөзді өзгерту
           </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleChangePassword} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="currentPassword">Current Password</Label>
+              <Label htmlFor="currentPassword">Ағымдағы құпия сөз</Label>
               <Input
                 id="currentPassword"
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Enter current password"
+                placeholder="Ағымдағы құпия сөзді енгізіңіз"
                 required
               />
             </div>
             <Separator />
             <div className="space-y-2">
-              <Label htmlFor="newPassword">New Password</Label>
+              <Label htmlFor="newPassword">Жаңа құпия сөз</Label>
               <Input
                 id="newPassword"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Min 6 characters"
+                placeholder="Кемінде 6 таңба"
                 required
                 minLength={6}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Label htmlFor="confirmPassword">Жаңа құпия сөзді растаңыз</Label>
               <Input
                 id="confirmPassword"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter new password"
+                placeholder="Жаңа құпия сөзді қайта енгізіңіз"
                 required
                 minLength={6}
               />
@@ -194,7 +194,7 @@ export default function ProfilePage() {
               ) : (
                 <Lock className="h-4 w-4" />
               )}
-              {savingPassword ? "Changing..." : "Change Password"}
+              {savingPassword ? "Өзгертілуде..." : "Құпия сөзді өзгерту"}
             </Button>
           </form>
         </CardContent>

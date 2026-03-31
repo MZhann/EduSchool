@@ -41,10 +41,10 @@ export default function HomePage() {
           </div>
           <div className="flex items-center gap-3">
             <Link href="/login">
-              <Button variant="ghost">Log In</Button>
+              <Button variant="ghost">Кіру</Button>
             </Link>
             <Link href="/register">
-              <Button>Sign Up</Button>
+              <Button>Тіркелу</Button>
             </Link>
           </div>
         </div>
@@ -57,25 +57,23 @@ export default function HomePage() {
           <div className="container mx-auto max-w-4xl text-center">
             <div className="animate-fade-in-up stagger-1 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Blocks className="h-3.5 w-3.5" />
-              Interactive HTML Learning
+              Интерактивті HTML оқыту
             </div>
             <h1 className="animate-fade-in-up stagger-2 text-5xl sm:text-6xl font-bold tracking-tight mb-6 bg-linear-to-br from-foreground via-foreground to-muted-foreground bg-clip-text">
-              Learn HTML by Building
+              Құрастыру арқылы HTML үйреніңіз
             </h1>
             <p className="animate-fade-in-up stagger-3 text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-              A modern drag-and-drop platform where students learn HTML by
-              assembling blocks, not writing code. Teachers assign, monitor,
-              and grade — all in real time.
+              Оқушылар код жазбай, блоктарды құрастыру арқылы HTML үйренетін заманауи drag-and-drop платформа. Мұғалімдер тапсырмалар беріп, бақылап, бағалайды — бәрі нақты уақытта.
             </p>
             <div className="animate-fade-in-up stagger-4 flex items-center justify-center gap-4">
               <Link href="/register">
                 <Button size="lg" className="text-base px-8 shadow-lg shadow-primary/25">
-                  Get Started Free
+                  Тегін бастау
                 </Button>
               </Link>
               <Link href="/login">
                 <Button size="lg" variant="outline" className="text-base px-8">
-                  Sign In
+                  Кіру
                 </Button>
               </Link>
             </div>
@@ -84,18 +82,18 @@ export default function HomePage() {
 
         <section className="py-24 px-6 bg-muted/40">
           <div className="container mx-auto max-w-5xl">
-            <h2 className="animate-fade-in-up text-2xl font-bold text-center mb-12">Why EduSchool?</h2>
+            <h2 className="animate-fade-in-up text-2xl font-bold text-center mb-12">Неліктен EduSchool?</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="animate-fade-in-up stagger-1 flex flex-col items-center text-center p-8 rounded-2xl bg-card border-0 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <div className="h-14 w-14 rounded-2xl bg-linear-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center mb-5">
                   <Blocks className="h-7 w-7 text-blue-500" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">
-                  Drag & Drop Editor
+                  Drag & Drop редакторы
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Build HTML pages by dragging tag blocks into the workspace.
-                  No manual coding required.
+                  Тег блоктарын жұмыс аймағына сүйреп HTML парақшалар жасаңыз.
+                  Қолмен код жазу қажет емес.
                 </p>
               </div>
               <div className="animate-fade-in-up stagger-2 flex flex-col items-center text-center p-8 rounded-2xl bg-card border-0 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -103,11 +101,11 @@ export default function HomePage() {
                   <BookOpen className="h-7 w-7 text-emerald-600" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">
-                  2700+ Unique Tasks
+                  2700+ бірегей тапсырма
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Each student gets a unique randomized assignment. No two
-                  students receive the same task.
+                  Әр оқушы бірегей кездейсоқ тапсырма алады. Екі оқушы
+                  бірдей тапсырма алмайды.
                 </p>
               </div>
               <div className="animate-fade-in-up stagger-3 flex flex-col items-center text-center p-8 rounded-2xl bg-card border-0 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -115,11 +113,11 @@ export default function HomePage() {
                   <GraduationCap className="h-7 w-7 text-amber-600" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">
-                  Teacher Dashboard
+                  Мұғалім панелі
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Create classes, assign homework, monitor progress,
-                  grade submissions, and view statistics.
+                  Сыныптар құрыңыз, үй тапсырмасын беріңіз, прогресті бақылаңыз,
+                  жұмыстарды бағалаңыз және статистиканы қараңыз.
                 </p>
               </div>
             </div>
@@ -129,7 +127,7 @@ export default function HomePage() {
 
       <footer className="border-t py-8 px-6 bg-card/50">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
-          &copy; 2026 EduSchool. HTML Learning Platform.
+          &copy; 2026 EduSchool. HTML оқыту платформасы.
         </div>
       </footer>
     </div>

@@ -53,22 +53,22 @@ const statusConfig: Record<
   { label: string; variant: "default" | "secondary" | "outline" | "destructive"; className: string }
 > = {
   in_progress: {
-    label: "In Progress",
+    label: "Орындалуда",
     variant: "outline",
     className: "border-yellow-500/50 text-yellow-500 bg-yellow-500/10",
   },
   submitted: {
-    label: "Submitted",
+    label: "Жіберілді",
     variant: "outline",
     className: "border-blue-500/50 text-blue-500 bg-blue-500/10",
   },
   graded: {
-    label: "Graded",
+    label: "Бағаланды",
     variant: "outline",
     className: "border-green-500/50 text-green-500 bg-green-500/10",
   },
   returned: {
-    label: "Returned",
+    label: "Қайтарылды",
     variant: "outline",
     className: "border-orange-500/50 text-orange-500 bg-orange-500/10",
   },
@@ -94,7 +94,7 @@ export default function HomeworkMonitoringPage() {
       const data = await getHomeworkMonitoring(homeworkId);
       setMonitoringData(data);
     } catch {
-      setError("Failed to load monitoring data");
+      setError("Бақылау деректерін жүктеу сәтсіз аяқталды");
     } finally {
       setLoading(false);
     }
@@ -110,9 +110,9 @@ export default function HomeworkMonitoringPage() {
     try {
       const data = await getHomeworkMonitoring(homeworkId);
       setMonitoringData(data);
-      toast.success("Data refreshed");
+      toast.success("Деректер жаңартылды");
     } catch {
-      toast.error("Failed to refresh");
+      toast.error("Жаңарту сәтсіз аяқталды");
     } finally {
       setRefreshing(false);
     }
@@ -131,9 +131,9 @@ export default function HomeworkMonitoringPage() {
           : null
       );
       setCloseDialogOpen(false);
-      toast.success("Homework closed");
+      toast.success("Тапсырма жабылды");
     } catch {
-      toast.error("Failed to close homework");
+      toast.error("Тапсырманы жабу сәтсіз аяқталды");
     } finally {
       setClosing(false);
     }
@@ -143,7 +143,7 @@ export default function HomeworkMonitoringPage() {
     if (typeof submission.student === "object" && submission.student !== null) {
       return submission.student.name;
     }
-    return "Unknown Student";
+    return "Белгісіз оқушы";
   }
 
   function getStudentEmail(submission: SubmissionItem): string {
@@ -166,13 +166,13 @@ export default function HomeworkMonitoringPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <AlertCircle className="h-10 w-10 text-destructive" />
         <p className="text-muted-foreground">
-          {error || "Homework not found"}
+          {error || "Тапсырма табылмады"}
         </p>
         <Button
           variant="outline"
           onClick={() => router.push("/teacher/homework")}
         >
-          Back to Homework
+          Тапсырмаларға оралу
         </Button>
       </div>
     );
@@ -214,7 +214,7 @@ export default function HomeworkMonitoringPage() {
             {homework.dueDate && (
               <span className="flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5" />
-                Due: {new Date(homework.dueDate).toLocaleString()}
+                Мерзімі: {new Date(homework.dueDate).toLocaleString()}
               </span>
             )}
           </div>
@@ -229,7 +229,7 @@ export default function HomeworkMonitoringPage() {
             <RefreshCw
               className={`h-4 w-4 mr-1 ${refreshing ? "animate-spin" : ""}`}
             />
-            Refresh
+            Жаңарту
           </Button>
           {homework.status === "active" && (
             <Button
@@ -238,7 +238,7 @@ export default function HomeworkMonitoringPage() {
               onClick={() => setCloseDialogOpen(true)}
             >
               <Lock className="h-4 w-4 mr-1" />
-              Close
+              Жабу
             </Button>
           )}
         </div>
@@ -249,7 +249,7 @@ export default function HomeworkMonitoringPage() {
           <div className="h-1.5 bg-linear-to-r from-slate-500 to-gray-600" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Students
+              Барлық оқушылар
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -260,7 +260,7 @@ export default function HomeworkMonitoringPage() {
           <div className="h-1.5 bg-linear-to-r from-amber-400 to-yellow-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-yellow-500">
-              In Progress
+              Орындалуда
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -273,7 +273,7 @@ export default function HomeworkMonitoringPage() {
           <div className="h-1.5 bg-linear-to-r from-blue-500 to-indigo-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-blue-500">
-              Submitted
+              Жіберілді
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -286,7 +286,7 @@ export default function HomeworkMonitoringPage() {
           <div className="h-1.5 bg-linear-to-r from-emerald-500 to-green-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-green-500">
-              Graded
+              Бағаланды
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -300,7 +300,7 @@ export default function HomeworkMonitoringPage() {
       {homework.theoryContent && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Theory Content</CardTitle>
+            <CardTitle className="text-base">Теориялық мазмұн</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground whitespace-pre-wrap">
@@ -313,13 +313,13 @@ export default function HomeworkMonitoringPage() {
       <Separator />
 
       <div>
-        <h2 className="text-xl font-semibold mb-4">Student Submissions</h2>
+        <h2 className="text-xl font-semibold mb-4">Оқушылар жұмыстары</h2>
         {submissions.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Users className="h-10 w-10 text-muted-foreground mb-3" />
               <p className="text-muted-foreground text-sm">
-                No submissions yet
+                Әлі жұмыс жоқ
               </p>
             </CardContent>
           </Card>
@@ -329,12 +329,12 @@ export default function HomeworkMonitoringPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-12">#</TableHead>
-                  <TableHead>Student</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Grade</TableHead>
-                  <TableHead>Submitted</TableHead>
-                  <TableHead className="w-20 text-right">Actions</TableHead>
+                  <TableHead>Оқушы</TableHead>
+                  <TableHead>Электрондық пошта</TableHead>
+                  <TableHead>Күйі</TableHead>
+                  <TableHead>Баға</TableHead>
+                  <TableHead>Жіберілді</TableHead>
+                  <TableHead className="w-20 text-right">Әрекеттер</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -393,10 +393,10 @@ export default function HomeworkMonitoringPage() {
       <Dialog open={closeDialogOpen} onOpenChange={setCloseDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Close Homework</DialogTitle>
+            <DialogTitle>Тапсырманы жабу</DialogTitle>
             <DialogDescription>
-              Are you sure you want to close this homework? Students will no
-              longer be able to submit or edit their work.
+              Бұл тапсырманы жабғыңыз келетініне сенімдісіз бе? Оқушылар жұмысты
+              жіберу немесе өңдеу мүмкіндігінен айрылады.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -405,7 +405,7 @@ export default function HomeworkMonitoringPage() {
               onClick={() => setCloseDialogOpen(false)}
               disabled={closing}
             >
-              Cancel
+              Бас тарту
             </Button>
             <Button
               variant="destructive"
@@ -413,7 +413,7 @@ export default function HomeworkMonitoringPage() {
               disabled={closing}
             >
               {closing && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-              Close Homework
+              Тапсырманы жабу
             </Button>
           </DialogFooter>
         </DialogContent>

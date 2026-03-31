@@ -20,22 +20,22 @@ export async function createHomework(
     teacher: teacherId,
   });
   if (!cls) {
-    throw new AppError(404, "Class not found");
+    throw new AppError(404, "Сынып табылмады");
   }
 
   if (cls.students.length === 0) {
-    throw new AppError(400, "Class has no students");
+    throw new AppError(400, "Сыныпта оқушылар жоқ");
   }
 
   const tasks = await Task.find({ topic: data.topic });
   if (tasks.length === 0) {
-    throw new AppError(400, `No tasks found for topic "${data.topic}"`);
+    throw new AppError(400, `"${data.topic}" тақырыбы бойынша тапсырмалар табылмады`);
   }
 
   if (tasks.length < cls.students.length) {
     throw new AppError(
       400,
-      `Not enough unique tasks for this topic. Need ${cls.students.length}, but only ${tasks.length} available.`
+      `Бұл тақырып бойынша жеткілікті бірегей тапсырмалар жоқ. ${cls.students.length} қажет, бірақ тек ${tasks.length} бар.`
     );
   }
 
@@ -86,7 +86,7 @@ export async function getHomeworkById(homeworkId: string, userId: string) {
     .populate("assignedTasks.student", "name email");
 
   if (!homework) {
-    throw new AppError(404, "Homework not found");
+    throw new AppError(404, "Тапсырма табылмады");
   }
 
   return homework;
@@ -138,7 +138,7 @@ export async function getHomeworkMonitoring(
   }).populate("assignedTasks.student", "name email");
 
   if (!homework) {
-    throw new AppError(404, "Homework not found");
+    throw new AppError(404, "Тапсырма табылмады");
   }
 
   const submissions = await Submission.find({ homework: homeworkId })
@@ -156,7 +156,7 @@ export async function closeHomework(homeworkId: string, teacherId: string) {
   );
 
   if (!homework) {
-    throw new AppError(404, "Homework not found");
+    throw new AppError(404, "Тапсырма табылмады");
   }
 
   return homework;

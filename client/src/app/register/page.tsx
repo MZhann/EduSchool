@@ -25,7 +25,7 @@ export default function RegisterPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!role) {
-      toast.error("Please select a role");
+      toast.error("Рөлді таңдаңыз");
       return;
     }
 
@@ -33,10 +33,10 @@ export default function RegisterPage() {
     try {
       const res = await authService.register({ name, email, password, role });
       setAuth(res.user, res.token);
-      toast.success("Account created successfully");
+      toast.success("Аккаунт сәтті жасалды");
       router.push(res.user.role === "teacher" ? "/teacher" : "/student");
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      toast.error(err.response?.data?.message || "Тіркелу сәтсіз аяқталды");
     } finally {
       setLoading(false);
     }
@@ -51,8 +51,8 @@ export default function RegisterPage() {
               <Code2 className="h-6 w-6 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Create Account</CardTitle>
-          <CardDescription>Choose your role and sign up</CardDescription>
+          <CardTitle className="text-2xl">Аккаунт жасау</CardTitle>
+          <CardDescription>Рөліңізді таңдап, тіркеліңіз</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -76,7 +76,7 @@ export default function RegisterPage() {
                     role === "teacher" ? "text-primary" : "text-muted-foreground"
                   }`}
                 >
-                  Teacher
+                  Мұғалім
                 </span>
               </button>
               <button
@@ -98,38 +98,38 @@ export default function RegisterPage() {
                     role === "student" ? "text-primary" : "text-muted-foreground"
                   }`}
                 >
-                  Student
+                  Оқушы
                 </span>
               </button>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Толық аты-жөні</Label>
               <Input
                 id="name"
-                placeholder="Enter your name"
+                placeholder="Атыңызды енгізіңіз"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Электрондық пошта</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="сіз@мысал.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Құпия сөз</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Min 6 characters"
+                placeholder="Кемінде 6 таңба"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -137,13 +137,13 @@ export default function RegisterPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading || !role}>
-              {loading ? "Creating account..." : "Create Account"}
+              {loading ? "Аккаунт жасалуда..." : "Аккаунт жасау"}
             </Button>
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
-            Already have an account?{" "}
+            Аккаунтыңыз бар ма?{" "}
             <Link href="/login" className="text-primary hover:underline font-medium">
-              Sign In
+              Кіру
             </Link>
           </p>
         </CardContent>

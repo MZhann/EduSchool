@@ -28,20 +28,20 @@ interface NavItem {
 }
 
 const teacherNavItems: NavItem[] = [
-  { label: "Dashboard", href: "/teacher", icon: <Home className="h-4 w-4" /> },
-  { label: "Classes", href: "/teacher/classes", icon: <Users className="h-4 w-4" /> },
-  { label: "Homework", href: "/teacher/homework", icon: <ClipboardList className="h-4 w-4" /> },
-  { label: "Grades", href: "/teacher/grades", icon: <Award className="h-4 w-4" /> },
-  { label: "Statistics", href: "/teacher/stats", icon: <BarChart3 className="h-4 w-4" /> },
-  { label: "Profile", href: "/teacher/profile", icon: <UserCircle className="h-4 w-4" /> },
+  { label: "Басты бет", href: "/teacher", icon: <Home className="h-4 w-4" /> },
+  { label: "Сыныптар", href: "/teacher/classes", icon: <Users className="h-4 w-4" /> },
+  { label: "Үй тапсырмасы", href: "/teacher/homework", icon: <ClipboardList className="h-4 w-4" /> },
+  { label: "Бағалар", href: "/teacher/grades", icon: <Award className="h-4 w-4" /> },
+  { label: "Статистика", href: "/teacher/stats", icon: <BarChart3 className="h-4 w-4" /> },
+  { label: "Профиль", href: "/teacher/profile", icon: <UserCircle className="h-4 w-4" /> },
 ];
 
 const studentNavItems: NavItem[] = [
-  { label: "Dashboard", href: "/student", icon: <Home className="h-4 w-4" /> },
-  { label: "My Classes", href: "/student/classes", icon: <FolderOpen className="h-4 w-4" /> },
-  { label: "Homework", href: "/student/homework", icon: <BookOpen className="h-4 w-4" /> },
-  { label: "Grades", href: "/student/grades", icon: <Award className="h-4 w-4" /> },
-  { label: "Profile", href: "/student/profile", icon: <UserCircle className="h-4 w-4" /> },
+  { label: "Басты бет", href: "/student", icon: <Home className="h-4 w-4" /> },
+  { label: "Менің сыныптарым", href: "/student/classes", icon: <FolderOpen className="h-4 w-4" /> },
+  { label: "Үй тапсырмасы", href: "/student/homework", icon: <BookOpen className="h-4 w-4" /> },
+  { label: "Бағалар", href: "/student/grades", icon: <Award className="h-4 w-4" /> },
+  { label: "Профиль", href: "/student/profile", icon: <UserCircle className="h-4 w-4" /> },
 ];
 
 export default function DashboardLayout({
@@ -156,7 +156,7 @@ export default function DashboardLayout({
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 mr-2" />
-            Log Out
+            Шығу
           </Button>
         </div>
       </aside>

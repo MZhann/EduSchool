@@ -26,10 +26,10 @@ export default function LoginPage() {
     try {
       const res = await authService.login({ email, password });
       setAuth(res.user, res.token);
-      toast.success("Logged in successfully");
+      toast.success("Сәтті кірдіңіз");
       router.push(res.user.role === "teacher" ? "/teacher" : "/student");
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "Login failed");
+      toast.error(err.response?.data?.message || "Кіру сәтсіз аяқталды");
     } finally {
       setLoading(false);
     }
@@ -44,24 +44,24 @@ export default function LoginPage() {
               <Code2 className="h-6 w-6 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Welcome Back</CardTitle>
-          <CardDescription>Sign in to your EduSchool account</CardDescription>
+          <CardTitle className="text-2xl">Қайта қош келдіңіз</CardTitle>
+          <CardDescription>EduSchool аккаунтыңызға кіріңіз</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Электрондық пошта</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="сіз@мысал.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Құпия сөз</Label>
               <Input
                 id="password"
                 type="password"
@@ -72,13 +72,13 @@ export default function LoginPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Кіру..." : "Кіру"}
             </Button>
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
-            Don&apos;t have an account?{" "}
+            Аккаунтыңыз жоқ па?{" "}
             <Link href="/register" className="text-primary hover:underline font-medium">
-              Sign Up
+              Тіркелу
             </Link>
           </p>
         </CardContent>

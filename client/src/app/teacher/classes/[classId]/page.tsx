@@ -65,7 +65,7 @@ export default function ClassDetailPage() {
         const data = await getClassById(classId);
         setClassData(data);
       } catch {
-        setError("Failed to load class details");
+        setError("Сынып мәліметтерін жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -82,9 +82,9 @@ export default function ClassDetailPage() {
       const updated = await removeStudent(classId, removeDialog.studentId);
       setClassData(updated);
       setRemoveDialog({ open: false, studentId: "", studentName: "" });
-      toast.success("Student removed from class");
+      toast.success("Оқушы сыныптан шығарылды");
     } catch {
-      toast.error("Failed to remove student");
+      toast.error("Оқушыны шығару сәтсіз аяқталды");
     } finally {
       setRemoving(false);
     }
@@ -92,7 +92,7 @@ export default function ClassDetailPage() {
 
   function copyToClipboard(text: string, label: string) {
     navigator.clipboard.writeText(text);
-    toast.success(`${label} copied to clipboard`);
+    toast.success(`${label} алмасу буферіне көшірілді`);
   }
 
   if (authLoading || loading) {
@@ -107,9 +107,9 @@ export default function ClassDetailPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <AlertCircle className="h-10 w-10 text-destructive" />
-        <p className="text-muted-foreground">{error || "Class not found"}</p>
+        <p className="text-muted-foreground">{error || "Сынып табылмады"}</p>
         <Button variant="outline" onClick={() => router.push("/teacher/classes")}>
-          Back to Classes
+          Сыныптарға оралу
         </Button>
       </div>
     );
@@ -128,12 +128,12 @@ export default function ClassDetailPage() {
             {classData.name}
           </h1>
           <p className="text-muted-foreground mt-1">
-            Created on {new Date(classData.createdAt).toLocaleDateString()}
+            Жасалған күні {new Date(classData.createdAt).toLocaleDateString()}
           </p>
         </div>
         <Button onClick={() => setShareOpen(true)}>
           <QrCode className="h-4 w-4 mr-2" />
-          Share Class
+          Сыныпты бөлісу
         </Button>
       </div>
 
@@ -143,7 +143,7 @@ export default function ClassDetailPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Copy className="h-4 w-4" />
-              Join Code
+              Қосылу коды
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -154,7 +154,7 @@ export default function ClassDetailPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => copyToClipboard(classData.joinCode, "Join code")}
+                onClick={() => copyToClipboard(classData.joinCode, "Қосылу коды")}
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -167,7 +167,7 @@ export default function ClassDetailPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Key className="h-4 w-4" />
-              Join Password
+              Қосылу құпия сөзі
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -179,7 +179,7 @@ export default function ClassDetailPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() =>
-                  copyToClipboard(classData.joinPassword, "Password")
+                  copyToClipboard(classData.joinPassword, "Құпия сөз")
                 }
               >
                 <Copy className="h-4 w-4" />
@@ -193,7 +193,7 @@ export default function ClassDetailPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Users className="h-4 w-4" />
-              Students
+              Оқушылар
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -207,14 +207,14 @@ export default function ClassDetailPage() {
       <Separator />
 
       <div>
-        <h2 className="text-xl font-semibold mb-4">Student List</h2>
+        <h2 className="text-xl font-semibold mb-4">Оқушылар тізімі</h2>
         {classData.students?.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Users className="h-10 w-10 text-muted-foreground mb-3" />
               <p className="text-muted-foreground text-sm">
-                No students have joined this class yet. Share the join code and
-                password with your students.
+                Әлі бірде-бір оқушы бұл сыныпқа қосылған жоқ. Қосылу коды мен
+                құпия сөзді оқушыларыңызбен бөлісіңіз.
               </p>
             </CardContent>
           </Card>
@@ -224,9 +224,9 @@ export default function ClassDetailPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-12">#</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead className="w-24 text-right">Actions</TableHead>
+                  <TableHead>Аты</TableHead>
+                  <TableHead>Электрондық пошта</TableHead>
+                  <TableHead className="w-24 text-right">Әрекеттер</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -273,13 +273,10 @@ export default function ClassDetailPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove Student</DialogTitle>
+            <DialogTitle>Оқушыны шығару</DialogTitle>
             <DialogDescription>
-              Are you sure you want to remove{" "}
-              <span className="font-semibold text-foreground">
-                {removeDialog.studentName}
-              </span>{" "}
-              from this class? This action cannot be undone.
+              {removeDialog.studentName}-ді осы сыныптан шығарғыңыз келетініне сенімдісіз бе?{" "}
+              Бұл әрекетті қайтаруға болмайды.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -290,7 +287,7 @@ export default function ClassDetailPage() {
               }
               disabled={removing}
             >
-              Cancel
+              Бас тарту
             </Button>
             <Button
               variant="destructive"
@@ -298,7 +295,7 @@ export default function ClassDetailPage() {
               disabled={removing}
             >
               {removing && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-              Remove
+              Шығару
             </Button>
           </DialogFooter>
         </DialogContent>

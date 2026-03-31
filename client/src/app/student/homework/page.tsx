@@ -14,22 +14,22 @@ const statusConfig: Record<
   { label: string; variant: "default" | "secondary" | "destructive" | "outline"; className: string }
 > = {
   in_progress: {
-    label: "In Progress",
+    label: "Орындалуда",
     variant: "outline",
     className: "border-amber-500/50 text-amber-600 bg-amber-500/10",
   },
   submitted: {
-    label: "Submitted",
+    label: "Жіберілді",
     variant: "outline",
     className: "border-blue-500/50 text-blue-600 bg-blue-500/10",
   },
   graded: {
-    label: "Graded",
+    label: "Бағаланды",
     variant: "outline",
     className: "border-emerald-500/50 text-emerald-600 bg-emerald-500/10",
   },
   returned: {
-    label: "Returned",
+    label: "Қайтарылды",
     variant: "outline",
     className: "border-orange-500/50 text-orange-600 bg-orange-500/10",
   },
@@ -57,7 +57,7 @@ export default function StudentHomeworkPage() {
         const data = await getStudentHomeworks();
         setHomeworks(data);
       } catch {
-        setError("Failed to load homework");
+        setError("Тапсырмаларды жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -85,9 +85,9 @@ export default function StudentHomeworkPage() {
   return (
     <div className="space-y-6">
       <div className="animate-fade-in-down">
-        <h1 className="text-2xl font-bold tracking-tight">Homework</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Үй тапсырмасы</h1>
         <p className="text-muted-foreground mt-1">
-          All your assigned homework
+          Сіздің барлық берілген тапсырмаларыңыз
         </p>
       </div>
 
@@ -95,9 +95,9 @@ export default function StudentHomeworkPage() {
         <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <BookOpen className="h-12 w-12 text-muted-foreground/50 mb-4" />
-            <p className="text-lg font-medium">No homework yet</p>
+            <p className="text-lg font-medium">Әлі тапсырма жоқ</p>
             <p className="text-sm text-muted-foreground mt-1">
-              Homework assigned by your teachers will appear here
+              Мұғалімдеріңіз берген тапсырмалар осында көрінеді
             </p>
           </CardContent>
         </Card>
@@ -149,7 +149,7 @@ export default function StudentHomeworkPage() {
                         <p className="text-2xl font-bold text-emerald-600">
                           {hw.grade}
                         </p>
-                        <p className="text-xs text-muted-foreground">Grade</p>
+                        <p className="text-xs text-muted-foreground">Баға</p>
                       </div>
                     )}
                   </CardContent>

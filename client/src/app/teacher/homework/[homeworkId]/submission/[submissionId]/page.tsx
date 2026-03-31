@@ -66,7 +66,7 @@ export default function GradeSubmissionPage() {
           setAnnotations(data.feedbackAnnotations);
         }
       } catch {
-        setError("Failed to load submission");
+        setError("Жұмысты жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -78,7 +78,7 @@ export default function GradeSubmissionPage() {
   async function handleGrade() {
     const gradeNum = Number(grade);
     if (isNaN(gradeNum) || gradeNum < 0 || gradeNum > 100) {
-      toast.error("Grade must be between 0 and 100");
+      toast.error("Баға 0 мен 100 аралығында болуы керек");
       return;
     }
 
@@ -90,9 +90,9 @@ export default function GradeSubmissionPage() {
         feedbackAnnotations: annotations.length > 0 ? annotations : undefined,
       });
       setSubmission(updated);
-      toast.success("Submission graded successfully");
+      toast.success("Жұмыс сәтті бағаланды");
     } catch {
-      toast.error("Failed to grade submission");
+      toast.error("Жұмысты бағалау сәтсіз аяқталды");
     } finally {
       setGrading(false);
     }
@@ -100,7 +100,7 @@ export default function GradeSubmissionPage() {
 
   async function handleReturn() {
     if (!feedback.trim()) {
-      toast.error("Please provide feedback before returning");
+      toast.error("Қайтарар алдында кері байланыс жазыңыз");
       return;
     }
 
@@ -111,9 +111,9 @@ export default function GradeSubmissionPage() {
         feedbackAnnotations: annotations.length > 0 ? annotations : undefined,
       });
       setSubmission(updated);
-      toast.success("Submission returned for correction");
+      toast.success("Жұмыс түзетуге қайтарылды");
     } catch {
-      toast.error("Failed to return submission");
+      toast.error("Жұмысты қайтару сәтсіз аяқталды");
     } finally {
       setReturning(false);
     }
@@ -142,7 +142,7 @@ export default function GradeSubmissionPage() {
     ) {
       return submission.student.name;
     }
-    return "Unknown Student";
+    return "Белгісіз оқушы";
   }
 
   function getTaskInfo(): TaskItem | null {
@@ -174,7 +174,7 @@ export default function GradeSubmissionPage() {
               &lt;{block.tag}&gt;
             </Badge>
             <span className="flex-1 min-w-0 break-words">
-              {block.content || <span className="text-muted-foreground italic">empty</span>}
+              {block.content || <span className="text-muted-foreground italic">бос</span>}
             </span>
             <Button
               variant="ghost"
@@ -194,7 +194,7 @@ export default function GradeSubmissionPage() {
           {hasAnnotation && (
             <div className="ml-4 mb-2">
               <Textarea
-                placeholder="Add comment for this block..."
+                placeholder="Осы блокқа пікір қосыңыз..."
                 value={annotation.comment}
                 onChange={(e) => updateAnnotation(block.id, e.target.value)}
                 rows={2}
@@ -221,13 +221,13 @@ export default function GradeSubmissionPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <AlertCircle className="h-10 w-10 text-destructive" />
         <p className="text-muted-foreground">
-          {error || "Submission not found"}
+          {error || "Жұмыс табылмады"}
         </p>
         <Button
           variant="outline"
           onClick={() => router.push(`/teacher/homework/${homeworkId}`)}
         >
-          Back to Homework
+          Тапсырмаға оралу
         </Button>
       </div>
     );
@@ -246,10 +246,10 @@ export default function GradeSubmissionPage() {
         </Link>
         <div className="flex-1">
           <h1 className="text-2xl font-bold tracking-tight">
-            Review Submission
+            Жұмысты тексеру
           </h1>
           <p className="text-muted-foreground mt-1">
-            Student: <span className="font-medium text-foreground">{getStudentName()}</span>
+            Оқушы: <span className="font-medium text-foreground">{getStudentName()}</span>
           </p>
         </div>
         <Badge
@@ -271,7 +271,7 @@ export default function GradeSubmissionPage() {
       {task && (
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-base">Task Details</CardTitle>
+            <CardTitle className="text-base">Тапсырма мәліметтері</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex items-center gap-2">
@@ -287,24 +287,24 @@ export default function GradeSubmissionPage() {
         <TabsList>
           <TabsTrigger value="preview" className="gap-1.5">
             <Eye className="h-3.5 w-3.5" />
-            HTML Preview
+            HTML алдын ала көрініс
           </TabsTrigger>
           <TabsTrigger value="blocks" className="gap-1.5">
             <Code2 className="h-3.5 w-3.5" />
-            Block Structure
+            Блок құрылымы
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="preview">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Rendered Output</CardTitle>
+              <CardTitle className="text-base">Нәтиже</CardTitle>
             </CardHeader>
             <CardContent>
               <div
                 className="border rounded-lg p-4 bg-white text-black min-h-[200px] prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{
-                  __html: submission.generatedHtml || "<p>No content</p>",
+                  __html: submission.generatedHtml || "<p>Мазмұн жоқ</p>",
                 }}
               />
             </CardContent>
@@ -316,10 +316,10 @@ export default function GradeSubmissionPage() {
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-base">
-                  Block Structure
+                  Блок құрылымы
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Click the comment icon to annotate a block
+                  Блокқа пікір қалдыру үшін пікір белгішесін басыңыз
                 </p>
               </div>
             </CardHeader>
@@ -328,7 +328,7 @@ export default function GradeSubmissionPage() {
                 renderBlockTree(submission.blocks)
               ) : (
                 <p className="text-sm text-muted-foreground text-center py-8">
-                  No blocks in this submission
+                  Бұл жұмыста блоктар жоқ
                 </p>
               )}
             </CardContent>
@@ -342,35 +342,35 @@ export default function GradeSubmissionPage() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Star className="h-4 w-4" />
-            Grading
+            Бағалау
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="grade">Grade (0 – 100)</Label>
+              <Label htmlFor="grade">Баға (0 – 100)</Label>
               <Input
                 id="grade"
                 type="number"
                 min={0}
                 max={100}
-                placeholder="Enter grade..."
+                placeholder="Бағаны енгізіңіз..."
                 value={grade}
                 onChange={(e) => setGrade(e.target.value)}
               />
             </div>
             {isAlreadyGraded && submission.gradedAt && (
               <div className="flex items-center text-sm text-muted-foreground">
-                Graded on {new Date(submission.gradedAt).toLocaleString()}
+                Бағаланған күні {new Date(submission.gradedAt).toLocaleString()}
               </div>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="feedback">Feedback</Label>
+            <Label htmlFor="feedback">Кері байланыс</Label>
             <Textarea
               id="feedback"
-              placeholder="Write overall feedback for the student..."
+              placeholder="Оқушыға жалпы кері байланыс жазыңыз..."
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               rows={4}
@@ -379,8 +379,8 @@ export default function GradeSubmissionPage() {
 
           {annotations.length > 0 && (
             <div className="text-sm text-muted-foreground">
-              {annotations.filter((a) => a.comment.trim()).length} block
-              annotation(s) will be included
+              {annotations.filter((a) => a.comment.trim()).length} блок
+              пікірлері қосылады
             </div>
           )}
 
@@ -394,7 +394,7 @@ export default function GradeSubmissionPage() {
               ) : (
                 <CheckCircle2 className="h-4 w-4 mr-2" />
               )}
-              {isAlreadyGraded ? "Update Grade" : "Grade"}
+              {isAlreadyGraded ? "Бағаны жаңарту" : "Бағалау"}
             </Button>
             <Button
               variant="outline"
@@ -406,7 +406,7 @@ export default function GradeSubmissionPage() {
               ) : (
                 <RotateCcw className="h-4 w-4 mr-2" />
               )}
-              Return for Correction
+              Түзетуге қайтару
             </Button>
           </div>
         </CardContent>

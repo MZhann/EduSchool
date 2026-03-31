@@ -197,21 +197,21 @@ export default function TeacherGradesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between animate-fade-in-down">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Grades</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Бағалар</h1>
           <p className="text-muted-foreground mt-1">
-            View and export student grades
+            Оқушылар бағаларын қарау және экспорттау
           </p>
         </div>
         <Button onClick={exportToExcel} disabled={filteredGrades.length === 0}>
           <Download className="h-4 w-4 mr-2" />
-          Export Excel
+          Excel экспорттау
         </Button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           {
-            label: "Total Submissions",
+            label: "Барлық тапсырмалар",
             value: stats.total,
             icon: BookOpen,
             gradient: "from-blue-500 to-cyan-500",
@@ -219,7 +219,7 @@ export default function TeacherGradesPage() {
             iconColor: "text-blue-500",
           },
           {
-            label: "Students",
+            label: "Оқушылар",
             value: stats.uniqueStudents,
             icon: Users,
             gradient: "from-violet-500 to-purple-600",
@@ -227,7 +227,7 @@ export default function TeacherGradesPage() {
             iconColor: "text-violet-500",
           },
           {
-            label: "Graded",
+            label: "Бағаланды",
             value: stats.gradedCount,
             icon: TrendingUp,
             gradient: "from-emerald-500 to-teal-500",
@@ -235,7 +235,7 @@ export default function TeacherGradesPage() {
             iconColor: "text-emerald-500",
           },
           {
-            label: "Average Grade",
+            label: "Орташа баға",
             value: stats.average !== null ? `${stats.average}%` : "—",
             icon: Award,
             gradient: "from-amber-500 to-orange-500",
@@ -271,7 +271,7 @@ export default function TeacherGradesPage() {
           onChange={(e) => setSelectedClassId(e.target.value)}
           className="flex h-9 w-full sm:w-[260px] rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <option value="">All Classes</option>
+          <option value="">Барлық сыныптар</option>
           {classes.map((cls) => (
             <option key={cls._id} value={cls._id}>
               {cls.name}
@@ -281,7 +281,7 @@ export default function TeacherGradesPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by student, email, or homework..."
+            placeholder="Оқушы, электрондық пошта, немесе тапсырмалар..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9"
@@ -297,11 +297,11 @@ export default function TeacherGradesPage() {
         <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <Award className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-1">No grades yet</h3>
+            <h3 className="text-lg font-semibold mb-1">Бағалар жоқ</h3>
             <p className="text-sm text-muted-foreground">
               {grades.length === 0
-                ? "Grades will appear here once students submit homework"
-                : "No results match your search"}
+                ? "Бағалар сіздің тапсырмаларыңыздың бағаландығына әкетілгеннен кейін көрінеді"
+                : "Қажетті нәтижелеріңіз табылмады"}
             </p>
           </CardContent>
         </Card>
@@ -312,13 +312,13 @@ export default function TeacherGradesPage() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">#</TableHead>
-                <TableHead>Student</TableHead>
-                <TableHead>Class</TableHead>
-                <TableHead>Homework</TableHead>
-                <TableHead>Topic</TableHead>
-                <TableHead className="text-center">Status</TableHead>
-                <TableHead className="text-center">Grade</TableHead>
-                <TableHead>Submitted</TableHead>
+                <TableHead>Оқушы</TableHead>
+                <TableHead>Сынып</TableHead>
+                <TableHead>Тапсырма</TableHead>
+                <TableHead>Тақырып</TableHead>
+                <TableHead className="text-center">Статусы</TableHead>
+                <TableHead className="text-center">Баға</TableHead>
+                <TableHead>Жіберілді</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

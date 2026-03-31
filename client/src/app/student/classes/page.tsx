@@ -56,7 +56,7 @@ export default function StudentClassesPage() {
       const data = await getStudentClasses();
       setClasses(data);
     } catch {
-      setError("Failed to load classes");
+      setError("Сыныптарды жүктеу сәтсіз аяқталды");
     } finally {
       setLoading(false);
     }
@@ -65,14 +65,14 @@ export default function StudentClassesPage() {
   async function handleJoin(e: React.FormEvent) {
     e.preventDefault();
     if (!joinCode.trim() || !joinPassword.trim()) {
-      toast.error("Please fill in all fields");
+      toast.error("Барлық өрістерді толтырыңыз");
       return;
     }
 
     setJoining(true);
     try {
       await joinClass({ joinCode: joinCode.trim(), joinPassword: joinPassword.trim() });
-      toast.success("Successfully joined the class!");
+      toast.success("Сыныпқа сәтті қосылдыңыз!");
       setDialogOpen(false);
       setJoinCode("");
       setJoinPassword("");
@@ -80,7 +80,7 @@ export default function StudentClassesPage() {
       await fetchClasses();
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Failed to join class";
+        err instanceof Error ? err.message : "Сыныпқа қосылу сәтсіз аяқталды";
       toast.error(message);
     } finally {
       setJoining(false);
@@ -107,38 +107,38 @@ export default function StudentClassesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between animate-fade-in-down">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">My Classes</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Менің сыныптарым</h1>
           <p className="text-muted-foreground mt-1">
-            Classes you&apos;ve joined
+            Сіз қосылған сыныптар
           </p>
         </div>
 
         <Button onClick={() => setDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Join Class
+          Сыныпқа қосылу
         </Button>
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Join a Class</DialogTitle>
+              <DialogTitle>Сыныпқа қосылу</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleJoin} className="space-y-4 pt-2">
               <div className="space-y-2">
-                <Label htmlFor="joinCode">Join Code</Label>
+                <Label htmlFor="joinCode">Қосылу коды</Label>
                 <Input
                   id="joinCode"
-                  placeholder="Enter class join code"
+                  placeholder="Сыныптың қосылу кодын енгізіңіз"
                   value={joinCode}
                   onChange={(e) => setJoinCode(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="joinPassword">Password</Label>
+                <Label htmlFor="joinPassword">Құпия сөз</Label>
                 <Input
                   id="joinPassword"
                   type="password"
-                  placeholder="Enter class password"
+                  placeholder="Сынып құпия сөзін енгізіңіз"
                   value={joinPassword}
                   onChange={(e) => setJoinPassword(e.target.value)}
                 />
@@ -149,11 +149,11 @@ export default function StudentClassesPage() {
                   variant="outline"
                   onClick={() => setDialogOpen(false)}
                 >
-                  Cancel
+                  Бас тарту
                 </Button>
                 <Button type="submit" disabled={joining}>
                   {joining && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                  Join
+                  Қосылу
                 </Button>
               </div>
             </form>
@@ -166,9 +166,9 @@ export default function StudentClassesPage() {
         <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <Users className="h-12 w-12 text-muted-foreground/50 mb-4" />
-            <p className="text-lg font-medium">No classes yet</p>
+            <p className="text-lg font-medium">Әлі сыныптар жоқ</p>
             <p className="text-sm text-muted-foreground mt-1">
-              Join a class using a code from your teacher
+              Мұғаліміңізден алған код арқылы сыныпқа қосылыңыз
             </p>
           </CardContent>
         </Card>
@@ -188,13 +188,13 @@ export default function StudentClassesPage() {
                   <div>
                     <h3 className="font-semibold text-base">{cls.name}</h3>
                     <p className="text-sm text-muted-foreground mt-0.5">
-                      Teacher: {teacherName}
+                      Мұғалім: {teacherName}
                     </p>
                   </div>
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Users className="h-3.5 w-3.5" />
-                      {cls.students.length} students
+                      {cls.students.length} оқушы
                     </span>
                     <span className="flex items-center gap-1">
                       <CalendarDays className="h-3.5 w-3.5" />

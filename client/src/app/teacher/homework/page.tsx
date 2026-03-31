@@ -81,7 +81,7 @@ export default function TeacherHomeworkPage() {
         setClasses(classData);
         setTopics(topicData);
       } catch {
-        setError("Failed to load data");
+        setError("Деректерді жүктеу сәтсіз аяқталды");
       } finally {
         setLoading(false);
       }
@@ -92,7 +92,7 @@ export default function TeacherHomeworkPage() {
 
   async function handleCreate() {
     if (!formData.title.trim() || !formData.topic || !formData.classId) {
-      toast.error("Please fill in title, topic, and class");
+      toast.error("Тақырып, тема және сыныпты толтырыңыз");
       return;
     }
 
@@ -127,10 +127,10 @@ export default function TeacherHomeworkPage() {
         dueDate: "",
       });
       setDialogOpen(false);
-      toast.success("Homework created successfully");
+      toast.success("Тапсырма сәтті жасалды");
     } catch (err: any) {
       const message =
-        err?.response?.data?.message || "Failed to create homework";
+        err?.response?.data?.message || "Тапсырма жасау сәтсіз аяқталды";
       toast.error(message);
     } finally {
       setCreating(false);
@@ -151,7 +151,7 @@ export default function TeacherHomeworkPage() {
       return hw.classId.name;
     }
     const cls = classes.find((c) => c._id === hw.classId);
-    return cls?.name || "Unknown Class";
+    return cls?.name || "Белгісіз сынып";
   }
 
   if (authLoading || loading) {
@@ -175,32 +175,32 @@ export default function TeacherHomeworkPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between animate-fade-in-down">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Homework</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Үй тапсырмасы</h1>
           <p className="text-muted-foreground mt-1">
-            Create and manage assignments
+            Тапсырмаларды жасау және басқару
           </p>
         </div>
 
         <Button onClick={() => setDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Create Homework
+          Тапсырма жасау
         </Button>
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="sm:max-w-[550px]">
             <DialogHeader>
-              <DialogTitle>Create New Homework</DialogTitle>
+              <DialogTitle>Жаңа тапсырма жасау</DialogTitle>
               <DialogDescription>
-                Assign a new homework to a class. Tasks will be automatically
-                distributed to students.
+                Сыныпқа жаңа тапсырма беріңіз. Тапсырмалар оқушыларға автоматты
+                түрде таратылады.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4 max-h-[60vh] overflow-y-auto">
               <div className="space-y-2">
-                <Label htmlFor="hwTitle">Title</Label>
+                <Label htmlFor="hwTitle">Тақырып</Label>
                 <Input
                   id="hwTitle"
-                  placeholder="e.g. HTML Lists Practice"
+                  placeholder="мыс. HTML тізімдер практикасы"
                   value={formData.title}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, title: e.target.value }))
@@ -209,7 +209,7 @@ export default function TeacherHomeworkPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="hwTopic">Topic</Label>
+                <Label htmlFor="hwTopic">Тақырып</Label>
                 <select
                   id="hwTopic"
                   value={formData.topic}
@@ -218,7 +218,7 @@ export default function TeacherHomeworkPage() {
                   }
                   className="flex h-9 w-full rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <option value="">Select a topic</option>
+                  <option value="">Тақырып таңдаңыз</option>
                   {topics.map((topic) => (
                     <option key={topic} value={topic}>
                       {topic}
@@ -228,7 +228,7 @@ export default function TeacherHomeworkPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="hwClass">Class</Label>
+                <Label htmlFor="hwClass">Сынып</Label>
                 <select
                   id="hwClass"
                   value={formData.classId}
@@ -237,20 +237,20 @@ export default function TeacherHomeworkPage() {
                   }
                   className="flex h-9 w-full rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <option value="">Select a class</option>
+                  <option value="">Сынып таңдаңыз</option>
                   {classes.map((cls) => (
                     <option key={cls._id} value={cls._id}>
-                      {cls.name} ({cls.students?.length || 0} students)
+                      {cls.name} ({cls.students?.length || 0} оқушы)
                     </option>
                   ))}
                 </select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="theory">Theory Content (optional)</Label>
+                <Label htmlFor="theory">Теориялық мазмұн (қосымша)</Label>
                 <Textarea
                   id="theory"
-                  placeholder="Provide theory or instructions for students..."
+                  placeholder="Оқушыларға теория немесе нұсқаулық беріңіз..."
                   value={formData.theoryContent}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -263,7 +263,7 @@ export default function TeacherHomeworkPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="dueDate">Due Date (optional)</Label>
+                <Label htmlFor="dueDate">Мерзімі (қосымша)</Label>
                 <Input
                   id="dueDate"
                   type="datetime-local"
@@ -283,11 +283,11 @@ export default function TeacherHomeworkPage() {
                 onClick={() => setDialogOpen(false)}
                 disabled={creating}
               >
-                Cancel
+                Бас тарту
               </Button>
               <Button onClick={handleCreate} disabled={creating}>
                 {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                Create
+                Жасау
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -298,7 +298,7 @@ export default function TeacherHomeworkPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search homework..."
+            placeholder="Тапсырма іздеу..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9"
@@ -309,9 +309,9 @@ export default function TeacherHomeworkPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="flex h-9 w-full sm:w-[180px] rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <option value="all">All Statuses</option>
-          <option value="active">Active</option>
-          <option value="closed">Closed</option>
+          <option value="all">Барлық күйлер</option>
+          <option value="active">Белсенді</option>
+          <option value="closed">Жабылған</option>
         </select>
       </div>
 
@@ -321,13 +321,13 @@ export default function TeacherHomeworkPage() {
             <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-1">
               {homeworks.length === 0
-                ? "No homework yet"
-                : "No matching homework"}
+                ? "Әлі тапсырма жоқ"
+                : "Сәйкес тапсырма табылмады"}
             </h3>
             <p className="text-sm text-muted-foreground">
               {homeworks.length === 0
-                ? "Create your first homework assignment"
-                : "Try adjusting your search or filter"}
+                ? "Бірінші тапсырманы жасаңыз"
+                : "Іздеу немесе сүзгіні өзгертіп көріңіз"}
             </p>
           </CardContent>
         </Card>
@@ -364,18 +364,16 @@ export default function TeacherHomeworkPage() {
                     {hw.dueDate && (
                       <div className="flex items-center gap-1.5">
                         <Clock className="h-3.5 w-3.5" />
-                        Due: {new Date(hw.dueDate).toLocaleDateString()}
+                        Мерзімі: {new Date(hw.dueDate).toLocaleDateString()}
                       </div>
                     )}
                     <div className="flex items-center gap-1.5">
                       <BookOpen className="h-3.5 w-3.5" />
-                      {hw.assignedTasks?.length || 0} task
-                      {(hw.assignedTasks?.length || 0) !== 1 ? "s" : ""}{" "}
-                      assigned
+                      {hw.assignedTasks?.length || 0} тапсырма берілді
                     </div>
                   </div>
                   <div className="flex items-center text-sm text-primary font-medium pt-1">
-                    View Details
+                    Толығырақ
                     <ArrowRight className="ml-1 h-3.5 w-3.5" />
                   </div>
                 </CardContent>

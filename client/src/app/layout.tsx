@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EduSchool - HTML Learning Platform",
-  description: "Learn HTML through drag-and-drop blocks",
+  title: "EduSchool - HTML оқыту платформасы",
+  description: "Drag-and-drop блоктар арқылы HTML үйреніңіз",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="kk"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
