@@ -18,6 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import ClassShareModal from "@/components/class/ClassShareModal";
 import {
   Users,
   Plus,
@@ -27,8 +28,18 @@ import {
   Loader2,
   AlertCircle,
   ArrowRight,
+  QrCode,
 } from "lucide-react";
 import { toast } from "sonner";
+
+const cardGradients = [
+  "from-blue-500 to-cyan-500",
+  "from-violet-500 to-purple-600",
+  "from-emerald-500 to-teal-500",
+  "from-amber-500 to-orange-500",
+  "from-rose-500 to-pink-500",
+  "from-indigo-500 to-blue-600",
+];
 
 export default function TeacherClassesPage() {
   const { user, isLoading: authLoading } = useAuth("teacher");
@@ -38,6 +49,7 @@ export default function TeacherClassesPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [creating, setCreating] = useState(false);
   const [formData, setFormData] = useState({ name: "", joinPassword: "" });
+  const [shareClass, setShareClass] = useState<ClassItem | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -99,7 +111,7 @@ export default function TeacherClassesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-down">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Classes</h1>
           <p className="text-muted-foreground mt-1">
@@ -166,7 +178,7 @@ export default function TeacherClassesPage() {
       </div>
 
       {classes.length === 0 ? (
-        <Card>
+        <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <Users className="h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-1">No classes yet</h3>
@@ -181,12 +193,16 @@ export default function TeacherClassesPage() {
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {classes.map((cls) => (
-            <Card key={cls._id} className="group hover:border-primary/50 transition-colors">
+          {classes.map((cls, i) => (
+            <Card
+              key={cls._id}
+              className={`animate-fade-in-up stagger-${(i % 8) + 1} group overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300`}
+            >
+              <div className={`h-2 bg-linear-to-r ${cardGradients[i % cardGradients.length]}`} />
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-lg">{cls.name}</CardTitle>
-                  <Badge variant="secondary">
+                  <Badge variant="secondary" className="rounded-full">
                     {cls.students?.length || 0} student
                     {(cls.students?.length || 0) !== 1 ? "s" : ""}
                   </Badge>
@@ -231,19 +247,39 @@ export default function TeacherClassesPage() {
                   </div>
                 </div>
 
-                <Link href={`/teacher/classes/${cls._id}`}>
+                <div className="flex gap-2">
+                  <Link href={`/teacher/classes/${cls._id}`} className="flex-1">
+                    <Button
+                      variant="outline"
+                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    >
+                      View Details
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
                   <Button
                     variant="outline"
-                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    size="icon"
+                    onClick={() => setShareClass(cls)}
+                    title="Show QR code & credentials"
                   >
-                    View Details
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <QrCode className="h-4 w-4" />
                   </Button>
-                </Link>
+                </div>
               </CardContent>
             </Card>
           ))}
         </div>
+      )}
+
+      {shareClass && (
+        <ClassShareModal
+          open={!!shareClass}
+          onOpenChange={(open) => !open && setShareClass(null)}
+          className={shareClass.name}
+          joinCode={shareClass.joinCode}
+          joinPassword={shareClass.joinPassword}
+        />
       )}
     </div>
   );

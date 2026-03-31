@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { getTeacherClasses } from "@/services/class.service";
 import { getClassStats } from "@/services/submission.service";
-import { ClassItem, ClassStats, StudentStats } from "@/types";
+import { ClassItem, ClassStats } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-
-
 import {
   Table,
   TableBody,
@@ -26,6 +23,322 @@ import {
   AlertCircle,
   TrendingUp,
 } from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  RadialBarChart,
+  RadialBar,
+} from "recharts";
+
+const CHART_COLORS = [
+  "#6366f1",
+  "#06b6d4",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+  "#14b8a6",
+];
+
+function getGradeColor(avg: number | null): string {
+  if (avg === null) return "text-muted-foreground";
+  if (avg >= 80) return "text-green-500";
+  if (avg >= 60) return "text-yellow-500";
+  return "text-red-500";
+}
+
+function getProgressPercentage(submitted: number, total: number): number {
+  if (total === 0) return 0;
+  return Math.round((submitted / total) * 100);
+}
+
+function GradeBarChart({ studentStats }: { studentStats: ClassStats["studentStats"] }) {
+  const data = studentStats
+    .filter((s) => s.averageGrade !== null)
+    .map((s) => ({
+      name: s.name.length > 12 ? s.name.slice(0, 12) + "…" : s.name,
+      fullName: s.name,
+      grade: Math.round(s.averageGrade!),
+    }))
+    .sort((a, b) => b.grade - a.grade);
+
+  if (data.length === 0) return null;
+
+  return (
+    <Card className="animate-fade-in-up stagger-5 overflow-hidden border-0 shadow-md">
+      <div className="h-1.5 bg-linear-to-r from-indigo-500 to-violet-500" />
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <BarChart3 className="h-5 w-5 text-indigo-500" />
+          Student Average Grades
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[320px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+              <XAxis
+                dataKey="name"
+                tick={{ fontSize: 12 }}
+                interval={0}
+                angle={data.length > 6 ? -30 : 0}
+                textAnchor={data.length > 6 ? "end" : "middle"}
+                height={data.length > 6 ? 60 : 30}
+              />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null;
+                  const d = payload[0].payload;
+                  return (
+                    <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
+                      <p className="font-medium">{d.fullName}</p>
+                      <p className="text-muted-foreground">
+                        Grade: <span className="font-semibold text-foreground">{d.grade}%</span>
+                      </p>
+                    </div>
+                  );
+                }}
+              />
+              <Bar dataKey="grade" radius={[6, 6, 0, 0]} maxBarSize={50}>
+                {data.map((_, i) => (
+                  <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function SubmissionPieChart({ studentStats }: { studentStats: ClassStats["studentStats"] }) {
+  const totalAssignments = studentStats.reduce((s, st) => s + st.totalAssignments, 0);
+  const totalSubmitted = studentStats.reduce((s, st) => s + st.submittedCount, 0);
+  const totalGraded = studentStats.reduce((s, st) => s + st.gradedCount, 0);
+  const notSubmitted = totalAssignments - totalSubmitted;
+  const submittedPending = totalSubmitted - totalGraded;
+
+  const data = [
+    { name: "Graded", value: totalGraded, color: "#10b981" },
+    { name: "Awaiting Review", value: submittedPending, color: "#3b82f6" },
+    { name: "Not Submitted", value: notSubmitted, color: "#94a3b8" },
+  ].filter((d) => d.value > 0);
+
+  if (data.length === 0) return null;
+
+  return (
+    <Card className="animate-fade-in-up stagger-6 overflow-hidden border-0 shadow-md">
+      <div className="h-1.5 bg-linear-to-r from-emerald-500 to-teal-500" />
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <TrendingUp className="h-5 w-5 text-emerald-500" />
+          Submission Overview
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={65}
+                outerRadius={100}
+                paddingAngle={4}
+                dataKey="value"
+                strokeWidth={0}
+              >
+                {data.map((entry, i) => (
+                  <Cell key={i} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null;
+                  const d = payload[0].payload;
+                  return (
+                    <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
+                      <p className="font-medium">{d.name}</p>
+                      <p className="text-muted-foreground">
+                        Count: <span className="font-semibold text-foreground">{d.value}</span>
+                      </p>
+                    </div>
+                  );
+                }}
+              />
+              <Legend
+                verticalAlign="bottom"
+                formatter={(value: string) => (
+                  <span className="text-sm text-foreground">{value}</span>
+                )}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function GradeDistributionChart({ studentStats }: { studentStats: ClassStats["studentStats"] }) {
+  const graded = studentStats.filter((s) => s.averageGrade !== null);
+
+  const buckets = [
+    { range: "90-100", min: 90, max: 100, color: "#10b981" },
+    { range: "80-89", min: 80, max: 89, color: "#06b6d4" },
+    { range: "70-79", min: 70, max: 79, color: "#6366f1" },
+    { range: "60-69", min: 60, max: 69, color: "#f59e0b" },
+    { range: "< 60", min: 0, max: 59, color: "#ef4444" },
+  ];
+
+  const data = buckets.map((b) => ({
+    range: b.range,
+    count: graded.filter(
+      (s) => s.averageGrade! >= b.min && s.averageGrade! <= b.max
+    ).length,
+    color: b.color,
+  }));
+
+  if (graded.length === 0) return null;
+
+  return (
+    <Card className="animate-fade-in-up stagger-7 overflow-hidden border-0 shadow-md">
+      <div className="h-1.5 bg-linear-to-r from-amber-500 to-orange-500" />
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Award className="h-5 w-5 text-amber-500" />
+          Grade Distribution
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data} layout="vertical" margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" className="opacity-30" horizontal={false} />
+              <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12 }} />
+              <YAxis
+                dataKey="range"
+                type="category"
+                width={55}
+                tick={{ fontSize: 12 }}
+              />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null;
+                  const d = payload[0].payload;
+                  return (
+                    <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
+                      <p className="font-medium">{d.range}%</p>
+                      <p className="text-muted-foreground">
+                        Students: <span className="font-semibold text-foreground">{d.count}</span>
+                      </p>
+                    </div>
+                  );
+                }}
+              />
+              <Bar dataKey="count" radius={[0, 6, 6, 0]} maxBarSize={32}>
+                {data.map((entry, i) => (
+                  <Cell key={i} fill={entry.color} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function CompletionRadialChart({ studentStats }: { studentStats: ClassStats["studentStats"] }) {
+  const totalAssignments = studentStats.reduce((s, st) => s + st.totalAssignments, 0);
+  const totalSubmitted = studentStats.reduce((s, st) => s + st.submittedCount, 0);
+  const totalGraded = studentStats.reduce((s, st) => s + st.gradedCount, 0);
+
+  const completionRate = totalAssignments > 0 ? Math.round((totalSubmitted / totalAssignments) * 100) : 0;
+  const gradingRate = totalSubmitted > 0 ? Math.round((totalGraded / totalSubmitted) * 100) : 0;
+
+  const data = [
+    { name: "Grading Rate", value: gradingRate, fill: "#8b5cf6" },
+    { name: "Completion Rate", value: completionRate, fill: "#06b6d4" },
+  ];
+
+  return (
+    <Card className="animate-fade-in-up stagger-8 overflow-hidden border-0 shadow-md">
+      <div className="h-1.5 bg-linear-to-r from-cyan-500 to-blue-500" />
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <BarChart3 className="h-5 w-5 text-cyan-500" />
+          Rates Overview
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadialBarChart
+              cx="50%"
+              cy="50%"
+              innerRadius="30%"
+              outerRadius="90%"
+              data={data}
+              startAngle={180}
+              endAngle={0}
+            >
+              <RadialBar
+                background={{ fill: "hsl(var(--muted))" }}
+                dataKey="value"
+                cornerRadius={8}
+              />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null;
+                  const d = payload[0].payload;
+                  return (
+                    <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
+                      <p className="font-medium">{d.name}</p>
+                      <p className="text-muted-foreground">
+                        <span className="font-semibold text-foreground">{d.value}%</span>
+                      </p>
+                    </div>
+                  );
+                }}
+              />
+              <Legend
+                verticalAlign="bottom"
+                formatter={(value: string) => (
+                  <span className="text-sm text-foreground">{value}</span>
+                )}
+              />
+            </RadialBarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="flex justify-center gap-8 -mt-2 text-center">
+          <div>
+            <p className="text-2xl font-bold text-cyan-500">{completionRate}%</p>
+            <p className="text-xs text-muted-foreground">Completion</p>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-violet-500">{gradingRate}%</p>
+            <p className="text-xs text-muted-foreground">Grading</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function TeacherStatsPage() {
   const { user, isLoading: authLoading } = useAuth("teacher");
@@ -75,17 +388,61 @@ export default function TeacherStatsPage() {
     fetchStats();
   }, [selectedClassId]);
 
-  function getGradeColor(avg: number | null): string {
-    if (avg === null) return "text-muted-foreground";
-    if (avg >= 80) return "text-green-500";
-    if (avg >= 60) return "text-yellow-500";
-    return "text-red-500";
-  }
+  const overallAvg = useMemo(() => {
+    if (!stats || stats.studentStats.length === 0) return null;
+    const graded = stats.studentStats.filter((s) => s.averageGrade !== null);
+    if (graded.length === 0) return null;
+    return graded.reduce((sum, s) => sum + (s.averageGrade || 0), 0) / graded.length;
+  }, [stats]);
 
-  function getProgressPercentage(submitted: number, total: number): number {
-    if (total === 0) return 0;
-    return Math.round((submitted / total) * 100);
-  }
+  const totalSubmitted = useMemo(
+    () => stats?.studentStats.reduce((sum, s) => sum + s.submittedCount, 0) || 0,
+    [stats]
+  );
+  const totalGraded = useMemo(
+    () => stats?.studentStats.reduce((sum, s) => sum + s.gradedCount, 0) || 0,
+    [stats]
+  );
+
+  const statCards = [
+    {
+      label: "Students",
+      value: stats?.studentStats.length || 0,
+      subtitle: null,
+      icon: Users,
+      gradient: "from-blue-500 to-cyan-500",
+      iconBg: "bg-blue-500/10",
+      iconColor: "text-blue-500",
+    },
+    {
+      label: "Total Homeworks",
+      value: stats?.totalHomeworks || 0,
+      subtitle: null,
+      icon: BookOpen,
+      gradient: "from-amber-500 to-orange-500",
+      iconBg: "bg-amber-500/10",
+      iconColor: "text-amber-500",
+    },
+    {
+      label: "Submissions",
+      value: totalSubmitted,
+      subtitle: `${totalGraded} graded`,
+      icon: TrendingUp,
+      gradient: "from-emerald-500 to-teal-500",
+      iconBg: "bg-emerald-500/10",
+      iconColor: "text-emerald-500",
+    },
+    {
+      label: "Class Average",
+      value: overallAvg !== null ? `${Math.round(overallAvg)}%` : "—",
+      subtitle: null,
+      icon: Award,
+      gradient: "from-violet-500 to-purple-600",
+      iconBg: "bg-violet-500/10",
+      iconColor: "text-violet-500",
+      valueColor: getGradeColor(overallAvg),
+    },
+  ];
 
   if (authLoading || loadingClasses) {
     return (
@@ -104,29 +461,16 @@ export default function TeacherStatsPage() {
     );
   }
 
-  const overallAvg =
-    stats && stats.studentStats.length > 0
-      ? stats.studentStats
-          .filter((s) => s.averageGrade !== null)
-          .reduce((sum, s) => sum + (s.averageGrade || 0), 0) /
-          (stats.studentStats.filter((s) => s.averageGrade !== null).length || 1)
-      : null;
-
-  const totalSubmitted =
-    stats?.studentStats.reduce((sum, s) => sum + s.submittedCount, 0) || 0;
-  const totalGraded =
-    stats?.studentStats.reduce((sum, s) => sum + s.gradedCount, 0) || 0;
-
   return (
     <div className="space-y-6">
-      <div>
+      <div className="animate-fade-in-down">
         <h1 className="text-3xl font-bold tracking-tight">Statistics</h1>
         <p className="text-muted-foreground mt-1">
           View student performance by class
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 animate-fade-in-up stagger-1">
         <label className="text-sm font-medium">Class:</label>
         <select
           value={selectedClassId}
@@ -143,7 +487,7 @@ export default function TeacherStatsPage() {
       </div>
 
       {classes.length === 0 ? (
-        <Card>
+        <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <BarChart3 className="h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-1">No classes yet</h3>
@@ -158,69 +502,38 @@ export default function TeacherStatsPage() {
         </div>
       ) : stats ? (
         <>
+          {/* Stat Cards */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Students
-                </CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {stats.studentStats.length}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Homeworks
-                </CardTitle>
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {stats.totalHomeworks}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Submissions
-                </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{totalSubmitted}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {totalGraded} graded
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Class Average
-                </CardTitle>
-                <Award className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div
-                  className={`text-2xl font-bold ${getGradeColor(overallAvg)}`}
-                >
-                  {overallAvg !== null ? `${Math.round(overallAvg)}%` : "—"}
-                </div>
-              </CardContent>
-            </Card>
+            {statCards.map((stat, i) => (
+              <Card
+                key={stat.label}
+                className={`animate-fade-in-up stagger-${i + 1} overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow duration-300`}
+              >
+                <div className={`h-1.5 bg-linear-to-r ${stat.gradient}`} />
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    {stat.label}
+                  </CardTitle>
+                  <div className={`p-2.5 rounded-xl ${stat.iconBg}`}>
+                    <stat.icon className={`h-4 w-4 ${stat.iconColor}`} />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className={`text-2xl font-bold tracking-tight ${"valueColor" in stat ? stat.valueColor : ""}`}>
+                    {stat.value}
+                  </div>
+                  {stat.subtitle && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {stat.subtitle}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {stats.studentStats.length === 0 ? (
-            <Card>
+            <Card className="animate-fade-in-up stagger-5">
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Users className="h-10 w-10 text-muted-foreground mb-3" />
                 <p className="text-muted-foreground text-sm">
@@ -229,82 +542,98 @@ export default function TeacherStatsPage() {
               </CardContent>
             </Card>
           ) : (
-            <Card>
-              <CardHeader>
-                <CardTitle>Student Performance</CardTitle>
-              </CardHeader>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-12">#</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead className="text-center">Assignments</TableHead>
-                    <TableHead className="text-center">Submitted</TableHead>
-                    <TableHead className="text-center">Graded</TableHead>
-                    <TableHead className="text-center">Completion</TableHead>
-                    <TableHead className="text-center">Average Grade</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {stats.studentStats.map((student, index) => (
-                    <TableRow key={student.studentId}>
-                      <TableCell className="text-muted-foreground">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {student.name}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {student.email}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {student.totalAssignments}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {student.submittedCount}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {student.gradedCount}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <div className="flex items-center justify-center gap-2">
-                          <div className="w-16 h-2 rounded-full bg-muted overflow-hidden">
-                            <div
-                              className="h-full rounded-full bg-primary transition-all"
-                              style={{
-                                width: `${getProgressPercentage(
-                                  student.submittedCount,
-                                  student.totalAssignments
-                                )}%`,
-                              }}
-                            />
-                          </div>
-                          <span className="text-xs text-muted-foreground w-10">
-                            {getProgressPercentage(
-                              student.submittedCount,
-                              student.totalAssignments
-                            )}
-                            %
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <span
-                          className={`font-semibold ${getGradeColor(
-                            student.averageGrade
-                          )}`}
-                        >
-                          {student.averageGrade !== null
-                            ? `${Math.round(student.averageGrade)}%`
-                            : "—"}
-                        </span>
-                      </TableCell>
+            <>
+              {/* Charts Row 1: Bar + Pie */}
+              <div className="grid gap-6 lg:grid-cols-2">
+                <GradeBarChart studentStats={stats.studentStats} />
+                <SubmissionPieChart studentStats={stats.studentStats} />
+              </div>
+
+              {/* Charts Row 2: Distribution + Radial */}
+              <div className="grid gap-6 lg:grid-cols-2">
+                <GradeDistributionChart studentStats={stats.studentStats} />
+                <CompletionRadialChart studentStats={stats.studentStats} />
+              </div>
+
+              {/* Student Performance Table */}
+              <Card className="animate-fade-in-up overflow-hidden border-0 shadow-md">
+                <div className="h-1.5 bg-linear-to-r from-indigo-500 to-blue-500" />
+                <CardHeader>
+                  <CardTitle>Student Performance</CardTitle>
+                </CardHeader>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-12">#</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead className="text-center">Assignments</TableHead>
+                      <TableHead className="text-center">Submitted</TableHead>
+                      <TableHead className="text-center">Graded</TableHead>
+                      <TableHead className="text-center">Completion</TableHead>
+                      <TableHead className="text-center">Average Grade</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Card>
+                  </TableHeader>
+                  <TableBody>
+                    {stats.studentStats.map((student, index) => (
+                      <TableRow key={student.studentId}>
+                        <TableCell className="text-muted-foreground">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {student.name}
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {student.email}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {student.totalAssignments}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {student.submittedCount}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {student.gradedCount}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <div className="w-16 h-2 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className="h-full rounded-full bg-primary transition-all"
+                                style={{
+                                  width: `${getProgressPercentage(
+                                    student.submittedCount,
+                                    student.totalAssignments
+                                  )}%`,
+                                }}
+                              />
+                            </div>
+                            <span className="text-xs text-muted-foreground w-10">
+                              {getProgressPercentage(
+                                student.submittedCount,
+                                student.totalAssignments
+                              )}
+                              %
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <span
+                            className={`font-semibold ${getGradeColor(
+                              student.averageGrade
+                            )}`}
+                          >
+                            {student.averageGrade !== null
+                              ? `${Math.round(student.averageGrade)}%`
+                              : "—"}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </>
           )}
         </>
       ) : null}

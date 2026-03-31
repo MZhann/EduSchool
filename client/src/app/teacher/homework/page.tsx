@@ -38,6 +38,15 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+const cardGradients = [
+  "from-indigo-500 to-blue-500",
+  "from-emerald-500 to-teal-500",
+  "from-amber-500 to-orange-500",
+  "from-rose-500 to-pink-500",
+  "from-violet-500 to-purple-600",
+  "from-cyan-500 to-blue-500",
+];
+
 export default function TeacherHomeworkPage() {
   const { user, isLoading: authLoading } = useAuth("teacher");
   const [homeworks, setHomeworks] = useState<HomeworkItem[]>([]);
@@ -164,7 +173,7 @@ export default function TeacherHomeworkPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-down">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Homework</h1>
           <p className="text-muted-foreground mt-1">
@@ -285,7 +294,7 @@ export default function TeacherHomeworkPage() {
         </Dialog>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up stagger-1">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -307,7 +316,7 @@ export default function TeacherHomeworkPage() {
       </div>
 
       {filteredHomeworks.length === 0 ? (
-        <Card>
+        <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-1">
@@ -324,9 +333,10 @@ export default function TeacherHomeworkPage() {
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredHomeworks.map((hw) => (
+          {filteredHomeworks.map((hw, i) => (
             <Link key={hw._id} href={`/teacher/homework/${hw._id}`}>
-              <Card className="h-full hover:border-primary/50 transition-colors cursor-pointer">
+              <Card className={`animate-fade-in-up stagger-${(i % 8) + 1} h-full overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer`}>
+                <div className={`h-2 bg-linear-to-r ${cardGradients[i % cardGradients.length]}`} />
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-2">
                     <CardTitle className="text-base line-clamp-2">

@@ -126,3 +126,33 @@ export async function getClassStats(
     next(error);
   }
 }
+
+export async function getTeacherGrades(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const classId = req.query.classId as string | undefined;
+    const grades = await submissionService.getTeacherGrades(
+      req.user!.userId,
+      classId
+    );
+    res.json(grades);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getStudentGrades(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const grades = await submissionService.getStudentGrades(req.user!.userId);
+    res.json(grades);
+  } catch (error) {
+    next(error);
+  }
+}

@@ -189,7 +189,7 @@ export default function HomeworkMonitoringPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-4 animate-fade-in-down">
         <Link href="/teacher/homework">
           <Button variant="ghost" size="icon" className="mt-1">
             <ArrowLeft className="h-5 w-5" />
@@ -245,7 +245,8 @@ export default function HomeworkMonitoringPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-4">
-        <Card>
+        <Card className="animate-fade-in-up stagger-1 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-slate-500 to-gray-600" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Students
@@ -255,7 +256,8 @@ export default function HomeworkMonitoringPage() {
             <div className="text-2xl font-bold">{submissions.length}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fade-in-up stagger-2 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-amber-400 to-yellow-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-yellow-500">
               In Progress
@@ -267,7 +269,8 @@ export default function HomeworkMonitoringPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fade-in-up stagger-3 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-blue-500 to-indigo-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-blue-500">
               Submitted
@@ -279,7 +282,8 @@ export default function HomeworkMonitoringPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fade-in-up stagger-4 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-emerald-500 to-green-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-green-500">
               Graded

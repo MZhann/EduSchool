@@ -37,11 +37,11 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-linear-to-br from-primary/5 via-background to-background">
-      <Card className="w-full max-w-md shadow-lg shadow-primary/5">
+      <Card className="animate-scale-in w-full max-w-md border-0 shadow-xl shadow-primary/5">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-2">
-            <div className="h-12 w-12 rounded-xl bg-linear-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-              <Code2 className="h-6 w-6 text-primary" />
+            <div className="h-12 w-12 rounded-xl bg-linear-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/25">
+              <Code2 className="h-6 w-6 text-primary-foreground" />
             </div>
           </div>
           <CardTitle className="text-2xl">Welcome Back</CardTitle>

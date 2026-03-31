@@ -35,6 +35,13 @@ const statusConfig: Record<
   },
 };
 
+const statusGradients: Record<SubmissionStatus, string> = {
+  in_progress: "from-amber-400 to-orange-500",
+  submitted: "from-blue-400 to-indigo-500",
+  graded: "from-emerald-400 to-teal-500",
+  returned: "from-orange-400 to-red-500",
+};
+
 export default function StudentHomeworkPage() {
   const { user, isLoading: authLoading } = useAuth("student");
   const router = useRouter();
@@ -77,7 +84,7 @@ export default function StudentHomeworkPage() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="animate-fade-in-down">
         <h1 className="text-2xl font-bold tracking-tight">Homework</h1>
         <p className="text-muted-foreground mt-1">
           All your assigned homework
@@ -85,7 +92,7 @@ export default function StudentHomeworkPage() {
       </div>
 
       {homeworks.length === 0 ? (
-        <Card>
+        <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <BookOpen className="h-12 w-12 text-muted-foreground/50 mb-4" />
             <p className="text-lg font-medium">No homework yet</p>
@@ -96,47 +103,51 @@ export default function StudentHomeworkPage() {
         </Card>
       ) : (
         <div className="grid gap-3">
-          {homeworks.map((hw) => {
+          {homeworks.map((hw, i) => {
             const cfg = statusConfig[hw.submissionStatus];
+            const gradient = statusGradients[hw.submissionStatus] || "from-gray-400 to-gray-500";
             return (
               <Card
                 key={hw._id}
-                className="cursor-pointer hover:border-primary/30 transition-colors"
+                className={`animate-fade-in-up stagger-${(i % 8) + 1} cursor-pointer overflow-hidden border-0 shadow-sm hover:shadow-md transition-all duration-200`}
                 onClick={() => router.push(`/student/homework/${hw._id}`)}
               >
-                <CardContent className="flex items-center justify-between p-4">
-                  <div className="space-y-1 min-w-0 flex-1">
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-medium truncate">{hw.title}</h3>
-                      <Badge variant={cfg.variant} className={cfg.className}>
-                        {cfg.label}
-                      </Badge>
+                <div className="flex">
+                  <div className={`w-1.5 bg-linear-to-b ${gradient} shrink-0`} />
+                  <CardContent className="flex items-center justify-between p-4 flex-1">
+                    <div className="space-y-1 min-w-0 flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="font-medium truncate">{hw.title}</h3>
+                        <Badge variant={cfg.variant} className={cfg.className}>
+                          {cfg.label}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <span>{hw.classId.name}</span>
+                        <span>&middot;</span>
+                        <span>{hw.topic}</span>
+                        {hw.dueDate && (
+                          <>
+                            <span>&middot;</span>
+                            <span className="flex items-center gap-1">
+                              <CalendarDays className="h-3.5 w-3.5" />
+                              {new Date(hw.dueDate).toLocaleDateString()}
+                            </span>
+                          </>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <span>{hw.classId.name}</span>
-                      <span>&middot;</span>
-                      <span>{hw.topic}</span>
-                      {hw.dueDate && (
-                        <>
-                          <span>&middot;</span>
-                          <span className="flex items-center gap-1">
-                            <CalendarDays className="h-3.5 w-3.5" />
-                            {new Date(hw.dueDate).toLocaleDateString()}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </div>
 
-                  {hw.submissionStatus === "graded" && hw.grade != null && (
-                    <div className="text-right ml-4 shrink-0">
-                      <p className="text-2xl font-bold text-emerald-600">
-                        {hw.grade}
-                      </p>
-                      <p className="text-xs text-muted-foreground">Grade</p>
-                    </div>
-                  )}
-                </CardContent>
+                    {hw.submissionStatus === "graded" && hw.grade != null && (
+                      <div className="text-right ml-4 shrink-0">
+                        <p className="text-2xl font-bold text-emerald-600">
+                          {hw.grade}
+                        </p>
+                        <p className="text-xs text-muted-foreground">Grade</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </div>
               </Card>
             );
           })}

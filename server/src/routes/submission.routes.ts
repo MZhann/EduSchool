@@ -26,6 +26,20 @@ router.post(
 );
 
 router.get(
+  "/grades/teacher",
+  authenticate,
+  requireRole("teacher"),
+  submissionController.getTeacherGrades
+);
+
+router.get(
+  "/grades/student",
+  authenticate,
+  requireRole("student"),
+  submissionController.getStudentGrades
+);
+
+router.get(
   "/:submissionId",
   authenticate,
   submissionController.getSubmissionById

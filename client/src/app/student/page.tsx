@@ -66,39 +66,39 @@ export default function StudentDashboardPage() {
       label: "Joined Classes",
       value: classes.length,
       icon: FolderOpen,
-      color: "text-blue-500",
-      bg: "bg-blue-500/10",
-      borderColor: "border-l-blue-500",
+      gradient: "from-blue-500 to-cyan-500",
+      iconBg: "bg-blue-500/10",
+      iconColor: "text-blue-500",
     },
     {
       label: "Assigned Homework",
       value: homeworks.length,
       icon: BookOpen,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10",
-      borderColor: "border-l-amber-500",
+      gradient: "from-amber-500 to-orange-500",
+      iconBg: "bg-amber-500/10",
+      iconColor: "text-amber-500",
     },
     {
       label: "Completed",
       value: completedCount,
       icon: CheckCircle,
-      color: "text-emerald-500",
-      bg: "bg-emerald-500/10",
-      borderColor: "border-l-emerald-500",
+      gradient: "from-emerald-500 to-teal-500",
+      iconBg: "bg-emerald-500/10",
+      iconColor: "text-emerald-500",
     },
     {
       label: "In Progress",
       value: pendingCount,
       icon: Clock,
-      color: "text-violet-500",
-      bg: "bg-violet-500/10",
-      borderColor: "border-l-violet-500",
+      gradient: "from-violet-500 to-purple-600",
+      iconBg: "bg-violet-500/10",
+      iconColor: "text-violet-500",
     },
   ];
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="animate-fade-in-down">
         <h1 className="text-2xl font-bold tracking-tight">
           Welcome back, {user?.name}
         </h1>
@@ -108,25 +108,29 @@ export default function StudentDashboardPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <Card key={stat.label} className={`border-l-4 ${stat.borderColor}`}>
+        {stats.map((stat, i) => (
+          <Card
+            key={stat.label}
+            className={`animate-fade-in-up stagger-${i + 1} overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow duration-300`}
+          >
+            <div className={`h-1.5 bg-linear-to-r ${stat.gradient}`} />
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 {stat.label}
               </CardTitle>
-              <div className={`p-2 rounded-lg ${stat.bg}`}>
-                <stat.icon className={`h-4 w-4 ${stat.color}`} />
+              <div className={`p-2.5 rounded-xl ${stat.iconBg}`}>
+                <stat.icon className={`h-4 w-4 ${stat.iconColor}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">{stat.value}</p>
+              <p className="text-3xl font-bold tracking-tight">{stat.value}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
       {homeworks.length > 0 && (
-        <div>
+        <div className="animate-fade-in-up stagger-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Recent Homework</h2>
             <button
@@ -137,10 +141,10 @@ export default function StudentDashboardPage() {
             </button>
           </div>
           <div className="grid gap-3">
-            {homeworks.slice(0, 5).map((hw) => (
+            {homeworks.slice(0, 5).map((hw, i) => (
               <Card
                 key={hw._id}
-                className="cursor-pointer hover:border-primary/30 hover:shadow-sm transition-all"
+                className={`animate-fade-in-up stagger-${i + 1} cursor-pointer border-0 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-200`}
                 onClick={() => router.push(`/student/homework/${hw._id}`)}
               >
                 <CardContent className="flex items-center justify-between p-4">

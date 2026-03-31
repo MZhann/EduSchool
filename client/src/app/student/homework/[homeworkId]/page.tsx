@@ -178,7 +178,7 @@ export default function HomeworkWorkspacePage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 animate-fade-in-down">
         <div className="flex items-center gap-3 min-w-0">
           <Button
             variant="ghost"
@@ -229,7 +229,7 @@ export default function HomeworkWorkspacePage() {
       {(submission.status === "graded" || submission.status === "returned") && (
         <div className="grid gap-4 sm:grid-cols-2">
           {submission.grade != null && (
-            <Card className="border-emerald-500/30">
+            <Card className="animate-fade-in-up stagger-1 border-emerald-500/30 overflow-hidden border-0 shadow-md">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-emerald-500" />
@@ -244,7 +244,7 @@ export default function HomeworkWorkspacePage() {
             </Card>
           )}
           {feedback && (
-            <Card className="border-blue-500/30">
+            <Card className="animate-fade-in-up stagger-2 border-blue-500/30 overflow-hidden border-0 shadow-md">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                   <MessageSquare className="h-4 w-4 text-blue-500" />

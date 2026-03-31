@@ -18,6 +18,7 @@ import {
   FolderOpen,
   ClipboardList,
   UserCircle,
+  Award,
 } from "lucide-react";
 
 interface NavItem {
@@ -30,6 +31,7 @@ const teacherNavItems: NavItem[] = [
   { label: "Dashboard", href: "/teacher", icon: <Home className="h-4 w-4" /> },
   { label: "Classes", href: "/teacher/classes", icon: <Users className="h-4 w-4" /> },
   { label: "Homework", href: "/teacher/homework", icon: <ClipboardList className="h-4 w-4" /> },
+  { label: "Grades", href: "/teacher/grades", icon: <Award className="h-4 w-4" /> },
   { label: "Statistics", href: "/teacher/stats", icon: <BarChart3 className="h-4 w-4" /> },
   { label: "Profile", href: "/teacher/profile", icon: <UserCircle className="h-4 w-4" /> },
 ];
@@ -38,6 +40,7 @@ const studentNavItems: NavItem[] = [
   { label: "Dashboard", href: "/student", icon: <Home className="h-4 w-4" /> },
   { label: "My Classes", href: "/student/classes", icon: <FolderOpen className="h-4 w-4" /> },
   { label: "Homework", href: "/student/homework", icon: <BookOpen className="h-4 w-4" /> },
+  { label: "Grades", href: "/student/grades", icon: <Award className="h-4 w-4" /> },
   { label: "Profile", href: "/student/profile", icon: <UserCircle className="h-4 w-4" /> },
 ];
 
@@ -86,13 +89,13 @@ export default function DashboardLayout({
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-card border-r flex flex-col transition-transform lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-card border-r flex flex-col transition-transform duration-300 ease-out lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="h-16 flex items-center justify-between px-4 border-b">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-linear-to-br from-primary to-primary/80 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-linear-to-br from-primary to-primary/80 flex items-center justify-center shadow-md shadow-primary/20">
               <Code2 className="h-4.5 w-4.5 text-primary-foreground" />
             </div>
             <span className="font-bold text-lg tracking-tight">EduSchool</span>
@@ -170,7 +173,7 @@ export default function DashboardLayout({
           </Button>
           <div className="flex-1" />
         </header>
-        <main className="flex-1 p-4 lg:p-6 overflow-auto">{children}</main>
+        <main className="flex-1 p-4 lg:p-6 overflow-auto animate-fade-in">{children}</main>
       </div>
     </div>
   );

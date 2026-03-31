@@ -63,14 +63,15 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div>
+      <div className="animate-fade-in-down">
         <h1 className="text-2xl font-bold tracking-tight">Profile</h1>
         <p className="text-muted-foreground mt-1">
           Manage your account information
         </p>
       </div>
 
-      <Card>
+      <Card className="animate-fade-in-up stagger-1 overflow-hidden border-0 shadow-md">
+        <div className="h-1.5 bg-linear-to-r from-violet-500 to-purple-600" />
         <CardHeader className="pb-4">
           <div className="flex items-center gap-4">
             <div className="h-16 w-16 rounded-full bg-linear-to-br from-primary/20 to-primary/5 flex items-center justify-center">
@@ -91,7 +92,8 @@ export default function ProfilePage() {
         </CardHeader>
       </Card>
 
-      <Card>
+      <Card className="animate-fade-in-up stagger-2 overflow-hidden border-0 shadow-md">
+        <div className="h-1.5 bg-linear-to-r from-blue-500 to-cyan-500" />
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <UserIcon className="h-4 w-4" />
@@ -140,7 +142,8 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="animate-fade-in-up stagger-3 overflow-hidden border-0 shadow-md">
+        <div className="h-1.5 bg-linear-to-r from-amber-500 to-orange-500" />
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Lock className="h-4 w-4" />

@@ -26,6 +26,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import ClassShareModal from "@/components/class/ClassShareModal";
 import {
   ArrowLeft,
   Copy,
@@ -35,6 +36,7 @@ import {
   Calendar,
   Loader2,
   AlertCircle,
+  QrCode,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -53,6 +55,7 @@ export default function ClassDetailPage() {
     studentName: string;
   }>({ open: false, studentId: "", studentName: "" });
   const [removing, setRemoving] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   useEffect(() => {
     if (!user || !classId) return;
@@ -114,13 +117,13 @@ export default function ClassDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 animate-fade-in-down">
         <Link href="/teacher/classes">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
-        <div>
+        <div className="flex-1">
           <h1 className="text-3xl font-bold tracking-tight">
             {classData.name}
           </h1>
@@ -128,10 +131,15 @@ export default function ClassDetailPage() {
             Created on {new Date(classData.createdAt).toLocaleDateString()}
           </p>
         </div>
+        <Button onClick={() => setShareOpen(true)}>
+          <QrCode className="h-4 w-4 mr-2" />
+          Share Class
+        </Button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card>
+        <Card className="animate-fade-in-up stagger-1 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-blue-500 to-cyan-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Copy className="h-4 w-4" />
@@ -154,7 +162,8 @@ export default function ClassDetailPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-fade-in-up stagger-2 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-amber-500 to-orange-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Key className="h-4 w-4" />
@@ -179,7 +188,8 @@ export default function ClassDetailPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-fade-in-up stagger-3 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-emerald-500 to-teal-500" />
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Users className="h-4 w-4" />
@@ -293,6 +303,14 @@ export default function ClassDetailPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <ClassShareModal
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        className={classData.name}
+        joinCode={classData.joinCode}
+        joinPassword={classData.joinPassword}
+      />
     </div>
   );
 }

@@ -71,9 +71,48 @@ export default function TeacherDashboardPage() {
     0
   );
 
+  const statCards = [
+    {
+      label: "Total Classes",
+      value: classes.length,
+      subtitle: `${totalStudents} student${totalStudents !== 1 ? "s" : ""} enrolled`,
+      icon: Users,
+      gradient: "from-blue-500 to-blue-600",
+      iconBg: "bg-blue-500/10",
+      iconColor: "text-blue-500",
+    },
+    {
+      label: "Total Homeworks",
+      value: homeworks.length,
+      subtitle: "Across all classes",
+      icon: ClipboardList,
+      gradient: "from-amber-500 to-orange-500",
+      iconBg: "bg-amber-500/10",
+      iconColor: "text-amber-500",
+    },
+    {
+      label: "Active Assignments",
+      value: activeHomeworks.length,
+      subtitle: "Currently in progress",
+      icon: BookOpen,
+      gradient: "from-emerald-500 to-teal-500",
+      iconBg: "bg-emerald-500/10",
+      iconColor: "text-emerald-500",
+    },
+    {
+      label: "Total Students",
+      value: totalStudents,
+      subtitle: `Across ${classes.length} class${classes.length !== 1 ? "es" : ""}`,
+      icon: Users,
+      gradient: "from-violet-500 to-purple-600",
+      iconBg: "bg-violet-500/10",
+      iconColor: "text-violet-500",
+    },
+  ];
+
   return (
     <div className="space-y-8">
-      <div>
+      <div className="animate-fade-in-down">
         <h1 className="text-3xl font-bold tracking-tight">
           Welcome back, {user?.name}
         </h1>
@@ -83,77 +122,33 @@ export default function TeacherDashboardPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="border-l-4 border-l-primary">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Classes
-            </CardTitle>
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Users className="h-4 w-4 text-primary" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{classes.length}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {totalStudents} student{totalStudents !== 1 ? "s" : ""} enrolled
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-amber-500">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Homeworks
-            </CardTitle>
-            <div className="p-2 rounded-lg bg-amber-500/10">
-              <ClipboardList className="h-4 w-4 text-amber-600" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{homeworks.length}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Across all classes
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-emerald-500">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Active Assignments
-            </CardTitle>
-            <div className="p-2 rounded-lg bg-emerald-500/10">
-              <BookOpen className="h-4 w-4 text-emerald-600" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{activeHomeworks.length}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Currently in progress
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-violet-500">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Students
-            </CardTitle>
-            <div className="p-2 rounded-lg bg-violet-500/10">
-              <Users className="h-4 w-4 text-violet-600" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{totalStudents}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Across {classes.length} class{classes.length !== 1 ? "es" : ""}
-            </p>
-          </CardContent>
-        </Card>
+        {statCards.map((stat, i) => (
+          <Card
+            key={stat.label}
+            className={`animate-fade-in-up stagger-${i + 1} overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow duration-300`}
+          >
+            <div className={`h-1.5 bg-linear-to-r ${stat.gradient}`} />
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                {stat.label}
+              </CardTitle>
+              <div className={`p-2.5 rounded-xl ${stat.iconBg}`}>
+                <stat.icon className={`h-4 w-4 ${stat.iconColor}`} />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold tracking-tight">{stat.value}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {stat.subtitle}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
+        <Card className="animate-fade-in-up stagger-5 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-indigo-500 to-blue-500" />
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Homeworks</CardTitle>
             <Link href="/teacher/homework">
@@ -169,11 +164,11 @@ export default function TeacherDashboardPage() {
               </p>
             ) : (
               <div className="space-y-3">
-                {recentHomeworks.map((hw) => (
+                {recentHomeworks.map((hw, i) => (
                   <Link
                     key={hw._id}
                     href={`/teacher/homework/${hw._id}`}
-                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                    className={`animate-fade-in-up stagger-${i + 1} flex items-center justify-between p-3 rounded-xl border hover:bg-muted/50 hover:border-primary/20 transition-all duration-200`}
                   >
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium truncate">
@@ -210,7 +205,8 @@ export default function TeacherDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-fade-in-up stagger-6 overflow-hidden border-0 shadow-md">
+          <div className="h-1.5 bg-linear-to-r from-emerald-500 to-green-500" />
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Your Classes</CardTitle>
             <Link href="/teacher/classes">
@@ -226,11 +222,11 @@ export default function TeacherDashboardPage() {
               </p>
             ) : (
               <div className="space-y-3">
-                {classes.map((cls) => (
+                {classes.map((cls, i) => (
                   <Link
                     key={cls._id}
                     href={`/teacher/classes/${cls._id}`}
-                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                    className={`animate-fade-in-up stagger-${i + 1} flex items-center justify-between p-3 rounded-xl border hover:bg-muted/50 hover:border-primary/20 transition-all duration-200`}
                   >
                     <div>
                       <p className="text-sm font-medium">{cls.name}</p>

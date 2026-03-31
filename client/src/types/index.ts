@@ -123,3 +123,30 @@ export interface MonitoringData {
   homework: HomeworkItem;
   submissions: SubmissionItem[];
 }
+
+export interface TeacherGradeRow {
+  _id: string;
+  studentName: string;
+  studentEmail: string;
+  homeworkTitle: string;
+  homeworkTopic: string;
+  className: string;
+  status: SubmissionStatus;
+  grade: number | null;
+  feedback: string;
+  submittedAt?: string;
+  gradedAt?: string;
+}
+
+export interface StudentGradeRow {
+  _id: string;
+  homeworkTitle: string;
+  homeworkTopic: string;
+  className: string;
+  dueDate?: string;
+  status: SubmissionStatus;
+  grade: number | null;
+  feedback: string;
+  submittedAt?: string;
+  gradedAt?: string;
+}

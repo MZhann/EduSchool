@@ -219,3 +219,75 @@ export async function getClassStats(classId: string, teacherId: string) {
     studentStats,
   };
 }
+
+export async function getTeacherGrades(
+  teacherId: string,
+  classId?: string
+) {
+  const query: Record<string, any> = { teacher: teacherId };
+  if (classId) query.classId = classId;
+
+  const homeworks = await Homework.find(query)
+    .populate("classId", "name")
+    .sort({ createdAt: -1 });
+
+  if (homeworks.length === 0) {
+    return [];
+  }
+
+  const homeworkIds = homeworks.map((h) => h._id);
+  const submissions = await Submission.find({
+    homework: { $in: homeworkIds },
+  })
+    .populate("student", "name email")
+    .populate("homework", "title topic classId");
+
+  await Homework.populate(submissions, {
+    path: "homework.classId",
+    select: "name",
+  });
+
+  return submissions.map((sub) => {
+    const hw = sub.homework as any;
+    const student = sub.student as any;
+    return {
+      _id: sub._id,
+      studentName: student?.name || "Unknown",
+      studentEmail: student?.email || "",
+      homeworkTitle: hw?.title || "",
+      homeworkTopic: hw?.topic || "",
+      className: hw?.classId?.name || "",
+      status: sub.status,
+      grade: sub.grade ?? null,
+      feedback: sub.feedback || "",
+      submittedAt: sub.submittedAt,
+      gradedAt: sub.gradedAt,
+    };
+  });
+}
+
+export async function getStudentGrades(studentId: string) {
+  const submissions = await Submission.find({ student: studentId })
+    .populate({
+      path: "homework",
+      select: "title topic classId dueDate",
+      populate: { path: "classId", select: "name" },
+    })
+    .sort({ createdAt: -1 });
+
+  return submissions.map((sub) => {
+    const hw = sub.homework as any;
+    return {
+      _id: sub._id,
+      homeworkTitle: hw?.title || "",
+      homeworkTopic: hw?.topic || "",
+      className: hw?.classId?.name || "",
+      dueDate: hw?.dueDate || null,
+      status: sub.status,
+      grade: sub.grade ?? null,
+      feedback: sub.feedback || "",
+      submittedAt: sub.submittedAt,
+      gradedAt: sub.gradedAt,
+    };
+  });
+}

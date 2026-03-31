@@ -1,5 +1,12 @@
 import api from "@/lib/api";
-import { SubmissionItem, HtmlBlock, ClassStats, HomeworkItem } from "@/types";
+import {
+  SubmissionItem,
+  HtmlBlock,
+  ClassStats,
+  HomeworkItem,
+  TeacherGradeRow,
+  StudentGradeRow,
+} from "@/types";
 
 export async function getStudentSubmission(homeworkId: string): Promise<{
   submission: SubmissionItem;
@@ -57,5 +64,18 @@ export async function returnSubmission(
 
 export async function getClassStats(classId: string): Promise<ClassStats> {
   const res = await api.get(`/submissions/stats/class/${classId}`);
+  return res.data;
+}
+
+export async function getTeacherGrades(
+  classId?: string
+): Promise<TeacherGradeRow[]> {
+  const params = classId ? { classId } : {};
+  const res = await api.get("/submissions/grades/teacher", { params });
+  return res.data;
+}
+
+export async function getStudentGrades(): Promise<StudentGradeRow[]> {
+  const res = await api.get("/submissions/grades/student");
   return res.data;
 }

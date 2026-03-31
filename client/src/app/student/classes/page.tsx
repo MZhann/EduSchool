@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { getStudentClasses, joinClass } from "@/services/class.service";
 import { ClassItem } from "@/types";
@@ -17,8 +18,18 @@ import {
 import { Loader2, Plus, Users, CalendarDays } from "lucide-react";
 import { toast } from "sonner";
 
+const cardGradients = [
+  "from-blue-500 to-cyan-500",
+  "from-violet-500 to-purple-600",
+  "from-emerald-500 to-teal-500",
+  "from-amber-500 to-orange-500",
+  "from-rose-500 to-pink-500",
+  "from-indigo-500 to-blue-600",
+];
+
 export default function StudentClassesPage() {
   const { user, isLoading: authLoading } = useAuth("student");
+  const searchParams = useSearchParams();
   const [classes, setClasses] = useState<ClassItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,6 +37,14 @@ export default function StudentClassesPage() {
   const [joinCode, setJoinCode] = useState("");
   const [joinPassword, setJoinPassword] = useState("");
   const [joining, setJoining] = useState(false);
+
+  useEffect(() => {
+    const codeFromUrl = searchParams.get("joinCode");
+    if (codeFromUrl) {
+      setJoinCode(codeFromUrl);
+      setDialogOpen(true);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (!user) return;
@@ -86,7 +105,7 @@ export default function StudentClassesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-down">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">My Classes</h1>
           <p className="text-muted-foreground mt-1">
@@ -144,7 +163,7 @@ export default function StudentClassesPage() {
       </div>
 
       {classes.length === 0 ? (
-        <Card>
+        <Card className="animate-fade-in-up">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <Users className="h-12 w-12 text-muted-foreground/50 mb-4" />
             <p className="text-lg font-medium">No classes yet</p>
@@ -155,12 +174,16 @@ export default function StudentClassesPage() {
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {classes.map((cls) => {
+          {classes.map((cls, i) => {
             const teacherName =
               typeof cls.teacher === "object" ? cls.teacher.name : "—";
 
             return (
-              <Card key={cls._id} className="hover:border-primary/30 transition-colors">
+              <Card
+                key={cls._id}
+                className={`animate-fade-in-up stagger-${(i % 8) + 1} overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300`}
+              >
+                <div className={`h-2 bg-linear-to-r ${cardGradients[i % cardGradients.length]}`} />
                 <CardContent className="p-5 space-y-3">
                   <div>
                     <h3 className="font-semibold text-base">{cls.name}</h3>
