@@ -7,7 +7,7 @@ import { getStudentHomeworks } from "@/services/homework.service";
 import { StudentHomework, SubmissionStatus } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, BookOpen, CalendarDays } from "lucide-react";
+import { Loader2, BookOpen, CalendarDays, Lock } from "lucide-react";
 
 const statusConfig: Record<
   SubmissionStatus,
@@ -121,6 +121,12 @@ export default function StudentHomeworkPage() {
                         <Badge variant={cfg.variant} className={cfg.className}>
                           {cfg.label}
                         </Badge>
+                        {hw.status === "closed" && (
+                          <Badge variant="outline" className="border-slate-400/50 text-slate-500 bg-slate-400/10 gap-1">
+                            <Lock className="h-3 w-3" />
+                            Closed
+                          </Badge>
+                        )}
                       </div>
                       <div className="flex items-center gap-3 text-sm text-muted-foreground">
                         <span>{hw.classId.name}</span>

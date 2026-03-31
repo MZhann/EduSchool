@@ -1,4 +1,4 @@
-import { Class } from "../models";
+import { Class, Homework, Task, Submission } from "../models";
 import { AppError } from "../middleware";
 import { CreateClassInput, JoinClassInput } from "../validators";
 import { generateJoinCode } from "../utils/generateCode";
@@ -60,7 +60,49 @@ export async function joinClass(studentId: string, data: JoinClassInput) {
   cls.students.push(studentId as any);
   await cls.save();
 
+  await assignExistingHomework(cls._id.toString(), studentId);
+
   return cls;
+}
+
+async function assignExistingHomework(classId: string, studentId: string) {
+  const homeworks = await Homework.find({ classId });
+
+  for (const hw of homeworks) {
+    const alreadyAssigned = hw.assignedTasks.some(
+      (at) => at.student.toString() === studentId
+    );
+    if (alreadyAssigned) continue;
+
+    const assignedTaskIds = new Set(
+      hw.assignedTasks.map((at) => at.task.toString())
+    );
+
+    const allTopicTasks = await Task.find({ topic: hw.topic });
+    if (allTopicTasks.length === 0) continue;
+
+    let availableTasks = allTopicTasks.filter(
+      (t) => !assignedTaskIds.has(t._id.toString())
+    );
+
+    const pool = availableTasks.length > 0 ? availableTasks : allTopicTasks;
+    const randomTask = pool[Math.floor(Math.random() * pool.length)];
+
+    hw.assignedTasks.push({
+      student: studentId as any,
+      task: randomTask._id,
+    });
+    await hw.save();
+
+    await Submission.create({
+      homework: hw._id,
+      task: randomTask._id,
+      student: studentId,
+      blocks: [],
+      generatedHtml: "",
+      status: "in_progress",
+    });
+  }
 }
 
 export async function getStudentClasses(studentId: string) {

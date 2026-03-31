@@ -95,7 +95,6 @@ export async function getHomeworkById(homeworkId: string, userId: string) {
 export async function getStudentHomeworks(studentId: string) {
   const homeworks = await Homework.find({
     "assignedTasks.student": studentId,
-    status: "active",
   })
     .populate("classId", "name")
     .sort({ createdAt: -1 });
