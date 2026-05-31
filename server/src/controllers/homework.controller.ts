@@ -1,7 +1,11 @@
 import { Response, NextFunction } from "express";
+import Anthropic from "@anthropic-ai/sdk";
 import { homeworkService } from "../services";
 import { createHomeworkSchema } from "../validators";
 import { AuthRequest } from "../types";
+import { env } from "../config/env";
+
+const anthropic = new Anthropic({ apiKey: env.anthropicApiKey });
 
 export async function createHomework(
   req: AuthRequest,
@@ -108,6 +112,47 @@ export async function getTopics(
   try {
     const topics = await homeworkService.getTopics();
     res.json(topics);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function generateTheory(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { title, topic, className } = req.body as {
+      title?: string;
+      topic?: string;
+      className?: string;
+    };
+
+    if (!title && !topic) {
+      res.status(400).json({ message: "title немесе topic қажет" });
+      return;
+    }
+
+    const message = await anthropic.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 400,
+      messages: [
+        {
+          role: "user",
+          content: `Сен мектеп мұғалімісің. Келесі тапсырма үшін қысқа теориялық мазмұн жаз (3-5 сөйлем):
+Тапсырма тақырыбы: ${title || ""}
+Пән/Тема: ${topic || ""}
+Сынып: ${className || ""}
+
+Тек маңызды ақпаратты қамт. Оқушыларға түсінікті, нұсқаулыққа дайын мәтін жаз. Тек теориялық мазмұнды жаз, қосымша түсінік берме.`,
+        },
+      ],
+    });
+
+    const text =
+      message.content[0].type === "text" ? message.content[0].text : "";
+    res.json({ text });
   } catch (error) {
     next(error);
   }

@@ -8,4 +8,5 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET || "default-secret-change-me",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   clientUrl: process.env.CLIENT_URL || "http://localhost:3000",
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY || "",
 } as const;

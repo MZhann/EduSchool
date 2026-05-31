@@ -7,6 +7,7 @@ import {
   createHomework,
   getTeacherHomeworks,
   getTopics,
+  generateHomeworkTheory,
 } from "@/services/homework.service";
 import { getTeacherClasses } from "@/services/class.service";
 import { HomeworkItem, ClassItem } from "@/types";
@@ -35,6 +36,7 @@ import {
   AlertCircle,
   Search,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -56,6 +58,7 @@ export default function TeacherHomeworkPage() {
   const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [generatingTheory, setGeneratingTheory] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
@@ -134,6 +137,23 @@ export default function TeacherHomeworkPage() {
       toast.error(message);
     } finally {
       setCreating(false);
+    }
+  }
+
+  async function handleGenerateTheory() {
+    setGeneratingTheory(true);
+    try {
+      const className = classes.find((c) => c._id === formData.classId)?.name;
+      const text = await generateHomeworkTheory({
+        title: formData.title,
+        topic: formData.topic,
+        className,
+      });
+      setFormData((prev) => ({ ...prev, theoryContent: text }));
+    } catch {
+      toast.error("Теория генерациялау сәтсіз аяқталды");
+    } finally {
+      setGeneratingTheory(false);
     }
   }
 
@@ -247,7 +267,24 @@ export default function TeacherHomeworkPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="theory">Теориялық мазмұн (қосымша)</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="theory">Теориялық мазмұн (қосымша)</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleGenerateTheory}
+                    disabled={generatingTheory || creating}
+                    className="h-7 text-xs gap-1.5"
+                  >
+                    {generatingTheory ? (
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-3 w-3" />
+                    )}
+                    ЖИ арқылы генераця
+                  </Button>
+                </div>
                 <Textarea
                   id="theory"
                   placeholder="Оқушыларға теория немесе нұсқаулық беріңіз..."
@@ -259,6 +296,7 @@ export default function TeacherHomeworkPage() {
                     }))
                   }
                   rows={4}
+                  disabled={generatingTheory}
                 />
               </div>
 
@@ -281,11 +319,11 @@ export default function TeacherHomeworkPage() {
               <Button
                 variant="outline"
                 onClick={() => setDialogOpen(false)}
-                disabled={creating}
+                disabled={creating || generatingTheory}
               >
                 Бас тарту
               </Button>
-              <Button onClick={handleCreate} disabled={creating}>
+              <Button onClick={handleCreate} disabled={creating || generatingTheory}>
                 {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                 Жасау
               </Button>

@@ -9,6 +9,7 @@
     "seed": "tsx src/seed/index.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.100.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

@@ -50,3 +50,12 @@ export async function getTopics(): Promise<string[]> {
   const res = await api.get("/homework/topics");
   return res.data;
 }
+
+export async function generateHomeworkTheory(data: {
+  title?: string;
+  topic?: string;
+  className?: string;
+}): Promise<string> {
+  const res = await api.post("/homework/generate-theory", data);
+  return res.data.text;
+}

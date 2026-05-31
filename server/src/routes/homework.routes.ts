@@ -7,6 +7,13 @@ const router = Router();
 router.get("/topics", authenticate, homeworkController.getTopics);
 
 router.post(
+  "/generate-theory",
+  authenticate,
+  requireRole("teacher"),
+  homeworkController.generateTheory
+);
+
+router.post(
   "/",
   authenticate,
   requireRole("teacher"),
