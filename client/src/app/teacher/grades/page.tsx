@@ -28,6 +28,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import * as XLSX from "xlsx";
+import { SHOW_SUBMITTED_UI } from "@/lib/featureFlags";
 
 const statusConfig: Record<
   SubmissionStatus,
@@ -90,9 +91,7 @@ export default function TeacherGradesPage() {
   async function fetchGrades() {
     setLoading(true);
     try {
-      const data = await getTeacherGrades(
-        selectedClassId || undefined
-      );
+      const data = await getTeacherGrades(selectedClassId || undefined);
       setGrades(data);
     } catch {
       setError("Failed to load grades");
@@ -139,12 +138,14 @@ export default function TeacherGradesPage() {
       Topic: g.homeworkTopic,
       Status: statusConfig[g.status]?.label || g.status,
       Grade: g.grade ?? "—",
-      "Submitted At": g.submittedAt
-        ? new Date(g.submittedAt).toLocaleString()
-        : "—",
-      "Graded At": g.gradedAt
-        ? new Date(g.gradedAt).toLocaleString()
-        : "—",
+      ...(SHOW_SUBMITTED_UI
+        ? {
+            "Submitted At": g.submittedAt
+              ? new Date(g.submittedAt).toLocaleString()
+              : "—",
+          }
+        : {}),
+      "Graded At": g.gradedAt ? new Date(g.gradedAt).toLocaleString() : "—",
       Feedback: g.feedback || "",
     }));
 
@@ -172,7 +173,9 @@ export default function TeacherGradesPage() {
     XLSX.utils.book_append_sheet(wb, ws, classLabel.slice(0, 31));
     XLSX.writeFile(
       wb,
-      `Grades_${classLabel.replace(/\s+/g, "_")}_${new Date().toISOString().split("T")[0]}.xlsx`
+      `Grades_${classLabel.replace(/\s+/g, "_")}_${
+        new Date().toISOString().split("T")[0]
+      }.xlsx`
     );
   }
 
@@ -245,7 +248,9 @@ export default function TeacherGradesPage() {
         ].map((stat, i) => (
           <Card
             key={stat.label}
-            className={`animate-fade-in-up stagger-${i + 1} overflow-hidden border-0 shadow-md`}
+            className={`animate-fade-in-up stagger-${
+              i + 1
+            } overflow-hidden border-0 shadow-md`}
           >
             <div className={`h-1.5 bg-linear-to-r ${stat.gradient}`} />
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -318,7 +323,7 @@ export default function TeacherGradesPage() {
                 <TableHead>Тақырып</TableHead>
                 <TableHead className="text-center">Статусы</TableHead>
                 <TableHead className="text-center">Баға</TableHead>
-                <TableHead>Жіберілді</TableHead>
+                {SHOW_SUBMITTED_UI && <TableHead>Жіберілді</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -356,11 +361,13 @@ export default function TeacherGradesPage() {
                         {g.grade !== null ? `${g.grade}%` : "—"}
                       </span>
                     </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {g.submittedAt
-                        ? new Date(g.submittedAt).toLocaleDateString()
-                        : "—"}
-                    </TableCell>
+                    {SHOW_SUBMITTED_UI && (
+                      <TableCell className="text-sm text-muted-foreground">
+                        {g.submittedAt
+                          ? new Date(g.submittedAt).toLocaleDateString()
+                          : "—"}
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               })}

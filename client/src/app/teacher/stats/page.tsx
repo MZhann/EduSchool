@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { getTeacherClasses } from "@/services/class.service";
 import { getClassStats } from "@/services/submission.service";
 import { ClassItem, ClassStats } from "@/types";
+import { SHOW_SUBMITTED_UI } from "@/lib/featureFlags";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -568,7 +569,9 @@ export default function TeacherStatsPage() {
                       <TableHead>Аты</TableHead>
                       <TableHead>Электрондық пошта</TableHead>
                       <TableHead className="text-center">Тапсырмалар</TableHead>
-                      <TableHead className="text-center">Жіберілді</TableHead>
+                      {SHOW_SUBMITTED_UI && (
+                        <TableHead className="text-center">Жіберілді</TableHead>
+                      )}
                       <TableHead className="text-center">Бағаланды</TableHead>
                       <TableHead className="text-center">Аяқтау</TableHead>
                       <TableHead className="text-center">Орташа баға</TableHead>
@@ -589,9 +592,11 @@ export default function TeacherStatsPage() {
                         <TableCell className="text-center">
                           {student.totalAssignments}
                         </TableCell>
-                        <TableCell className="text-center">
-                          {student.submittedCount}
-                        </TableCell>
+                        {SHOW_SUBMITTED_UI && (
+                          <TableCell className="text-center">
+                            {student.submittedCount}
+                          </TableCell>
+                        )}
                         <TableCell className="text-center">
                           {student.gradedCount}
                         </TableCell>

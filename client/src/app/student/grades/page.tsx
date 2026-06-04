@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { getStudentGrades } from "@/services/submission.service";
 import { StudentGradeRow, SubmissionStatus } from "@/types";
+import { SHOW_SUBMITTED_UI } from "@/lib/featureFlags";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -199,7 +200,7 @@ export default function StudentGradesPage() {
                 <TableHead className="text-center">Статусы</TableHead>
                 <TableHead className="text-center">Баға</TableHead>
                 <TableHead>Дедлайн</TableHead>
-                <TableHead>Жіберілді</TableHead>
+                {SHOW_SUBMITTED_UI && <TableHead>Жіберілді</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -239,11 +240,13 @@ export default function StudentGradesPage() {
                         "—"
                       )}
                     </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {g.submittedAt
-                        ? new Date(g.submittedAt).toLocaleDateString()
-                        : "—"}
-                    </TableCell>
+                    {SHOW_SUBMITTED_UI && (
+                      <TableCell className="text-sm text-muted-foreground">
+                        {g.submittedAt
+                          ? new Date(g.submittedAt).toLocaleDateString()
+                          : "—"}
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               })}

@@ -26,7 +26,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-
 import {
   Plus,
   Clock,
@@ -161,8 +160,7 @@ export default function TeacherHomeworkPage() {
     const matchesSearch = hw.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      statusFilter === "all" || hw.status === statusFilter;
+    const matchesStatus = statusFilter === "all" || hw.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -253,7 +251,10 @@ export default function TeacherHomeworkPage() {
                   id="hwClass"
                   value={formData.classId}
                   onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, classId: e.target.value }))
+                    setFormData((prev) => ({
+                      ...prev,
+                      classId: e.target.value,
+                    }))
                   }
                   className="flex h-9 w-full rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
@@ -282,7 +283,7 @@ export default function TeacherHomeworkPage() {
                     ) : (
                       <Sparkles className="h-3 w-3" />
                     )}
-                    ЖИ арқылы генераця
+                    ЖИ арқылы генерациялау
                   </Button>
                 </div>
                 <Textarea
@@ -323,7 +324,10 @@ export default function TeacherHomeworkPage() {
               >
                 Бас тарту
               </Button>
-              <Button onClick={handleCreate} disabled={creating || generatingTheory}>
+              <Button
+                onClick={handleCreate}
+                disabled={creating || generatingTheory}
+              >
                 {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                 Жасау
               </Button>
@@ -373,17 +377,23 @@ export default function TeacherHomeworkPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredHomeworks.map((hw, i) => (
             <Link key={hw._id} href={`/teacher/homework/${hw._id}`}>
-              <Card className={`animate-fade-in-up stagger-${(i % 8) + 1} h-full overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer`}>
-                <div className={`h-2 bg-linear-to-r ${cardGradients[i % cardGradients.length]}`} />
+              <Card
+                className={`animate-fade-in-up stagger-${
+                  (i % 8) + 1
+                } h-full overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer`}
+              >
+                <div
+                  className={`h-2 bg-linear-to-r ${
+                    cardGradients[i % cardGradients.length]
+                  }`}
+                />
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-2">
                     <CardTitle className="text-base line-clamp-2">
                       {hw.title}
                     </CardTitle>
                     <Badge
-                      variant={
-                        hw.status === "active" ? "default" : "secondary"
-                      }
+                      variant={hw.status === "active" ? "default" : "secondary"}
                       className="shrink-0"
                     >
                       {hw.status}

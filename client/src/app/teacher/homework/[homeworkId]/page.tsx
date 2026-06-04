@@ -14,6 +14,7 @@ import {
   SubmissionStatus,
   HomeworkItem,
 } from "@/types";
+import { SHOW_SUBMITTED_UI } from "@/lib/featureFlags";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -244,7 +245,9 @@ export default function HomeworkMonitoringPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-4">
+      <div
+        className={`grid gap-4 ${SHOW_SUBMITTED_UI ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}
+      >
         <Card className="animate-fade-in-up stagger-1 overflow-hidden border-0 shadow-md">
           <div className="h-1.5 bg-linear-to-r from-slate-500 to-gray-600" />
           <CardHeader className="pb-2">
@@ -269,19 +272,21 @@ export default function HomeworkMonitoringPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="animate-fade-in-up stagger-3 overflow-hidden border-0 shadow-md">
-          <div className="h-1.5 bg-linear-to-r from-blue-500 to-indigo-500" />
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-blue-500">
-              Жіберілді
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {statusCounts["submitted"] || 0}
-            </div>
-          </CardContent>
-        </Card>
+        {SHOW_SUBMITTED_UI && (
+          <Card className="animate-fade-in-up stagger-3 overflow-hidden border-0 shadow-md">
+            <div className="h-1.5 bg-linear-to-r from-blue-500 to-indigo-500" />
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-blue-500">
+                Жіберілді
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {statusCounts["submitted"] || 0}
+              </div>
+            </CardContent>
+          </Card>
+        )}
         <Card className="animate-fade-in-up stagger-4 overflow-hidden border-0 shadow-md">
           <div className="h-1.5 bg-linear-to-r from-emerald-500 to-green-500" />
           <CardHeader className="pb-2">
@@ -333,7 +338,7 @@ export default function HomeworkMonitoringPage() {
                   <TableHead>Электрондық пошта</TableHead>
                   <TableHead>Күйі</TableHead>
                   <TableHead>Баға</TableHead>
-                  <TableHead>Жіберілді</TableHead>
+                  {SHOW_SUBMITTED_UI && <TableHead>Жіберілді</TableHead>}
                   <TableHead className="w-20 text-right">Әрекеттер</TableHead>
                 </TableRow>
               </TableHeader>
@@ -363,11 +368,13 @@ export default function HomeworkMonitoringPage() {
                           <span className="text-muted-foreground">—</span>
                         )}
                       </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {sub.submittedAt
-                          ? new Date(sub.submittedAt).toLocaleString()
-                          : "—"}
-                      </TableCell>
+                      {SHOW_SUBMITTED_UI && (
+                        <TableCell className="text-muted-foreground">
+                          {sub.submittedAt
+                            ? new Date(sub.submittedAt).toLocaleString()
+                            : "—"}
+                        </TableCell>
+                      )}
                       <TableCell className="text-right">
                         {(sub.status === "submitted" ||
                           sub.status === "graded" ||

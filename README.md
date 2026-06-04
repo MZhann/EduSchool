@@ -94,7 +94,7 @@ npm run install:all
 
 1. Server: edit `server/.env`
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://localhost:27017/eduschool
 JWT_SECRET=your-secret-key
 JWT_EXPIRES_IN=7d
@@ -103,7 +103,7 @@ CLIENT_URL=http://localhost:3000
 
 2. Client: edit `client/.env.local`
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:5001/api
 ```
 
 ### Seed the Task Bank
@@ -120,7 +120,9 @@ This populates the database with 500+ HTML tasks across 10 topics.
 npm run dev
 ```
 
-This starts both the server (port 5000) and client (port 3000) concurrently.
+This starts both the server (port 5001) and client (port 3000) concurrently.
+
+> **macOS note:** Port 5000 is often used by **AirPlay Receiver**. If login fails with a CORS error, ensure the API runs on **5001** (see `server/.env` and `client/.env.local`) and restart both processes.
 
 ### Task Topics
 1. HTML Basics
